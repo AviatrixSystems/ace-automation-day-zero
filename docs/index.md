@@ -26,4 +26,4 @@ The ACE Associate certificate is a mandatory prerequisite.
 
 In addition, the training materials expect you have deployed the Aviatrix Controller in AWS using the Sandbox Starter Tool.
 
-You’ll also need GitHub and Terraform Cloud accounts.
+You’ll also need [GitHub](https://githun.com) and [Terraform Cloud](https://app.terraform.io) accounts.
