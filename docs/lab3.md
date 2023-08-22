@@ -1,3 +1,8 @@
+---
+title: Lab3 - Day Two
+layout: home
+---
+
 # Lab 3 - Day Two
 
 ## Overview

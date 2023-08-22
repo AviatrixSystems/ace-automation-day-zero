@@ -1,3 +1,8 @@
+---
+title: Home
+layout: home
+---
+
 # Aviatrix Certified Engineer Multicloud Network Automation Specialty (IaC)
 
 The Aviatrix Certified Engineer Multicloud Network Automation Specialty (IaC) course brings the concepts of DevOps together by automating a multicloud network infrastructure through hands-on labs. The training includes solved walkthrough guides of each lab. Students can expect to enter the training with no coding background and complete the training with an understanding of how to use IaC tools (GitHub and Terraform Cloud) to build, enhance, and secure multicloud networks at scale in an automated fashion.

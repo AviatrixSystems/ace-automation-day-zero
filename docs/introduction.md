@@ -1,3 +1,8 @@
+---
+title: Introduction
+layout: home
+---
+
 # Introduction
 
 The ACE Automation Specialty Training (Infrastructure as Code - IaC) brings the concepts of DevOps together by automating a secure multicloud network infrastructure through 3 hands-on labs.

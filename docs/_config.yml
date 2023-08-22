@@ -1,8 +1,5 @@
-title: Aviatrix Certified Engineer Multicloud Network Automation Specialty (IaC)
+title: ACE Multicloud Network Automation Specialty (IaC)
 description: The Aviatrix Certified Engineer Multicloud Network Automation Specialty (IaC) course brings the concepts of DevOps together by automating a multicloud network infrastructure through hands-on labs.
 theme: just-the-docs
 
 url: https://aviatrixsystems.github.io/ace-automation
-
-aux_links:
-  Template Repository: https://github.com/just-the-docs/just-the-docs-template
