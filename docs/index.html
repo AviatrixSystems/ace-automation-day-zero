@@ -22,6 +22,12 @@
     href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@3/dist/docsify-themeable/style.min.css"
     type="text/css">
+  <!-- Custom theme styles -->
+  <style>
+    :root {
+      --sidebar-width: 25rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -32,6 +38,7 @@
     window.$docsify = {
       name: 'ACE Automation',
       homepage: 'home.md',
+      logo: './images/aviatrix-logo.png',
       // Sidebar Configuration
       auto2top: true,
       loadSidebar: true,
@@ -48,7 +55,6 @@
       },
     };
   </script>
-
   <!-- Required -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
 
@@ -63,6 +69,7 @@
   <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-markdown.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-nginx.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  </script>
 </body>
 
 </html>

@@ -1,245 +1,253 @@
-# Lab 3 - Expanding to multi-cloud
+# Overview
 
-Lab time: ~30 minutes
+In this lab you will adopt a CI/CD pipeline for making secure changes to your cloud infrastructure using the Aviatrix Multicloud Networking and Security platform.
 
-**_Scenario_**:  The business has decided to go multi-cloud! Some apps simply run better in other clouds, and why put all eggs in one basket? During this exercise we will deploy in AWS an Aviatrix Transit VPC, Transit Gateway and attach the existing spoke gateways to the aws transit. We will also peer Azure and AWS and test out the connectivity.
+Specifically, you will implement Egress FQDN Security by collaborating with Applications Development and InfoSec teams. The Developers will be making changes to a single file whenever they need to make changes to the FQDNs that their app needs egress access to. We are using the term Day 2 for the work done in this lab.
 
-The Spoke VPCs and gateways have already been created to save you time. The process is very similar to deploying the transit gateway though.
+Here is an overview of the tasks:
 
-![Topology](images/lab-3.png)  
-_Fig. Current Topology_  
+Refer to the infrastructure built in Lab 1 and Lab 2
+Fork new ACE code for this lab as a remote repository in your own account
+Personalize the code for your accounts
+Invite Collaborators for the Repository
+Create a new GitHub Branch where code changes will be made, and then secure the main branch with Branch Protection Rules
+Connect GitHub with Terraform Cloud via an API-driven workflow
 
-## Lab 3.1 - Deploy the AWS transit VPC
+You will implement Egress Security by collaborating with your DevOps and SecOps teams. The DevOps team will add FQDNs to the app-fqdn-rules.tf file in a new GitHub branch that their app needs to access. They will then create a Pull Request (PR) in GitHub. The PR will need to be approved by the SecOps team prior to being merged into the main branch. Branch protection rules enable checks and balances for the organization. By having such guard rails, no single entity can bring down the entire infrastructure with Terraform.
 
-### Description
+The workflow is represented here.
 
-Let's go ahead and create the Transit VPC in AWS using the topology builder in Copilot.
+![Diagram](images/lab3-1-diag.png)
 
-### Validate
+## GitHub
 
-* Log in to Aviatrix Copilot
-* Scroll down on the left-hand pain to **_Cloud Fabric -> Topology -> Builder_**
-* Click **Select Cloud Region** and enter the following fields:
+### Fork ACE code for this lab
 
-|                    |                          |
-| ------------------ | ------------------------ |
-| **Cloud Provider** | AWS                      |
-| **Account**        | aws-account              |
-| **Region**         | eu-central-1 (Frankfurt) |
+While logged into your GitHub student account, create a new repository by visiting https://github.com/AviatrixSystems/ace-iac-day-two
 
-![Topology builder](images/lab-3-topology-builder.png)  
-_Fig. Set up the topology builder_  
+Click Fork in the top-right corner of the browser.
 
-* Hit save to start the configuration session.
-* Click The "+" sign next to transit, to add a new transit.
+![Fork](images/lab3-2-fork.png)
 
-![Topology builder](images/lab-3-topology-builder-vpc.png)  
-_Fig. Add transit_  
+This will create a remote repository (aka repo) of the lab code in your own GitHub account.
+Code Review
 
-* Enter the following fields:
+Here is how each file has a purpose in this Lab:
 
-|                         |                     |
-| ----------------------- | ------------------- |
-| **Transit Gateway VPC** | Create New VPC/VNet |
-| **VPC Name**            | aws-transit         |
-| **VPC CIDR**            | 10.pod[#].40.0/23   |
+app-fqdn-rules.tf - DevOps team maintains this file. This file defines FQDNs that the app needs access to. The DevOps team will know best what domains their app needs to reach out to, so they are the 'owners' of this file. They will need to make sure the formatting (white space, etc) of each line specifying an FQDN is consistent because GitHub Actions will check this, and fail if the code is not represented in a canonical format. Read this doc for more info on terraform fmt.
+backend.tf - This file states where your Terraform runtime (aka execution) and State should reside. We are using a Remote Backend in which both of these will reside in a Terraform Cloud workspace. You will need to edit this file appropriately
+main.tf - This creates an Egress FQDN allowlist tag called APP-RULES, applies it to the Spoke gateway in Azure, and associates TCP and UDP rules to the tag.
+provider.tf - specific information about the Aviatrix Terraform provider that we are using in this training. All resources in this repository leverage the Aviatrix provider. Only a pointer to the Controller IP is specified in this file in Lab 3. In Lab 1 and Lab 2, this file also had Terraform variables for the credentials for the Controller. Both methods are valid. 
+variables.tf - Any variable with optional default values are provided here. Additionally, if a variable needs to have a non-default value, you would specify it in the Terraform Cloud Variables section.
+versions.tf - specific version about the provider versions. 
 
-For the VPC CIDR, replace **pod[#]** with your pod number. For example, if your pod number is 150, pod[#] should be replaced with 150, so the complete CIDR will become 10.150.40.0/23. The topology builder will automatically create all the required public and private subnets, IGW, and routing tables.
+### Personalize the code for your accounts
 
-![Create a VPC](images/lab3-create-vpc.png)  
-_Fig. Create a VPC_  
+Edit ace-iac-day-two > backend.tf (https://github.com/<your-account>/ace-iac-day-two/blob/main/backend.tf).
 
-Hit save, and the VPC will be created.
-  
-### Expected Results
+![Backend](images/lab3-3-backend.png)
 
-You created a VPC with multiple subnets directly in the Aviatrix GUI.
+Click the Pencil icon to edit directly on GitHub.com cloud UI
 
-## Lab 3.2 - Deploy the Aviatrix Transit Gateway
+![Edit](images/lab3-4-edit.png)
 
-### Description
+Uncomment this line:
 
-In this exercise we are going to launch the Aviatrix Transit Gateway in the newly created Transit VPC in AWS.
+    ```hcl
+    # organization = "<replace-with-your-Terraform-Cloud-organization-and-uncomment>"
+    ```
 
-### Validate
+Edit it with the username of your Terraform Cloud organization account.
 
-* Enter the following fields:
+Commit the changes directly to the main branch.
 
-|                          |                                                         |
-| ------------------------ | ------------------------------------------------------- |
-| **Transit Gateway VPC**  | aws-transit                                             |
-| **Gateway Name**         | aws-transit                                             |
-| **Gateway Size**         | t3.small                                                |
-| **Instance 1 (Primary)** | aws-transit-Public-1-eu-central-1a + Allocate New EIP   |
-| **Transit Peers**        | Click edit and add the azure-transit as a peer and save |
+Next, edit ace-iac-day-two > .github > CODEOWNERS (https://github.com/<student-account>/ace-iac-day-two/blob/main/.github/CODEOWNERS)
 
-![Screenshot](images/lab3-transit-config.png)  
-_Fig. Create Aviatrix Transit Gateway_  
+![Code](images/lab3-5-code.png)
 
-![Screenshot](images/lab3-transit-peering.png)  
-_Fig. Configure transit peering_  
+Click on the Pencil icon to edit directly on GitHub.com cloud UI
 
-* Hit Save to save the transit gateway settings and return to the topology builder overview.
-* You now get the option to either generate your changes as Terraform code, or deploy directly from the UI. Choose and click deploy.
+![Edit](images/lab3-6-edit.png)
 
-![Screenshot](images/lab3-overview.png)  
-_Fig. Overview_  
+Edit the line for this CODEOWNERS file to specify the ACE SecOps GitHub account as the Owner. For example,
 
-* As you can see, the topology builder will now start to deploy the transit gateway. Wait for this to finish. It will take about 5-10 minutes.
+app-fqdn-rules.tf @ace-secops
 
-> **Important:** By default, routes are not propagated between spokes attached to the transit gateway. We have to enable a setting on our transit gateway to allow this to happen.  
+Edit the other 4 lines and specify the Student’s own GitHub account (NetOps role).
 
-* Go to **_Cloud Fabric -> Gateways -> Transit Gateways_** and click on **_aws-transit_**.
-* Open the settings pane and enable and save **Connected Transit** under the General settings.
+Commit the changes directly to the main branch.
 
-![Screenshot](images/lab3-connected-transit.png)  
-_Fig. Enable connected transit_  
+### Invite Collaborators for the Repository
 
-### Expected Results
+Remember that you are playing the Network Operator role and will need to invite the DevOps and SecOps personas as Collaborators to your Repository.
 
-Now that we have the aws-transit deployed, peered to azure-transit and have enabled connected transit, we should see these changes reflected in our topology view. (under **_Cloud Fabric -> Topology_**)
+Click on Settings > Collaborators > Manage access. Make sure these are the Settings for the Repository, not the Settings for your account. 
+Click on Invite a collaborator.
+Invite your GitHub account that will serve the purpose of the DevOps.
+Click on Invite a collaborator again.
+Invite your GitHub account that will serve the purpose of SecOps.
+Check the email for your respective accounts for DevOps and SecOps and approve the invitations to become a collaborator for your Network Operator Repository.
 
-![Screenshot](images/lab3-result.png)  
-_Fig. Topology view_  
+### Create, Automate, and Secure a Branch
 
-## Lab 3.3 - Attach Spoke Gateways to Aviatrix Transit Gateway
+Create a new branch called updates
 
-### Description
+![Branch](images/lab3-7-branch.png)
 
-Now that we have our aws-transit set up, we need to establish connectivity between the AWS spoke gateways and the aws-transit gateway. The spoke gateways have been pre-deployed to save some time, but the process is much the same as the transit gateway you have just deployed.
+Automate workflows on the branch by configuring GitHub Actions
 
-### Validate
+![Actions](images/lab3-8-actions.png)
 
-* Go to **_Cloud Fabric -> Gateways -> Spoke Gateways_**.
-* Click the edit button (pencil) behind the **_aws-prod_** gateway. 
+Click Actions
 
-![Screenshot](images/lab3-edit-spoke.png)  
-_Fig. Edit spoke_  
+![Actions](images/lab3-9-actions.png)
 
-* Change the attachment from empty to **_aws-transit_** and hit save.
+Click I understand my workflows, go ahead and enable them
 
-![Screenshot](images/lab3-attach-spoke.png)  
-_Fig. Attach Spoke Gateway to Transit_  
+Secure the main branch by creating a Branch Protection Rule. This will ensure that only the GitHub account(s) mentioned in the CODEOWNERS file are authorized to review/approve the Pull Request.
 
-* Repeat the process for the **_aws-shared_** spoke gateway.
+Click on Settings > Branches > Add rule
+Name the Branch Name Pattern main
+Check the following 7 fields:
 
-### Expected Results
-The AWS spoke gateways should now be attached to the aws-transit. Within a few minutes, we should see these changes reflected in our topology view. (under **_Cloud Fabric -> Topology_**)
+Require pull request reviews before merging
+Require approvals
+Dismiss stale pull request approvals when new commits are pushed
+Require review from Code Owners
+Require status checks to pass before merging
+Require branches to be up to date before merging
+Include administrators
 
-![Topology](images/lab3-copilot-spoke-attach.png)  
-_Fig. CoPilot Topology with Attached Spokes_
+![Protect](images/lab3-10-protect.png)
 
-* If your topology does not show the connection to the spokes, refresh the page after a minute or so.
+By setting this up, you are adding several layers of security to the main branch which is where Terraform will be looking at for terraform apply.
 
-## Lab 3.4 - Enable network segmentation on the AWS transit
+## Terraform Cloud
 
-### Description
+### Set up workspace
 
-Just like we enabled network segmentation on the azure-transit before, we want to extend this segmentation to AWS and enable it on the aws-transit as well.
+Create a new Workspace.
 
-### Validate
+![Workspace](images/lab3-11-workspace.png)
 
-* In the Copilot, go to **_Networking -> Network Segmentation -> Network Domains_**. and click the **_Transit Gateways_** button.
-* In the transit gateway pane, enable segmentation for aws-transit.
+Select API-driven workflow.
 
-![Screenshot](images/lab2-enable-segmentation.png)  
-_Fig. Transit Segmentation_
+![Workflow](images/lab3-12-workflow.png)
 
-![Screenshot](images/lab3-enable-segmentation-3.png)  
-_Fig. Enable Segmentation_
+Name the workspace ace-iac-day-two and click Create workspace
 
-### Expected Results
+![Workspace](images/lab3-13-workspace.png)
 
-Segmentation is now enabled on both gateways.
+### Configure Variables
 
-## Lab 3.5 - Create Network Domains
+Navigate to the Variables tab and add these credentials for accessing the Controller as Environment Variables:
 
-### Description
+AVIATRIX_CONTROLLER_IP
+AVIATRIX_USERNAME
+AVIATRIX_PASSWORD
 
-For our AWS spokes, we want to create network domains and associations, just like we did for the Azure spokes before.
+Mark the value for AVIATRIX_CONTROLLER_IP and AVIATRIX_PASSWORD as sensitive.
 
-### Validate
+As a learning exercise, note that the credentials for accessing the Aviatrix Controller are defined as Environment variables in this Lab. However, in Lab 1 and Lab 2, the credentials were instead defined as Terraform variables that were called in the provider.tf file. Both methods are valid.
 
-In CoPilot, go to **_Networking -> Network Segmentation -> Network Domains_**. Use the **_+ Network Domains_** button to add the following domains and associations:
+![Vars](images/lab3-14-vars.png)
 
-| Domain     | Association |
-| :--------- | :---------- |
-| AWS-Shared | aws-shared  |
-| AWS-Prod   | aws-prod    |
+## Connect GitHub Repo and Terraform Cloud via API
 
-### Expected Results
+Finally, generate an API Token in Terraform Cloud and specify it as a new Secret for your GitHub Repository.
 
-After adding the network domains and associations, you should see the following in Copilot:
+### Terraform Cloud side
 
-![Screenshot](images/lab3-network-domains.png)  
-_Fig. Add network domains_
+Go to the Tokens page in your Terraform Cloud User Settings. Make sure you are in the Settings for your User account (accessible from the upper right corner of the page), not the Settings for your Organization (typically visible in the center of the top menu).
 
-## Lab 3.6 - Create a connection policy
+![Org](images/lab3-15-org.png)
 
-### Description
+Click on Create an API token and generate an API token named GitHub Actions.
 
-We want the development team in the office, to be able to access AWS-Shared.
+![Token](images/lab3-16-token.png)
 
-### Validate
+Save the token in a safe place. You will add it to GitHub later as a secret, so the Actions workflow can authenticate to Terraform Cloud.
 
-* Edit the **_Office_** network domain under **_Networking -> Network Segmentation -> Network Domains_** in Copilot.
+### GitHub side
 
-![Screenshot](images/lab3-edit-network-domain.png)  
-_Fig. Edit network domain_
+Back in GitHub, for the repository (not the user), navigate to Settings > Secrets > Actions.
 
-* Now add the **_AWS-Shared_** domain as a connected domain.
+Create a New repository secret named TF_API_TOKEN, setting the Terraform Cloud API token you created in the previous step as the value.
 
-![Screenshot](images/lab3-add-network-domain-policy.png)  
-_Fig. Add network domain connection_
+Now your Terraform Cloud account and the repository in your GitHub account are securely linked via API.
 
-### Expected Results
+## Collaboration with other stakeholders
 
-* The network domains should now be connected to each other, as shown on the screenshot below.
-* Another great place to visualize the connectivity between network domains is **_Networking -> Network Segmentation-> Overview_**.
+### Work done by DevOps team
 
-![Screenshot](images/lab3-add-connected-network-domain-result.png)  
-_Fig. Add network domain connection_
+Please check your work carefully for any errors. If all looks good, navigate to the browser window where you are logged on in GitHub as the DevOps team.
 
-![Screenshot](images/lab3-network-domain-overview.png)  
-_Fig. Network domain overview_
+Since Branch Protection Rules are in place for the main branch, make sure you navigate to the updates branch to make any changes. Click on the app-fqdn-rules.tf file in the updates branch to request access to a new FQDN.
 
-## Lab 3.7 - Test Connectivity to AWS Spokes
+![Update](images/lab3-17-update.png)
 
-### Description
+Click on the Pencil icon to edit directly on GitHub.com cloud UI
 
-The AWS Spokes should be connected to the AWS Transit so now we can check connectivity to the spokes from the office.
+![Edit](images/lab3-18-edit.png)
 
-### Validate
+Below the two existing lines for aviatrix, add the following line:
 
-* Open the Remote Access Server and open the **RDP - Client** (or navigate to `https://client.pod[#].aviatrixlab.com`). This is the on-prem Host.
-* Open up the Firefox browser on the RDP desktop
-* Navigate to `http://localhost`
+      "*.ubuntu.com"   = "80"
 
-> Do we have access to aws-shared and azure-build?
+Make sure the formatting (white spaces and alignment) matches the two existing lines. Otherwise, the GitHub Actions check will fail. GitHub Actions is configured for best practices, which is to check for formatting inconsistencies. As an FYI, this file is ace-iac-day-two > .github > workflows > terraform.yml, but it is beyond the scope of this training to go into the configuration and syntax of this file.
 
-### Expected Results
+Next, click Commit changes:
 
-* As you can see, you now have access to azure-build and aws-shared.
+![Commit](images/lab3-19-commit.png)
 
-![Screenshot](images/lab3-office-access.png)  
-_Fig. Office Access_
+After the DevOps account makes the code change, they need to create a Pull Request (PR) on the branch. Click New pull request.
 
-> Were these connections succesful?
+![PR](images/lab3-20-pr.png)
 
-### Expected Results
+Make sure you select the main branch of your repository (NOT the one that you forked) as the base and the updates branch as the compare.
 
-From the office, you should be able to reach aws-shared, but not aws-prod.
+![Compare](images/lab3-21-compare.png)
 
-## Lab 3 Summary
+Add relevant comments and then click Create pull request one more time.
 
-* AWS has been onboarded
-* You deployed a VPC and an Aviatrix Transit Gateway in AWS
-* You connected all of the Spoke VPCs to the Transit
-* You created a Multicloud Transit network, connecting AWS and Azure
-* You are able to reach the AWS environment from On-Prem, via the Azure Transit
-* Again, not a single route table entry needed to be touched on the CSP side
-* You have end to end visibility into all network traffic
-* All connectivity is private and encrypted across the entirety of the Aviatrix Cloud Fabric - from on-prem and within and between the clouds
+![PR](images/lab3-22-pr.png)
 
-![Screenshot](images/end-lab-3.png)  
-_Fig. Topology after Lab 3_
+GitHub Actions will then automatically do some checks for formatting, and then notify the SecOps GitHub account that their Approval of the PR is pending.
+
+![PR-Check](images/lab3-23-pr-check.png)
+
+You can click on Details to see the progress at any point.
+
+### Work done by SecOps team
+
+Now you can navigate to the browser window where you are logged on in GitHub as the SecOps team to approve the PR.
+
+Specifically, navigate to Pull requests > Review requests and click on the request.
+
+![PR](images/lab3-24-pr.png)
+
+Click Add your review.
+
+![Review](images/lab3-25-review.png)
+
+Click Review changes one more time. If you are okay with the changes, click the Approve button and the Submit review.
+
+![Submit](images/lab3-26-submit.png)
+
+Once the SecOps team has Approved the PR, it will look like this:
+
+![Approve](images/lab3-27-approve.png)
+
+Now, any team can Merge the PR back into the Main branch. Upon doing so, GitHub Actions will trigger a Deployment (CD part of Continuous Deployment), which is a terraform apply and the Network Team can monitor the progress of the apply on Terraform Cloud.
+
+At any time in this workflow, you can see the status of the GitHub Actions by clicking on Actions in GitHub.
+
+On the Controller, you should now see the new rule in your Egress FQDN filter.
+
+![Egress](images/lab3-28-egress.png)
+
+## Final Thoughts
+
+Congratulations! You have just built, enhanced, and secured a multicloud network by using automation. By using git branches and enabling collaboration with DevOps and SecOps teams to build CI/CD pipelines with secured branches, you have experienced true NetOps in action. Many of Aviatrix's largest customers practice IaC day in and day out. While the choice of tools (e.g. Jenkins instead of Terraform Cloud, GitLab instead of GitHub) may vary across enterprises, the concepts of Infrastructure as Code remain the same.
+
+Be sure to clean up your resources to avoid any excess charges.

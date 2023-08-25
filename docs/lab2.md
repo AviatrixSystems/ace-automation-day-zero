@@ -1,325 +1,117 @@
-# Lab 2 - Office Connectivity
+# Overview
 
-Lab time: ~45 minutes  
+In this lab you will enhance your cloud infrastructure built in Lab 1 using the Aviatrix Multicloud Networking and Security platform. You will be conducting all changes on the Main branch of your existing repository from Lab 1. We are using the term Day 1 for the work done in this lab.
 
-**_Scenario_**:  Your development team needs direct access to the azure-build server in Azure. This requires a VPN connection from the office, into the cloud infrastructure.
+This lab is intended to familiarize you with Terraform code modifications.
 
-During this lab we will build and verify the connectivity to your office.
+Here is an overview of the tasks:
 
-![Topology](images/lab-2.png)  
-_Fig. Azure Deployment_
+- Code modification
+- View changes in the Controller UI
 
-## Lab 2.1 - Connection to the Office
+## Code Modification
 
-### Description
+It is recommended to use a localized setup with an IDE that integrates with your GitHub account. However, you can also make the code changes directly on the GitHub.com UI.
 
-Your on-prem Network team has already configured an IPSec tunnel on the office router, pointing to your Aviatrix Transit Gateway deployed in the Azure Transit VNET. In this lab you will need to configure the tunnel in the Aviatrix Transit Gateway for the tunnel to establish connectivity.
+## Resize gateways
 
-### Validate
+ACE Inc is growing now and needs to resize their gateways. The AWS Transit and Spoke Gateways are currently t2.micro. Verify this on the Controller > GATEWAY
 
-In order to connect your Multicloud environment to the office, we will create an **_External Connection_**. This allows you to create a secure connectivity between the Cloud and the office with dynamic routing (BGP).
+![Size](images/lab2-1-size.png)
 
-Now let’s add the office connection. In Copilot, navigate to **_Networking --> Connectivity --> External Connections (S2C)_**. Click the **_+ External Connection_** button to add a new connection.
+ACE needs to resize their AWS gateways from t2.micro to t3.micro.
 
-|                             |                                                                                                                                                                                                                       |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Connection Name**         | azure-to-office                                                                                                                                                                                                       |
-| **Connect public cloud to** | External Device, BGP over IPsec                                                                                                                                                                                       |
-| **Local Gateway**           | azure-transit                                                                                                                                                                                                         |
-| **Local ASN**               | 65pod[#] _For Pods 1-9, double pad the pod# with an additional 0 (ie. 65004). For Pods 10-99 single pad (ie. 65010). For Pods > 100, no padding is needed (ie. 65100)_                                                |
-| **Remote ASN**              | 65000                                                                                                                                                                                                                 |
-| **Remote Gateway IP**       | <ip-address> _Please open a terminal session in your workstation and resolve the following FQDN to its IP address `onprem.pod[#].aviatrixlab.com`. Do NOT enter the FQDN on this field. Instead enter the IP address_ |
-| **Pre-shared Key**          | mapleleafs                                                                                                                                                                                                            |
-| **Local Tunnel IP**         | 169.254.100.2/30                                                                                                                                                                                                      |
-| **Remote Tunnel IP**        | 169.254.100.1/30                                                                                                                                                                                                      |
+Make this change by editing variables.tf file
 
-It should look something like the example below. Make sure to put in your own remote gateway IP and AS number though.
+On GitHub.com cloud UI, click the Pencil icon to edit directly.
 
-![Configure IPsec](images/lab2-configure-ipsec.png)  
-_Fig. Configure IPsec_
+![Edit](images/lab2-2-edit.png)
 
-* Hit **_save_** to execute the changes.
+Make the change for the Transit Gateway on line 19.
 
-After 1-2 minutes, you should see that the connection to the office is configured and up (green).
+![Vars](images/lab2-3-var.png)
 
-![Topology](images/lab2-tunnel-up.png)  
-_Fig. Tunnel up_
+Likewise, make the change on line 35 for the Spoke Gateway size.
 
-In order to test connectivity between cloud and the office, a test VM is available in the office with the FQDN `client-int.pod[#].aviatrixlab.com`. The IPSec tunnel is up, but maybe there is another blocker that prevents connectivity. Try the following test:
+Provide a meaningful commit message at the bottom and click the Commit changes button.
 
-* From CoPilot, navigate to **_Cloud Fabric-->Topology_**
-* Click on the **_azure-transit_** node. You should now see the connection to the office.
-* Click on the **Aviatrix Gateway icon (_azure-transit_)** and then click the Diagnostic Tools button on the right bottom of the screen (see lab 1.5 if you are unable to locate it).
-* Under the ping tab, enter the hostname `client-int.pod[#].aviatrixlab.com` and click PING
+![Commit](images/lab2-4-commit.png)
 
-![Topology](images/lab2-onprem-ping.png)  
-_Fig. CoPilot Diag_  
+As soon as you commit the changes to a file, it will automatically queue a Terraform Plan. Back in Terraform Cloud, navigate to the Overview tab of your workspace. Depending on how soon you navigate there, you will see blue Planning or yellow Planned in the Latest Run pane. From there, click on See details to see the planned run with proposed changes such as this:
 
-> Was the ping successful?
+![Confirm](images/lab2-5-confirm.png)
 
-### Expected Results
+Click Confirm & Apply to see the progress of the terraform apply. When it is complete (less than 5 minutes later), both gateways in AWS will be t3.micro size.
 
-The Site2Cloud connection should be green and the BGP session should be established.  Still, connectivity tests should fail due to the route filtering on the transit which we will fix in the next step.
+![Gateway](images/lab2-6-gateway.png)
 
-Our lab environment now looks like this:  
+However, BU1 and BU2 are still not connected. SSH to BU1 Bastion and leave a continuous ping session running in a terminal window destined to BU2 App.
 
-![Topology](images/lab2-topology1.png)  
-_Fig. Topology with On-Prem Connectivity_  
+## Configure a Connection Policy
 
-## Lab 2.2 - Approve the Learned Routes
+Connect BU1 to BU2 by uncommenting this block of code at the bottom of main.tf
 
-### Description
+```hcl
+/* resource "aviatrix_segmentation_network_domain_connection_policy" "BU1_BU2" {
+  domain_name_1 = "BU1"
+  domain_name_2 = "BU2"
+  depends_on    = [aviatrix_segmentation_network_domain.BU1, aviatrix_segmentation_network_domain.BU2]
+} */
+```
 
-Aviatrix allows you to filter dynamically learned routes from external sites, and the azure-transit Gateway deployed in this lab has Route Approval enabled.  We want to approve the summarized route learned from on-prem.
+On GitHub.com cloud UI, click the Pencil icon to edit directly.
 
-### Validate
+![Edit](images/lab2-7-edit.png)
 
-* Browse to the transit gateway settings in Copilot, under **_Cloud Fabric -> Gateways -> Transit Gateways_** and click on **_azure-transit_**.
-* Navigate to the Approval pane and approve the pending CIDR.
+Remove the /* on line 82 and the */ on line 86.
 
-If no CIDR's are showing up here, validate that the BGP peering has established under **_Troubleshoot -> Cloud Routes -> BGP Info_**. If the peering is down, you likely made a configuration error.
+Provide an appropriate description for the change:
 
-![Topology](images/lab2-route-approval-2.png)  
-_Fig. Approve route_  
+![Commit](images/lab2-8-commit.png)
 
-* From CoPilot Topology, run **Diag** from the azure-transit gateway once again
-* Under the **Ping** tab, enter the hostname `client-int.pod[#].aviatrixlab.com` and click PING
+Once again, in Terraform Cloud, this will automatically trigger a Plan:
 
-> Was the ping successful this time?
+![TFC](images/lab2-9-tfc.png)
 
-### Expected Results
+Once the plan is finished, be sure to Confirm & Apply
 
-After adding the connection to on-prem and approving the learned routes, the connectivity tests should be successful. The process of route approvals allows you to be in charge of the learned routes!
+![Apply](images/lab2-10-apply.png)
 
-## Lab 2.3 - Office Connectivity Tests
+As soon as the apply is complete (should take less than a minute), notice the configured Connection Policy in the UI.
 
-### Description
+![Policy](images/lab2-11-policy.png)
 
-At this point, the office is connected to the Aviatrix Transit Gateway in Azure. This should provide the developers with connectivity to the azure-build server.
+Revisit the terminal window where BU1 Bastion was attempting to Ping BU2 App. You should now see the responses.
 
-### Validate
+Also, you should now be able to SSH to BU2 App from BU1 Bastion.
 
-* Open the Remote Access Server and open the **RDP - Client** (or navigate to `https://client.pod[#].aviatrixlab.com`). This is the on-prem Host.
-* Open up the Firefox browser on the RDP desktop
-* Navigate to `http://azure-build.pod[#].aviatrixlab.com` or just `http://azure-build`
+ACE Inc would like to have filters on what sites its apps can access. The list of those sites is not determined by the Network Operators team, but rather its Application Developers. In Lab 3, we will introduce collaboration with those teams.
 
-### Expected Results
+## Code Optimization
 
-* You should see something similar to the following screenshot. Note you're connecting across the site2cloud connection to the dmz spoke via the transit gateway.
-* Remember the **source port** for the next exercise
+Take a look at the following block of Terraform code that you just enabled on main.tf:
 
-![Screenshot](images/lab2-priv-conn-test.png)  
-_Fig. Connectivity Test_  
+```hcl
+  resource "aviatrix_segmentation_network_domain_connection_policy" "BU1_BU2" {
+    domain_name_1 = "BU1"
+    domain_name_2 = "BU2"
+    depends_on    = [aviatrix_segmentation_network_domain.BU1, aviatrix_segmentation_network_domain.BU2]
+  }
+```
 
-## Lab 2.4 - Verify the Flow Logs
+This block can be further optimized. The line beginning with depends_on is an explicit dependency on network domains that were created elsewhere in the code. Instead of hard-coding domain_name_1 and domain_name_2 as "BU1" and BU2" respectively, create implicit dependencies. Modify the code as follows:
 
-### Description
+```hcl
+resource "aviatrix_segmentation_network_domain_connection_policy" "BU1_BU2" {
+domain_name_1 = aviatrix_segmentation_network_domain.BU1.domain_name
+domain_name_2 = aviatrix_segmentation_network_domain.BU2.domain_name
+}
+```
 
-CoPilot provides very rich visibility into all traffic going across the Aviatrix overlay network.  Once you generate some traffic, this should be visible in CoPilot.
+When you commit and make the change, you'll notice that it makes no changes to your infrastructure. However, it is better Terraform code because it relies less on hard-coding.
 
-### Validate
+![Plan](images/lab2-12-plan.png)
 
-* Open **CoPilot** -> **Monitor** -> **FlowIQ** and click **Last 60 Minutes** to update the Date Range Filters
-* Using the source port from the previous lab, let's create the following filter:
-  * Click in the **Filters** box. Under **Matches all conditions (AND)**, select the metric **Source Port**
-  * Select **equals**
-  * Then, enter the source port from the website of the previous exercise and hit **_Apply_**. The Overview immediately filters to your criteria.
+## Observations
 
-> New flow records might appear 1-2 minutes after they occurred, so just click on **Refresh Data** a few times to refresh the time period
-
-![Screenshot](images/lab2-flowiq-filter.png)  
-_Fig. FlowIQ Filter_  
-
-### Expected Results
-
-* By filtering on the source port, you should be able to see all of the details behind the traffic generated from on-prem
-
-![Screenshot](images/lab2-flowiq-overview.png)  
-_Fig. FlowIQ Overview_  
-
-* By clicking on the **Records** tab, you will see the raw flow records
-* The most relevant fields are shown by default, but you can create custom views and show additional metadata relating to the traffic flows
-
-![Screenshot](images/lab2-flowiq-records.png)  
-_Fig. FlowIQ Records_  
-
-> **Note** - Gateway and Interface Names show up after a specific polling interval.  If the Gateway or Spoke Attachment is newly created, the fields will be displayed after the configured CoPilot polling interval (default is one hour)
-
-* By looking at the flow records, you can trace the path that a flow took and also see over which gateways the flow crossed
-
-## Lab 2.5 - Check office connectivity
-
-### Description
-
-While we have achieved our objective of providing the development team with access to the azure-build server, perhaps we have given them more access than desirable. Let's verify this.
-
-### Validate
-
-* Open the Remote Access Server and open the **RDP - Client** (or navigate to `https://client.pod[#].aviatrixlab.com`). This is the on-prem Host.
-* Open up the Firefox browser on the RDP desktop
-* Navigate to `http://localhost`
-
-> Do we have access to more destinations than expected?
-
-### Expected Results
-
-* As you can see, you now have access to all servers in Azure.
-
-![Screenshot](images/lab2-full-access.png)  
-_Fig. Full Access_
-
-## Lab 2.6 - Enable network segmentation
-
-### Description
-
-Now that we have established, that too much network access to the Azure environment has been granted to the development team, let's limit the exposure and reduce the security risks.
-
-### Validate
-
-* In the Copilot, go to **_Networking -> Network Segmentation -> Network Domains_**. and click the Transit gateways button.
-* In the transit gateway pane, enable segmentation for azure-transit.
-
-![Screenshot](images/lab2-enable-segmentation.png)  
-_Fig. Transit Segmentation_
-
-![Screenshot](images/lab2-enable-segmentation-2.png)  
-_Fig. Enable Segmentation_
-
-### Expected Results
-
-Now that segmentation is enabled on azure-transit, we can continue and build out Network Domains.
-
-## Lab 2.7 - Create Network Domains
-
-### Description
-
-Let's create some network domains, which can be used for segmentation.
-
-### Validate
-
-In CoPilot, go to **_Networking -> Network Segmentation -> Network Domains_**. As you can see, we don't have any network domains set up currently. Use the **_+ Network Domains_** button to add the following domains and associations:
-
-| Domain      | Association     |
-| :---------- | :-------------- |
-| Office      | azure-to-office |
-| Azure-Build | azure-build     |
-| Azure-Prod  | azure-prod      |
-| Azure-DMZ   | azure-dmz       |
-
-![Screenshot](images/lab2-add-network-domains.png)  
-_Fig. Add network domains_
-
-### Expected Results
-
-After adding the network domains and associations, you should see the following in Copilot:
-
-![Screenshot](images/lab2-network-domains-result.png)  
-_Fig. Network domains result_
-
-## Lab 2.8 - Check office connectivity
-
-### Description
-
-Now that we have implemented network segmentation, let's verify that we have limited the connectivity for developers in the office.
-
-### Validate
-
-* Go back to the Office connectivity dashboard and check the connectivity status.
-
-> Were these connections successful?
-
-### Expected Results
-
-* None of the connections should succeed. We have successfully limited developer access to Azure, but now we have lost access to the build server as well!
-
-![Office connectivity](images/lab1-connectivity-from-office.png)  
-_Fig. Office connectivity_  
-
-## Lab 2.9 - Create a connection policy
-
-### Description
-
-In order for our developers to be able to access the build server again, we need to create a connection policy, that allows traffic between the Office network domain and the Azure-Build network domain. In addition, the build server needs access to the azure-web and azure-app server. So we're going to need a connection policy for that as well!
-
-### Validate
-
-* Edit the **_Azure-Build_** network domain under **_Networking -> Network Segmentation -> Network Domains_** in Copilot.
-
-![Screenshot](images/lab2-edit-network-domain.png)  
-_Fig. Edit network domain_
-
-* Now add the **_Office_** and **_Azure-Prod_** domain as a connected domain.
-
-![Screenshot](images/lab2-add-connected-network-domain.png)  
-_Fig. Add network domain connection_
-
-### Expected Results
-
-* The network domains should now be connected to each other, as shown on the screenshot below.
-* Another great place to visualize the connectivity between network domains is **_Networking -> Network Segmentation-> Overview_**.
-
-![Screenshot](images/lab2-add-connected-network-domain-result.png)  
-_Fig. Add network domain connection_
-
-![Screenshot](images/lab2-network-domain-overview.png)  
-_Fig. Network domain overview_
-
-## Lab 2.10 - Check office connectivity
-
-### Description
-
-Now that we have implemented the connectivity policies, let's verify that we have limited the connectivity for developers in the office.
-
-### Validate
-
-* Go back to the Office connectivity dashboard and check the connectivity status.
-
-> Were these connections successful?
-
-### Expected Results
-
-* The developers in the office now should only have access to the build server!
-
-![Office connectivity](images/lab2-access-to-build-only.png)  
-_Fig. Office connectivity_  
-
-## Lab 2.11 - Fix Azure application
-
-### Description
-
-Now that we have enabled segmentation, we have not only limited connectivity from the office to Azure, but also between the network domains inside Azure. Since the application in Azure is dependent on connectivity between the DMZ and Prod VNET's, we need to fix this.
-
-### Validate
-
-First check that the connectivity is indeed broken.
-
-* From your own pc connect to:
-  * `http://azure-lb.pod[#].aviatrixlab.com/test`
-
-As you can see, the Web web application is now broken:
-
-![Web App connectivity](images/lab2-app-connectivity-broken.png)  
-_Fig. Office connectivity_  
-
-* Check the connection policies on the **_Networking -> Network Segmentation-> Overview_** page. Do you see a line connecting Azure-DMZ and Azure-Prod?
-* Create a connection policy between Azure-DMZ and Azure-Prod, similar to what you did in lab 2.9.
-
-![Add connection policy](images/lab2-add-connected-network-domain-2.png)  
-_Fig. Add connection policy_  
-
-Check that the connectivity is restored.
-
-![Web app connectivity](images/lab1-connectivity-3tier-app.png)  
-_Fig. Web app connectivity_  
-
-### Expected Results
-
-* After setting up the connectivity policy, you should be able to connect to all tiers of the Azure application again.
-
-## Lab 2 Summary
-
-* Congratulations - you successfully connected your office to Azure
-* Not a single route table entry needed to be touched on the cloud provider side
-* You have end to end visibility into all network traffic
-* You have limited the scope of connectivity from the office, using network segmentation
-* You have reestablished connectivity between the Azure-DMZ and Azure-Prod VNET's after implementing network segmentation.
+As you can see, Terraform is extremely powerful and scalable. With just a few lines of code, you can make a lot of changes. Notice how easy it was to make a change to your infrastructure. It also means that if you make a mistake, you could easily bring down your infrastructure. To mitigate risk, your organization will benefit from having some guard rails, especially in a Production environment. In Lab 3, we will do exactly that.

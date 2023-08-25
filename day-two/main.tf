@@ -1,33 +1,130 @@
-// ACE-IAC Git Aviatrix Infrastructure
-
-data "aviatrix_spoke_gateway" "egress" {
-  gw_name = var.azure_spoke2_name
+locals {
+  allowed_http_domains = [
+    "*.ubuntu.com",
+  ]
+  allowed_https_domains = [
+    "aws.amazon.com",
+    "*.amazonaws.com",
+    "*.aviatrix.com",
+    "aviatrix.com",
+  ]
 }
 
-resource "aviatrix_fqdn" "fqdn_filter" {
-  fqdn_tag     = "APP-RULES"
-  fqdn_mode    = "white"
-  fqdn_enabled = true
-  gw_filter_tag_list {
-    gw_name = data.aviatrix_spoke_gateway.egress.gw_name
+resource "aviatrix_distributed_firewalling_config" "ace_automation" {
+  enable_distributed_firewalling = true
+}
+
+resource "aviatrix_web_group" "allow_internet_https" {
+  name = "allowed-internet-https"
+  selector {
+    dynamic "match_expressions" {
+      for_each = toset(local.allowed_https_domains)
+
+      content {
+        snifilter = match_expressions.value
+      }
+    }
   }
-  manage_domain_names = false
 }
 
-resource "aviatrix_fqdn_tag_rule" "tcp" {
-  for_each      = local.egress_rules.tcp
-  fqdn_tag_name = aviatrix_fqdn.fqdn_filter.fqdn_tag
-  fqdn          = each.key
-  protocol      = "tcp"
-  port          = each.value
-  depends_on    = [aviatrix_fqdn.fqdn_filter]
+resource "aviatrix_web_group" "allow_internet_http" {
+  name = "allowed-internet-http"
+  selector {
+    dynamic "match_expressions" {
+      for_each = toset(local.allowed_http_domains)
+
+      content {
+        snifilter = match_expressions.value
+      }
+    }
+  }
 }
 
-resource "aviatrix_fqdn_tag_rule" "udp" {
-  for_each      = local.egress_rules.udp
-  fqdn_tag_name = aviatrix_fqdn.fqdn_filter.fqdn_tag
-  fqdn          = each.key
-  protocol      = "udp"
-  port          = each.value
-  depends_on    = [aviatrix_fqdn.fqdn_filter]
+resource "aviatrix_smart_group" "rfc1918" {
+  name = "rfc1918"
+  selector {
+    match_expressions {
+      cidr = "10.0.0.0/8"
+    }
+    match_expressions {
+      cidr = "172.16.0.0/12"
+    }
+    match_expressions {
+      cidr = "192.168.0.0/16"
+    }
+  }
+}
+
+resource "aviatrix_distributed_firewalling_policy_list" "ace_automation" {
+  policies {
+    name     = "allow-internet-http"
+    action   = "PERMIT"
+    priority = 0
+    protocol = "TCP"
+    logging  = true
+    watch    = false
+    port_ranges {
+      lo = 80
+    }
+    src_smart_groups = [
+      aviatrix_smart_group.rfc1918.uuid
+    ]
+    dst_smart_groups = [
+      "def000ad-0000-0000-0000-000000000001" # Public Internet
+    ]
+    web_groups = [
+      aviatrix_web_group.allow_internet_http.uuid,
+    ]
+  }
+  policies {
+    name     = "allow-internet-https"
+    action   = "PERMIT"
+    priority = 100
+    protocol = "TCP"
+    logging  = true
+    watch    = false
+    port_ranges {
+      lo = 443
+    }
+    src_smart_groups = [
+      aviatrix_smart_group.rfc1918.uuid
+    ]
+    dst_smart_groups = [
+      "def000ad-0000-0000-0000-000000000001" # Public Internet
+    ]
+    web_groups = [
+      aviatrix_web_group.allow_internet_https.uuid,
+    ]
+  }
+  policies {
+    name     = "allow-rfc1918"
+    action   = "PERMIT"
+    priority = 200
+    protocol = "ANY"
+    logging  = true
+    watch    = false
+    src_smart_groups = [
+      aviatrix_smart_group.rfc1918.uuid
+    ]
+    dst_smart_groups = [
+      aviatrix_smart_group.rfc1918.uuid
+    ]
+  }
+  policies {
+    name     = "default-deny-all"
+    action   = "DENY"
+    priority = 2147483646
+    protocol = "Any"
+    logging  = true
+    watch    = false
+    src_smart_groups = [
+      "def000ad-0000-0000-0000-000000000000" # Anywhere
+    ]
+    dst_smart_groups = [
+      "def000ad-0000-0000-0000-000000000000" # Anywhere
+    ]
+  }
+  depends_on = [
+    aviatrix_distributed_firewalling_config.ace_automation
+  ]
 }
