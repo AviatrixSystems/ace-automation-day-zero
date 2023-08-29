@@ -12,10 +12,11 @@ There are 3 labs in this training, intended to be performed in sequence. Terrafo
 
 - ACE Associate certification
 - An active AWS account
+- AWS Access Keys with permissions to deploy VPCs, EC2 instances, security groups, and keypairs.
 - Aviatrix Controller and CoPilot instances deployed in AWS. The training materials expect you have deployed your Controller using the [Aviatrix Self-Service tool](https://selfservice.aviatrix.com).
 - A GitHub account. [Sign up here](https://github.com/signup).
 - A Terraform Cloud Organization account. [Sign up here](https://app.terraform.io/signup/account).
-  
+
 ### Terraform cloud setup
 
 First-time users of tfc should click `Start from scratch`.
@@ -44,11 +45,13 @@ Gain familiarity with tools at your disposal for automating real-world cloud net
 
 ACE Inc. is a fictitious company with infrastructure in AWS with 3 teams/stakeholders:
 
-Network Operators, aka `NetOps`
-Application Developers, aka `DevOps`
-InfoSec team, aka `SecOps`
+- Network Operators, aka `NetOps`
+- Application Developers, aka `DevOps`
+- InfoSec team, aka `SecOps`
 
 These labs will ask you to think in terms of these different personas as you perform different lab tasks.
+
+### Lab 1
 
 In Lab 1, you will deploy ACE's infrastructure from scratch as follows:
 
@@ -59,12 +62,16 @@ The infrastructure is built in the AWS `us-west-2` region by default, although y
 As shown in the diagram, inside the region, there are the following resources:
 
 - A transit vpc with single `Aviatrix Transit Gateway`.
-- A spoke vpc with single `Aviatrix Spoke Gateway` for a workload called `BU1 Bastion` in a `Network Domain` called `BU1`. This host has a public IP as well as a private IP. You can ssh to it as ubuntu. Be sure to set a strong password.
-- A spoke vpc with single `Aviatrix Spoke Gateway` for a workload called `BU2 App` in a `Network Domain` called `BU2`. This host has only a private IP. The Spoke Gateway is configured for `Single IP Source NAT` to allow, monitor, and secure egress traffic to the internet.
+- A spoke vpc with single `Aviatrix Spoke Gateway`, for a workload called `BU1 Bastion`, in a `Network Domain` called `BU1`. This host has a public IP as well as a private IP. You can ssh to it as the `ubuntu` user. Be sure to set a strong password.
+- A spoke vpc with single `Aviatrix Spoke Gateway`, for a workload called `BU2 App`, in a `Network Domain` called `BU2`. This host has only a private IP. The Spoke Gateway is configured for `Single IP Source NAT` to allow, monitor, and secure egress traffic to the Internet.
+
+### Lab 2
 
 In Lab 2, you will configure a `Connection Policy` via Terraform to connect `BU1` and `BU2`. At that point, you will be able to ssh to `BU2 App` by first connecting to the `BU1 Bastion` public IP.
 
-In Lab 2, you will also resize an Aviatrix gateway via Terraform.
+You will also resize an Aviatrix gateway via Terraform.
+
+### Lab 3
 
 In Lab 3, you will collaborate with other stakeholders in ACE, Inc (Application Developers and InfoSec teams) to form a CI/CD pipeline for securing Egress traffic in `BU2`. We will monitor and visualize this in CoPilot as we adjust what FQDNs are allowed to be accessed on the Internet.
 
@@ -84,23 +91,23 @@ There will be a total of 3 Terraform State files used during this training resid
 
 ## Labs
 
-### Lab  1 for Day 0 (Build)
+### Lab 1 - Day 0 (Build)
 
 - VCS-driven workflow
 - Connect GitHub with Terraform Cloud
 - Write no code
 - Deploy infrastructure
 
-### Lab 2 for Day 1 (Operate)
+### Lab 2 - Day 1 (Operate)
 
 - VCS-driven workflow
 - Modify the Terraform code in Lab 1 to modify existing infrastructure
 
-### Lab 3 for Day 2 (Secure)
+### Lab 3 - Day 2 (Secure)
 
 - API-driven workflow
 - Create, Automate, and Secure a GitHub Branch
 - Build a CI/CD pipeline
 - Apply use-case for Egress security with IaC guardrails by collaborating with different stakeholders (Network Operators (`NetOps`), Application Developers (`DevOps`), Security (`SecOps`))
 
-When you are ready to begin, click next below.
+When you are ready to begin, click `Lab 1 - Day 0` below.

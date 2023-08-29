@@ -4,22 +4,22 @@ In this lab you will deploy cloud infrastructure for ACE Inc. from scratch using
 
 Here is an overview of the tasks in this lab:
 
-- Deploy Aviatrix Controller from [Self-Service](https://selfservice.aviatrix.com)
-- Fork ACE code for this lab as a remote repository in your own account. Learn more about what forking a repo means [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
-- Personalize the code for your accounts
-- Connect GitHub with Terraform Cloud
-- Adopt a VCS-driven workflow
+- Deploy an Aviatrix Controller/CoPilot from [Self-Service](https://selfservice.aviatrix.com).
+- Fork the ACE code for this lab as a remote repository in your own `GitHub` account. Learn more about what forking a repo means [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+- Personalize the code for your account(s).
+- Connect GitHub with Terraform Cloud.
+- Adopt a VCS-driven workflow.
 - Deploy the following infrastructure from scratch for ACE Inc.
 
 ![Topology](images/intro-topology.png)
 
 ## Aviatrix Self-Service
 
-Log into Aviatrix Self-Service and execute the Controller/CoPilot use-case.
+Log into Aviatrix [Self-Service](https://selfservice.aviatrix.com) and execute the Controller/CoPilot use-case.
 
-Note the public IPs addresses for both instances. We will be using them at different points in the lab. Note that all of the infrastructure that we'll be creating will be via code. We'll only use the UI to validate or visualize what's been built.
+Note the public IPs addresses for both Controller and CoPilot instances. We will be using them at different points in the lab. Note that all of the infrastructure that we'll be creating will be via code. We'll only use the UI to validate or visualize what's been built.
 
-In addition to deploying a Controller and CoPilot instances in AWS, the Self-Service Tool will also take care of onboarding your AWS account into the platform.
+In addition to deploying a Controller and CoPilot instance in AWS, the Self-Service Tool will also take care of onboarding your AWS account on the platform.
 
 **Note:** This training focuses on AWS for both control plane and data path - although the concepts apply equally to other clouds. The power of Aviatrix!
 
@@ -29,7 +29,7 @@ In addition to deploying a Controller and CoPilot instances in AWS, the Self-Ser
 
 While logged into your GitHub account, create a new repository by visiting the [ACE Automation](https://github.com/AviatrixSystems/ace-automation) repository.
 
-Click Fork in the top-right corner of the browser.
+Click `Fork` in the top-right corner of the browser.
 
 ![Fork](images/lab1-2-fork.png)
 
@@ -54,8 +54,6 @@ Now, let's edit `versions.tf`
 
 Be sure you're on the `ace-automation` repo in your GitHub account.
 
-
-
 ![Backend](images/lab1-3-backend.png)
 
 Click the Pencil icon to edit directly on GitHub.com cloud UI
@@ -68,7 +66,7 @@ Uncomment this line:
 # organization = "<replace-with-your-Terraform-Cloud-organization-and-uncomment>"
 ```
 
-Edit it with the username of your Terraform Cloud organization account. Find it here on the Terraform Cloud UI page:
+Edit it with the username of your Terraform Cloud organization account. Find it in the bottom-left corner on the Terraform Cloud UI page:
 
 ![TFC](images/lab1-5-tfc.png)
 
@@ -80,7 +78,7 @@ Back in GitHub page, at the bottom, click Commit changes directly to the main br
 
 ### Set up workspace
 
-Create a new Workspace.
+Create a new Workspace by clicking `New`, then `Workspace`.
 
 ![Workspace](images/lab1-7-workspace.png)
 
@@ -100,43 +98,40 @@ Install Terraform Cloud on your GitHub account. Keep the default of All reposito
 
 ![TFC](images/lab1-11-tfc.png)
 
-Choose the ace-iac-day-zero repository
+Choose the `ace-automation` repository
 
 ![Repo](images/lab1-12-repo.png)
 
-Keep the Workspace Name as is and click Create Workspace
+Keep the `Workspace Name` and `Project` as-is and click `Create Workspace`.
 
 ![TFC-Config](images/lab1-13-tfc-config.png)
+
+The `Workspace` will be created. For the next section, click on the `workspace variables page` link.
+
+![TFC-WS-Vars](images/lab1-14-tfc-ws-vars.png)
 
 ## Configure Variables
 
 Here you will configure Terraform Variables and Environment Variables.  
 
-![Vars](images/lab1-14-vars.png)
-
-Locate the + Add variable button.
+Locate the `+ Add variable` button.
 
 ![Add-Var](images/lab1-15-addvar.png)
 
-Then create/configure these five (5) Terraform Variables as follows with sensitive values for the passwords:
+Then create/configure these two (2) `Terraform Variable`(s) as follows. Be sure to click the sensitive box for the `password` value:
 
-controller_ip = <Public IP address of your Controller>
-username = admin
-password = <admin password you assigned to your Controller>
-aws_account_name = aws-account if your Controller is deployed via Sandbox Starter Tool; OR if you already have a Controller some other way, it is the name your AWS account appears onboarded to the Controller
+- **controller_ip** = _Public IP address of your Controller_
+- **password** = _password you assigned to your Controller_
+
+If you didn't deploy your Aviatrix Controller with the `Self-Service` tool, add an additional variable to override the default:
+- **aws_account_name** = _the name your Aviatrix Access Account as it appears in CoPilot under `Cloud Resources-->Cloud Account`_
 
 ![Account](images/lab1-16-account.png)
 
-- password. Whatever you set it to, please note it down. You will use this to SSH to the workloads.
+Then add these two (2) Environment Variables for your AWS Access and Secret Access Keys. As with the `password` above, be sure to click the sensitive box for the each value:
 
-Then add these six (6) Environment Variables for the AWS and Azure CSP Security Credentials with sensitive values for all of them:
-
-- AWS_ACCESS_KEY_ID = AWS Access Key ID that you used to deploy SST
-- AWS_SECRET_ACCESS_KEY = AWS Secret Access Key that you used to deploy SST
-- TF_VAR_azure_subscription_id = Azure Subscription ID. Learn how to determine it here.
-- TF_VAR_azure_tenant_id = Tenant ID. This is also known as Directory ID. Learn how to determine it here.
-- TF_VAR_azure_client_id = Application ID. This is also known as Client ID. Learn how to generate it here. 
-- TF_VAR_azure_client_secret = Application Key. This is also known as Client Secret. Learn how to generate it here.
+- **AWS_ACCESS_KEY_ID** = _AWS Access Key ID that has access to deploy EC2 instances, Security Groups, and Keypairs_
+- **AWS_SECRET_ACCESS_KEY** = _AWS Secret Access Key that matches the above access key_
 
 When you are done, it should look somewhat like this:
 
@@ -144,28 +139,34 @@ When you are done, it should look somewhat like this:
 
 ## Terraform plan and terraform apply
 
-Move to the Overview tab and perform a terraform plan by from the Actions menu on the right side..
+Move to the `Overview` tab in the left-hand navigation and perform a terraform `Start new run` by from the `Actions` menu on the right side.
 
-![Success](images/lab1-18-success.png)
+![Start Run](images/lab1-18-start-run.png)
+
+Then `Start run`
+
+![Start Run Confirm](images/lab1-18-start-run-confirm.png)
 
 On the next page, you will see the output of the terraform plan and what resources will be built (number of resources may vary from screenshot).
 
 ![Trigger](images/lab1-19-trigger.png)
 
-Click Confirm & Apply and provide any notes. This will issue the equivalent of terraform apply. Observe the progress of the resources being created by Terraform.
+Click `Confirm & Apply` and add any notes. Then, click `Confirm Plan` This will issue the equivalent of terraform apply. Observe the progress of the resources being created by Terraform.
 
-The infrastructure in Lab 1 should take about 10 minutes to build. As of version 6.5 of the Controller, gateway concurrency is supported, which means multiple gateways can be created simultaneously. When it has been built, you will see green output like this:
+The infrastructure in Lab 1 should take about 10 minutes to build. When it has completes, you will see green output like this:
 
 ![Trigger-UI](images/lab1-20-trigger-ui.png)
 
-At the bottom, you will see output generated from the code at the bottom of the aws.tf and azure.tf files that will look like this:
+At the bottom of the `Apply finished` section, you will see output generated from the code in `outputs.tf` that will look like this:
 
 ![Outputs](images/lab1-21-outputs.png)
 
-These are the Public and Private IPs of the Bastion host in BU1 (aka Spoke 1) as well as the Private IP of the App host in BU2 (aka Spoke 2).
+These are the Public and Private IPs of the Bastion host in `BU1` (bastion spoke) as well as the Private IP of the App host in `BU2` (egress spoke).
 
-At this point, you should be able to SSH to the BU1 Bastion as ubuntu and whatever password you set the password variable to above, but from there you won't be able to SSH to the BU2 App. The reason for that is BU1 and BU2 are not yet connected. Verify from the Controller:
+At this point, you should be able to SSH to the `BU1` Bastion as ubuntu and the password you set the password variable to above, but from there you won't be able to SSH to the `BU2` App. The reason for that is BU1 and BU2 are not yet connected. Verify from CoPilot by navigating to `Networking-->Network Segmentation` and and note that the 2 BUs are not connected:
 
 ![Policy](images/lab1-22-policy.png)
 
 In Lab 2, you will configure a network domain Connection Policy via Terraform.
+
+When you are ready to begin, click `Lab 2 - Day 1` below.
