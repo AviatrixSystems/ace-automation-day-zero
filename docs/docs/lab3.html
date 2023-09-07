@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Overview &#8212; ACE Automation (IaC)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/lab3';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Summary" href="summary.html" />
+    <link rel="prev" title="Overview" href="lab2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="introduction.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">ACE Automation (IaC)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="introduction.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lab1.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab2.html">Overview</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleanup.html">Cleanup</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/lab3.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Overview</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github">GitHub</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#invite-collaborators-for-the-repository">Invite Collaborators for the Repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-automate-and-secure-a-branch">Create, Automate, and Secure a Branch</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-cloud">Terraform Cloud</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-workspace">Set up workspace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-variables">Configure Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connect-github-repo-and-terraform-cloud-via-api">Connect GitHub Repo and Terraform Cloud via API</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-cloud-side">Terraform Cloud side</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#github-side">GitHub side</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaboration-with-other-stakeholders">Collaboration with other stakeholders</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-devops-team">Work done by DevOps team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-secops-team">Work done by SecOps team</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-thoughts">Final Thoughts</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h1>
+<p>In this lab you will adopt a CI/CD pipeline for making secure changes to your cloud infrastructure using the Aviatrix Multicloud Networking and Security platform.</p>
+<p>Specifically, you will implement Distributed Cloud Firewall (DCF) for Egress by collaborating with Applications development (DevOps) and InfoSec (SecOps) teams. The Developers will be making changes to a single file whenever they need to make changes to the FQDNs that their app needs to access on the Internet. We are using the term <code class="docutils literal notranslate"><span class="pre">Day</span> <span class="pre">2</span></code> for the work done in this lab.</p>
+<p><strong>Here is an overview of the tasks:</strong></p>
+<ul class="simple">
+<li><p>Refer to the infrastructure built in Lab 1 and Lab 2.</p></li>
+<li><p>Personalize the code for your accounts.</p></li>
+<li><p>Create a new GitHub Branch where code changes will be made, and then secure the main branch with Branch Protection Rules.</p></li>
+<li><p>Connect GitHub with Terraform Cloud via an API-driven workflow.</p></li>
+</ul>
+<p>You will implement DCF for Egress by collaborating with your DevOps and SecOps teams. The DevOps team will add FQDNs that their app needs to access to the <code class="docutils literal notranslate"><span class="pre">day-two/main.tf</span></code> file in a new GitHub branch. They will then create a <code class="docutils literal notranslate"><span class="pre">Pull</span> <span class="pre">Request</span></code> (PR) in GitHub. The <code class="docutils literal notranslate"><span class="pre">PR</span></code> will need to be approved by the SecOps team prior to being merged into the main branch. Branch protection rules enable checks and balances for the organization. Having such guard rails allows for layers of review and approval to help mitigate incorrect configuration entering your cloud networks.</p>
+<p>The workflow is represented here.</p>
+<p><img alt="Diagram" src="../_images/lab3-1-diag.png" /></p>
+<p>For the purpose of the lab these personas will be adopted by:</p>
+<ul class="simple">
+<li><p><strong>DevOps</strong> (You): You will modify code and create a PR, requesting network modifications to the current.</p></li>
+<li><p><strong>SecOps</strong> (Aviatrix): This PR will automatically request Aviatrix review of the changes in the PR. SecOps can approve or suggest modification before approval to the proposed updates.</p></li>
+<li><p><strong>NetOps</strong> (You): With the approval of SecOps, you will now be able to merge the PR and automatically implement the change.</p></li>
+</ul>
+<section id="github">
+<h2>GitHub<a class="headerlink" href="#github" title="Permalink to this heading">#</a></h2>
+<section id="code-review">
+<h3>Code Review<a class="headerlink" href="#code-review" title="Permalink to this heading">#</a></h3>
+<p>The terraform code for lab 3 is located in the sub-folder <code class="docutils literal notranslate"><span class="pre">day-two</span></code> of the <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> repository. Let’s take a look at each of the files:</p>
+<ul class="simple">
+<li><p><strong>allowed_domains.tf</strong> - The DevOps team maintains this file. This file defines FQDNs that the app needs to access on the Internet. The DevOps team will know best what domains their app to reach, so they are best positioned to request changes. They will need to make sure the formatting (white space, etc) of each line specifying an FQDN is consistent because GitHub Actions will check this, and fail if the code is not represented in a canonical format. Read <a class="reference external" href="https://www.terraform.io/docs/cli/commands/fmt.html">this doc</a> for more info on the <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">fmt</span></code> command.</p></li>
+<li><p><strong><a class="reference external" href="http://main.tf">main.tf</a></strong> - This file enables the <code class="docutils literal notranslate"><span class="pre">Aviatrix</span> <span class="pre">Distributed</span> <span class="pre">Cloud</span> <span class="pre">Firewall</span></code> (DCF) and sets webgroups (http and https) that contain domains that are allowed to egress to the Internet. Unless explicitly defined in the <code class="docutils literal notranslate"><span class="pre">allowed_domains.tf</span></code> file, the domain will be blocked. Additionally there is a ruled defined to allow all intra-rfc1918 traffic to traverse. Once DCF is enabled all traffic traversing Aviatrix gateways is blocked unless a rule is defined to allow it.</p></li>
+<li><p><strong><a class="reference external" href="http://providers.tf">providers.tf</a></strong> - This file contains the the Aviatrix terraform provider definition.</p></li>
+<li><p><strong><a class="reference external" href="http://versions.tf">versions.tf</a></strong> - This file defines the Terraform runtime (aka execution) and State should reside. We are using a Remote Backend in which both of these will reside in a Terraform Cloud workspace. You will need to edit this file appropriately for your tfc org/workspace.</p></li>
+</ul>
+<p>All resources in this repository leverage the Aviatrix terraform provider. In Lab 1 and Lab 2, we defined the controller ip and password in terraform variables. For this lab, we’ll be doing the same with environment variables. Both methods are valid.</p>
+</section>
+<section id="personalize-the-code-for-your-accounts">
+<h3>Personalize the code for your accounts<a class="headerlink" href="#personalize-the-code-for-your-accounts" title="Permalink to this heading">#</a></h3>
+<p>Edit <code class="docutils literal notranslate"><span class="pre">ace-automation/day-two</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">versions.tf</span></code> (<a class="github reference external" href="https://github.com/"></a><code class="docutils literal notranslate"><span class="pre">[your</span> <span class="pre">account]</span></code>/ace-automation/blob/main/day-two/versions.tf).</p>
+<p>Click the Pencil icon to edit directly on <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI</p>
+<p><img alt="Edit" src="../_images/lab3-4-edit.png" /></p>
+<p>Uncomment this line:</p>
+<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="c1"># organization = &quot;&lt;replace-with-your-Terraform-Cloud-organization-and-uncomment&gt;&quot;</span>
+</pre></div>
+</div>
+<p>Edit it with the username of your Terraform Cloud organization account.</p>
+<p>Commit the changes directly to the main branch.</p>
+<p>Next, edit ace-iac-day-two &gt; .github &gt; CODEOWNERS (<a class="github reference external" href="https://github.com/"></a><student-account>/ace-iac-day-two/blob/main/.github/CODEOWNERS)</p>
+<p><img alt="Code" src="../_images/lab3-5-code.png" /></p>
+<p>Click on the Pencil icon to edit directly on <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI</p>
+<p><img alt="Edit" src="../_images/lab3-6-edit.png" /></p>
+<p>Edit the line for this CODEOWNERS file to specify the ACE SecOps GitHub account as the Owner. For example,</p>
+<p><a class="reference external" href="http://app-fqdn-rules.tf">app-fqdn-rules.tf</a> &#64;ace-secops</p>
+<p>Edit the other 4 lines and specify the Student’s own GitHub account (NetOps role).</p>
+<p>Commit the changes directly to the main branch.</p>
+</section>
+<section id="invite-collaborators-for-the-repository">
+<h3>Invite Collaborators for the Repository<a class="headerlink" href="#invite-collaborators-for-the-repository" title="Permalink to this heading">#</a></h3>
+<p>Remember that you are playing the Network Operator role and will need to invite the DevOps and SecOps personas as Collaborators to your Repository.</p>
+<p>Click on Settings &gt; Collaborators &gt; Manage access. Make sure these are the Settings for the Repository, not the Settings for your account.
+Click on Invite a collaborator.
+Invite your GitHub account that will serve the purpose of the DevOps.
+Click on Invite a collaborator again.
+Invite your GitHub account that will serve the purpose of SecOps.
+Check the email for your respective accounts for DevOps and SecOps and approve the invitations to become a collaborator for your Network Operator Repository.</p>
+</section>
+<section id="create-automate-and-secure-a-branch">
+<h3>Create, Automate, and Secure a Branch<a class="headerlink" href="#create-automate-and-secure-a-branch" title="Permalink to this heading">#</a></h3>
+<p>Create a new branch called updates</p>
+<p><img alt="Branch" src="../_images/lab3-7-branch.png" /></p>
+<p>Automate workflows on the branch by configuring GitHub Actions</p>
+<p><img alt="Actions" src="../_images/lab3-8-actions.png" /></p>
+<p>Click Actions</p>
+<p><img alt="Actions" src="../_images/lab3-9-actions.png" /></p>
+<p>Click I understand my workflows, go ahead and enable them</p>
+<p>Secure the main branch by creating a Branch Protection Rule. This will ensure that only the GitHub account(s) mentioned in the CODEOWNERS file are authorized to review/approve the Pull Request.</p>
+<p>Click on Settings &gt; Branches &gt; Add rule
+Name the Branch Name Pattern main
+Check the following 7 fields:</p>
+<p>Require pull request reviews before merging
+Require approvals
+Dismiss stale pull request approvals when new commits are pushed
+Require review from Code Owners
+Require status checks to pass before merging
+Require branches to be up to date before merging
+Include administrators</p>
+<p><img alt="Protect" src="../_images/lab3-10-protect.png" /></p>
+<p>By setting this up, you are adding several layers of security to the main branch which is where Terraform will be looking at for terraform apply.</p>
+</section>
+</section>
+<section id="terraform-cloud">
+<h2>Terraform Cloud<a class="headerlink" href="#terraform-cloud" title="Permalink to this heading">#</a></h2>
+<section id="set-up-workspace">
+<h3>Set up workspace<a class="headerlink" href="#set-up-workspace" title="Permalink to this heading">#</a></h3>
+<p>Create a new Workspace.</p>
+<p><img alt="Workspace" src="../_images/lab3-11-workspace.png" /></p>
+<p>Select API-driven workflow.</p>
+<p><img alt="Workflow" src="../_images/lab3-12-workflow.png" /></p>
+<p>Name the workspace ace-iac-day-two and click Create workspace</p>
+<p><img alt="Workspace" src="../_images/lab3-13-workspace.png" /></p>
+</section>
+<section id="configure-variables">
+<h3>Configure Variables<a class="headerlink" href="#configure-variables" title="Permalink to this heading">#</a></h3>
+<p>Navigate to the Variables tab and add these credentials for accessing the Controller as Environment Variables:</p>
+<p>AVIATRIX_CONTROLLER_IP
+AVIATRIX_USERNAME
+AVIATRIX_PASSWORD</p>
+<p>Mark the value for AVIATRIX_CONTROLLER_IP and AVIATRIX_PASSWORD as sensitive.</p>
+<p>As a learning exercise, note that the credentials for accessing the Aviatrix Controller are defined as Environment variables in this Lab. However, in Lab 1 and Lab 2, the credentials were instead defined as Terraform variables that were called in the <a class="reference external" href="http://provider.tf">provider.tf</a> file. Both methods are valid.</p>
+<p><img alt="Vars" src="../_images/lab3-14-vars.png" /></p>
+</section>
+</section>
+<section id="connect-github-repo-and-terraform-cloud-via-api">
+<h2>Connect GitHub Repo and Terraform Cloud via API<a class="headerlink" href="#connect-github-repo-and-terraform-cloud-via-api" title="Permalink to this heading">#</a></h2>
+<p>Finally, generate an API Token in Terraform Cloud and specify it as a new Secret for your GitHub Repository.</p>
+<section id="terraform-cloud-side">
+<h3>Terraform Cloud side<a class="headerlink" href="#terraform-cloud-side" title="Permalink to this heading">#</a></h3>
+<p>Go to the Tokens page in your Terraform Cloud User Settings. Make sure you are in the Settings for your User account (accessible from the upper right corner of the page), not the Settings for your Organization (typically visible in the center of the top menu).</p>
+<p><img alt="Org" src="../_images/lab3-15-org.png" /></p>
+<p>Click on Create an API token and generate an API token named GitHub Actions.</p>
+<p><img alt="Token" src="../_images/lab3-16-token.png" /></p>
+<p>Save the token in a safe place. You will add it to GitHub later as a secret, so the Actions workflow can authenticate to Terraform Cloud.</p>
+</section>
+<section id="github-side">
+<h3>GitHub side<a class="headerlink" href="#github-side" title="Permalink to this heading">#</a></h3>
+<p>Back in GitHub, for the repository (not the user), navigate to Settings &gt; Secrets &gt; Actions.</p>
+<p>Create a New repository secret named TF_API_TOKEN, setting the Terraform Cloud API token you created in the previous step as the value.</p>
+<p>Now your Terraform Cloud account and the repository in your GitHub account are securely linked via API.</p>
+</section>
+</section>
+<section id="collaboration-with-other-stakeholders">
+<h2>Collaboration with other stakeholders<a class="headerlink" href="#collaboration-with-other-stakeholders" title="Permalink to this heading">#</a></h2>
+<section id="work-done-by-devops-team">
+<h3>Work done by DevOps team<a class="headerlink" href="#work-done-by-devops-team" title="Permalink to this heading">#</a></h3>
+<p>Please check your work carefully for any errors. If all looks good, navigate to the browser window where you are logged on in GitHub as the DevOps team.</p>
+<p>Since Branch Protection Rules are in place for the main branch, make sure you navigate to the updates branch to make any changes. Click on the <a class="reference external" href="http://app-fqdn-rules.tf">app-fqdn-rules.tf</a> file in the updates branch to request access to a new FQDN.</p>
+<p><img alt="Update" src="../_images/lab3-17-update.png" /></p>
+<p>Click on the Pencil icon to edit directly on <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI</p>
+<p><img alt="Edit" src="../_images/lab3-18-edit.png" /></p>
+<p>Below the two existing lines for aviatrix, add the following line:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &quot;*.ubuntu.com&quot;   = &quot;80&quot;
+</pre></div>
+</div>
+<p>Make sure the formatting (white spaces and alignment) matches the two existing lines. Otherwise, the GitHub Actions check will fail. GitHub Actions is configured for best practices, which is to check for formatting inconsistencies. As an FYI, this file is ace-iac-day-two &gt; .github &gt; workflows &gt; terraform.yml, but it is beyond the scope of this training to go into the configuration and syntax of this file.</p>
+<p>Next, click Commit changes:</p>
+<p><img alt="Commit" src="../_images/lab3-19-commit.png" /></p>
+<p>After the DevOps account makes the code change, they need to create a Pull Request (PR) on the branch. Click New pull request.</p>
+<p><img alt="PR" src="../_images/lab3-20-pr.png" /></p>
+<p>Make sure you select the main branch of your repository (NOT the one that you forked) as the base and the updates branch as the compare.</p>
+<p><img alt="Compare" src="../_images/lab3-21-compare.png" /></p>
+<p>Add relevant comments and then click Create pull request one more time.</p>
+<p><img alt="PR" src="../_images/lab3-22-pr.png" /></p>
+<p>GitHub Actions will then automatically do some checks for formatting, and then notify the SecOps GitHub account that their Approval of the PR is pending.</p>
+<p><img alt="PR-Check" src="../_images/lab3-23-pr-check.png" /></p>
+<p>You can click on Details to see the progress at any point.</p>
+</section>
+<section id="work-done-by-secops-team">
+<h3>Work done by SecOps team<a class="headerlink" href="#work-done-by-secops-team" title="Permalink to this heading">#</a></h3>
+<p>Now you can navigate to the browser window where you are logged on in GitHub as the SecOps team to approve the PR.</p>
+<p>Specifically, navigate to Pull requests &gt; Review requests and click on the request.</p>
+<p><img alt="PR" src="../_images/lab3-24-pr.png" /></p>
+<p>Click Add your review.</p>
+<p><img alt="Review" src="../_images/lab3-25-review.png" /></p>
+<p>Click Review changes one more time. If you are okay with the changes, click the Approve button and the Submit review.</p>
+<p><img alt="Submit" src="../_images/lab3-26-submit.png" /></p>
+<p>Once the SecOps team has Approved the PR, it will look like this:</p>
+<p><img alt="Approve" src="../_images/lab3-27-approve.png" /></p>
+<p>Now, any team can Merge the PR back into the Main branch. Upon doing so, GitHub Actions will trigger a Deployment (CD part of Continuous Deployment), which is a terraform apply and the Network Team can monitor the progress of the apply on Terraform Cloud.</p>
+<p>At any time in this workflow, you can see the status of the GitHub Actions by clicking on Actions in GitHub.</p>
+<p>On the Controller, you should now see the new rule in your Egress FQDN filter.</p>
+<p><img alt="Egress" src="../_images/lab3-28-egress.png" /></p>
+</section>
+</section>
+<section id="final-thoughts">
+<h2>Final Thoughts<a class="headerlink" href="#final-thoughts" title="Permalink to this heading">#</a></h2>
+<p>Congratulations! You have just built, enhanced, and secured a multicloud network by using automation. By using git branches and enabling collaboration with DevOps and SecOps teams to build CI/CD pipelines with secured branches, you have experienced true NetOps in action. Many of Aviatrix’s largest customers practice IaC day in and day out. While the choice of tools (e.g. Jenkins instead of Terraform Cloud, GitLab instead of GitHub) may vary across enterprises, the concepts of Infrastructure as Code remain the same.</p>
+<p>Be sure to clean up your resources to avoid any excess charges.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lab2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Overview</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="summary.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Summary</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github">GitHub</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#invite-collaborators-for-the-repository">Invite Collaborators for the Repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-automate-and-secure-a-branch">Create, Automate, and Secure a Branch</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-cloud">Terraform Cloud</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-workspace">Set up workspace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-variables">Configure Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connect-github-repo-and-terraform-cloud-via-api">Connect GitHub Repo and Terraform Cloud via API</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-cloud-side">Terraform Cloud side</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#github-side">GitHub side</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaboration-with-other-stakeholders">Collaboration with other stakeholders</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-devops-team">Work done by DevOps team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-secops-team">Work done by SecOps team</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-thoughts">Final Thoughts</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aviatrix Certified Engineer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

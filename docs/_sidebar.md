@@ -1,6 +1,0 @@
-- [Introduction](introduction.md)
-- [Lab 1 - Day 0](lab1.md)
-- [Lab 2 - Day 1](lab2.md)
-- [Lab 3 - Day 2](lab3.md)
-- [Summary](summary.md)
-- [Cleanup](cleanup.md)

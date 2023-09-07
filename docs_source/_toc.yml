@@ -1,0 +1,8 @@
+format: jb-article
+root: docs/introduction
+sections:
+- file: docs/lab1
+- file: docs/lab2
+- file: docs/lab3
+- file: docs/summary
+- file: docs/cleanup

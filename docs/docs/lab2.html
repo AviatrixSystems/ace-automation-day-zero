@@ -1,0 +1,532 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Overview &#8212; ACE Automation (IaC)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/lab2';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Overview" href="lab3.html" />
+    <link rel="prev" title="Overview" href="lab1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="introduction.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">ACE Automation (IaC)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="introduction.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lab1.html">Overview</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab3.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleanup.html">Cleanup</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/lab2.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Overview</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-modification">Code Modification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resize-gateways">Resize gateways</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-a-connection-policy">Configure a Connection Policy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-optimization">Code Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observations">Observations</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h1>
+<p>In this lab you will simulate the day-to-day operations of your cloud infrastructure built in Lab 1 using the Aviatrix Multicloud Networking and Security platform. You will be conducting all changes on the <code class="docutils literal notranslate"><span class="pre">Main</span></code> branch of your existing repository from Lab 1. We are using the term <code class="docutils literal notranslate"><span class="pre">Day</span> <span class="pre">1</span></code> for the work done in this lab.</p>
+<p>This lab is intended to familiarize you with how to change Terraform code and enact those changes against your cloud network infrastructure.</p>
+<p>We’ll take you through the process of:</p>
+<ol class="arabic simple">
+<li><p>Modifying gateway instances sizes</p></li>
+<li><p>Modify <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Segmentation</span></code> policies to connect isolated cloud networks.</p></li>
+</ol>
+<section id="code-modification">
+<h2>Code Modification<a class="headerlink" href="#code-modification" title="Permalink to this heading">#</a></h2>
+<p>It is recommended to use a localized setup with an IDE that integrates with your GitHub account. However, you can also make the code changes directly on the <a class="reference external" href="http://GitHub.com">GitHub.com</a> UI.</p>
+</section>
+<section id="resize-gateways">
+<h2>Resize gateways<a class="headerlink" href="#resize-gateways" title="Permalink to this heading">#</a></h2>
+<p>ACE Inc is growing now and needs to resize their gateways. The AWS Transit Gateway is currently t3.micro. Verify this in CoPilot by navigating to <code class="docutils literal notranslate"><span class="pre">Cloud</span> <span class="pre">Fabric--&gt;Gateways--&gt;Transit</span> <span class="pre">Gateways</span></code>. You may have to toggle on the <code class="docutils literal notranslate"><span class="pre">Instance</span> <span class="pre">Size</span></code> column.</p>
+<p><img alt="Size" src="../_images/lab2-1-size.png" /></p>
+<p>ACE needs to resize their AWS gateways from t3.micro to t3.small.</p>
+<p>Make this change by editing <a class="reference external" href="http://main.tf">main.tf</a> file</p>
+<p>On <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI, click the Pencil icon to edit directly.</p>
+<p><img alt="Edit" src="../_images/lab2-2-edit.png" /></p>
+<p>Make the change for the <code class="docutils literal notranslate"><span class="pre">aws_transit_instance_size</span></code> on line 4.</p>
+<p><img alt="Vars" src="../_images/lab2-3-main.png" /></p>
+<p>Provide a meaningful commit message at the bottom and click the Commit changes button.</p>
+<p><img alt="Commit" src="../_images/lab2-4-commit.png" /></p>
+<p>As soon as you commit the changes to a file, it will automatically queue a Terraform Plan. Back in Terraform Cloud, navigate to the Overview tab of your workspace. Depending on how soon you navigate there, you will see blue <code class="docutils literal notranslate"><span class="pre">Planning</span></code> or yellow <code class="docutils literal notranslate"><span class="pre">Planned</span></code>, or brown <code class="docutils literal notranslate"><span class="pre">Cost</span> <span class="pre">Estimated</span></code> in the Latest Run pane. From there, click on See details to see the planned run with proposed changes such as this:</p>
+<p><img alt="Confirm" src="../_images/lab2-5-confirm.png" /></p>
+<p>Click <code class="docutils literal notranslate"><span class="pre">Confirm</span> <span class="pre">&amp;</span> <span class="pre">Apply</span></code> and <code class="docutils literal notranslate"><span class="pre">Confirm</span> <span class="pre">Plan</span></code> to begin the terraform apply. When it is complete (less than 10 minutes later), the transit gateway in AWS will be t3.small size. Confirm again in CoPilot.</p>
+<p><img alt="Gateway" src="../_images/lab2-6-gateway.png" /></p>
+<p>However, <code class="docutils literal notranslate"><span class="pre">BU1</span></code> and <code class="docutils literal notranslate"><span class="pre">BU2</span></code> are still not connected. SSH to <code class="docutils literal notranslate"><span class="pre">BU1</span></code> Bastion and leave a continuous ping session running in a terminal window destined to <code class="docutils literal notranslate"><span class="pre">BU2</span></code> App.</p>
+</section>
+<section id="configure-a-connection-policy">
+<h2>Configure a Connection Policy<a class="headerlink" href="#configure-a-connection-policy" title="Permalink to this heading">#</a></h2>
+<p>Connect BU1 to BU2 by uncommenting this block of code at the bottom of <a class="reference external" href="http://main.tf">main.tf</a>.</p>
+<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="c1"># resource &quot;aviatrix_segmentation_network_domain_connection_policy&quot; &quot;ace_automation&quot; {</span>
+<span class="c1">#   domain_name_1 = &quot;bu1&quot;</span>
+<span class="c1">#   domain_name_2 = &quot;bu2&quot;</span>
+<span class="c1">#   depends_on    = [module.ace_automation]</span>
+<span class="c1"># }</span>
+</pre></div>
+</div>
+<p>On <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI, click the Pencil icon to edit directly.</p>
+<p><img alt="Edit" src="../_images/lab2-7-edit.png" /></p>
+<p>Remove the preceding <code class="docutils literal notranslate"><span class="pre">#</span></code> on each line (numbers 10-16).</p>
+<p>Provide an appropriate description for the change:</p>
+<p><img alt="Commit" src="../_images/lab2-8-commit.png" /></p>
+<p>Once again, in Terraform Cloud, this will automatically trigger a Plan.</p>
+<p><img alt="Plan" src="../_images/lab2-9-plan.png" /></p>
+<p>Once the plan is finished, be sure to <code class="docutils literal notranslate"><span class="pre">Confirm</span> <span class="pre">&amp;</span> <span class="pre">Apply</span></code> and <code class="docutils literal notranslate"><span class="pre">Confirm</span> <span class="pre">Plan</span></code></p>
+<p><img alt="Apply" src="../_images/lab2-10-apply.png" /></p>
+<p>As soon as the apply is complete (should take less than a minute), confirm the app and bastion networks are now connected by navigating to <code class="docutils literal notranslate"><span class="pre">Networking--&gt;Network</span> <span class="pre">Segmentation</span></code> in the CoPilot UI.</p>
+<p><img alt="Policy" src="../_images/lab2-11-policy.png" /></p>
+<p>If you click on the <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Domains</span></code> top tab you’ll see where this is configured in the UI.</p>
+<p><img alt="Domains" src="../_images/lab2-11-domains.png" /></p>
+<p>Revisit the terminal window where <code class="docutils literal notranslate"><span class="pre">BU1</span></code> Bastion was attempting to Ping <code class="docutils literal notranslate"><span class="pre">BU2</span></code> App. You should now see the responses.</p>
+<p>Also, you should now be able to SSH to <code class="docutils literal notranslate"><span class="pre">BU2</span></code> App from <code class="docutils literal notranslate"><span class="pre">BU1</span></code> Bastion.</p>
+</section>
+<section id="code-optimization">
+<h2>Code Optimization<a class="headerlink" href="#code-optimization" title="Permalink to this heading">#</a></h2>
+<p>Take a look at the following block of Terraform code that you just enabled on <a class="reference external" href="http://main.tf">main.tf</a>:</p>
+<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aviatrix_segmentation_network_domain_connection_policy&quot;</span><span class="w"> </span><span class="nv">&quot;ace_automation&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">domain_name_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bu1&quot;</span>
+<span class="w">    </span><span class="na">domain_name_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bu2&quot;</span>
+<span class="w">    </span><span class="na">depends_on</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">module.ace_automation</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This block can be further optimized. The line beginning with depends_on is an <em>explicit</em> dependency on network domains that were created elsewhere in the code. Instead of <code class="docutils literal notranslate"><span class="pre">hard-coding</span></code> domain_name_1 and domain_name_2 as <code class="docutils literal notranslate"><span class="pre">bu1</span></code> and <code class="docutils literal notranslate"><span class="pre">bu2</span></code> respectively, create <em>implicit</em> dependencies. Modify the code as follows:</p>
+<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aviatrix_segmentation_network_domain_connection_policy&quot;</span><span class="w"> </span><span class="nv">&quot;ace_automation&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">domain_name_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">module.ace_automation.bu1_network_domain_name</span>
+<span class="w">  </span><span class="na">domain_name_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">module.ace_automation.bu2_network_domain_name</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Since we now have an <em>implicit</em> dependency, we no longer need to create the <em>explicit</em> dependency via <code class="docutils literal notranslate"><span class="pre">depends_on</span></code> and therefore it had been removed.</p>
+<p>When you commit and make the change, you’ll notice that it makes no changes to your infrastructure. However, it is better Terraform code because it relies less on manual hard-coded dependencies.</p>
+<p><img alt="Plan" src="../_images/lab2-12-plan.png" /></p>
+</section>
+<section id="observations">
+<h2>Observations<a class="headerlink" href="#observations" title="Permalink to this heading">#</a></h2>
+<p>As you can see, Terraform is extremely powerful and scalable. With just a few lines of code, you can make a lot of changes. Notice how easy it was to make a change to your infrastructure. It also means you could easily effect your networks with misconfiguration. To mitigate risk, your organization will benefit from having some guard rails, especially in a Production environment.</p>
+<p>In Lab 3, we will introduce collaboration with those teams.</p>
+<p>When you are ready to begin, click <code class="docutils literal notranslate"><span class="pre">Lab</span> <span class="pre">3</span> <span class="pre">-</span> <span class="pre">Day</span> <span class="pre">2</span></code> below.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lab1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Overview</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lab3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Overview</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-modification">Code Modification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resize-gateways">Resize gateways</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-a-connection-policy">Configure a Connection Policy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-optimization">Code Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observations">Observations</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aviatrix Certified Engineer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

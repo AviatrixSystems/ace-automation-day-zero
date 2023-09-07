@@ -1,0 +1,586 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Overview &#8212; ACE Automation (IaC)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/lab1';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Overview" href="lab2.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="introduction.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">ACE Automation (IaC)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="introduction.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab2.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab3.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleanup.html">Cleanup</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/lab1.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Overview</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aviatrix-self-service">Aviatrix Self-Service</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github">GitHub</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fork-ace-code-for-this-lab">Fork ACE code for this lab</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-cloud">Terraform Cloud</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-workspace">Set up workspace</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-variables">Configure Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-plan-and-terraform-apply">Terraform plan and terraform apply</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h1>
+<p>In this lab you will deploy cloud infrastructure for ACE Inc. from scratch using the Aviatrix Multicloud Networking and Security platform. We are using the term <code class="docutils literal notranslate"><span class="pre">Day</span> <span class="pre">0</span></code> for the work done in this lab. Make sure you are logged in to your GitHub and Terraform Cloud accounts.</p>
+<p>Here is an overview of the tasks in this lab:</p>
+<ul class="simple">
+<li><p>Deploy an Aviatrix Controller/CoPilot from <a class="reference external" href="https://selfservice.aviatrix.com">Self-Service</a>.</p></li>
+<li><p>Fork the ACE code for this lab as a remote repository in your own <code class="docutils literal notranslate"><span class="pre">GitHub</span></code> account. Learn more about what forking a repo means <a class="reference external" href="https://docs.github.com/en/get-started/quickstart/fork-a-repo">here</a>.</p></li>
+<li><p>Personalize the code for your account(s).</p></li>
+<li><p>Connect GitHub with Terraform Cloud.</p></li>
+<li><p>Adopt a VCS-driven workflow.</p></li>
+<li><p>Deploy the following infrastructure from scratch for ACE Inc.</p></li>
+</ul>
+<p><img alt="Topology" src="../_images/intro-topology.png" /></p>
+<section id="aviatrix-self-service">
+<h2>Aviatrix Self-Service<a class="headerlink" href="#aviatrix-self-service" title="Permalink to this heading">#</a></h2>
+<p>Log into Aviatrix <a class="reference external" href="https://selfservice.aviatrix.com">Self-Service</a> and execute the Controller/CoPilot use-case.</p>
+<p>Note the public IPs addresses for both Controller and CoPilot instances. We will be using them at different points in the lab. Note that all of the infrastructure that we’ll be creating will be via code. We’ll only use the UI to validate or visualize what’s been built.</p>
+<p>In addition to deploying a Controller and CoPilot instance in AWS, the Self-Service Tool will also take care of onboarding your AWS account on the platform.</p>
+<p><strong>Note:</strong> This training focuses on AWS for both control plane and data path - although the concepts apply equally to other clouds. The power of Aviatrix!</p>
+</section>
+<section id="github">
+<h2>GitHub<a class="headerlink" href="#github" title="Permalink to this heading">#</a></h2>
+<section id="fork-ace-code-for-this-lab">
+<h3>Fork ACE code for this lab<a class="headerlink" href="#fork-ace-code-for-this-lab" title="Permalink to this heading">#</a></h3>
+<p>While logged into your GitHub account, create a new repository by visiting the <a class="reference external" href="https://github.com/AviatrixSystems/ace-automation">ACE Automation</a> repository.</p>
+<p>Click <code class="docutils literal notranslate"><span class="pre">Fork</span></code> in the top-right corner of the browser.</p>
+<p><img alt="Fork" src="../_images/lab1-2-fork.png" /></p>
+<p>This will create a remote repository (aka repo) of the lab code in your own GitHub account.</p>
+<p><strong>Remember:</strong> your GitHub account is playing the role of Network Operator for ACE Inc.</p>
+</section>
+</section>
+<section id="code-review">
+<h2>Code Review<a class="headerlink" href="#code-review" title="Permalink to this heading">#</a></h2>
+<p>Let’s take a look at the files in your forked  <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> repository.</p>
+<p>In Terraform, every file ending in <code class="docutils literal notranslate"><span class="pre">.tf</span></code> is considered. So they could all be in one big file, but the best practice is to have separate files for various purposes. Here is how each file has a purpose in this Lab:</p>
+<ul class="simple">
+<li><p><strong><a class="reference external" href="http://main.tf">main.tf</a></strong> - This file contains 1 module and 1 resource. We’ll be modifying this file at different points of the first two labs. The module is executing code located in the <code class="docutils literal notranslate"><span class="pre">_modules/day-zero</span></code> subfolder. The majority of the infrastructure being deployed is there. You’ll see references to other, external <code class="docutils literal notranslate"><span class="pre">Aviatrix</span></code> and AWS <code class="docutils literal notranslate"><span class="pre">modules</span></code> that are available for anyone to use. These will create the networks, security groups, ec2 instances and Aviatrix gateways used in the lab. The power of modules is that you can write code once (or use other’s code) and reuse it any number of times to achieve consistent implementations of the configured infrastructure. For the purpose of these labs, we’ll keep it simple by modifying the files noted here. But, if you have interest in digging deeper, look into these child modules, particularly <a class="reference external" href="https://registry.terraform.io/modules/terraform-aviatrix-modules/mc-transit/aviatrix/latest">mc-transit</a> and <a class="reference external" href="https://registry.terraform.io/modules/terraform-aviatrix-modules/mc-spoke/aviatrix/latest">mc-spoke</a>. These are the multicloud Aviatrix modules that deploy Aviatrix gateways and networks consistently across clouds.</p></li>
+<li><p><strong><a class="reference external" href="http://providers.tf">providers.tf</a></strong> - This file contains specific information about the <code class="docutils literal notranslate"><span class="pre">Aviatrix</span></code> and <code class="docutils literal notranslate"><span class="pre">AWS</span></code> Terraform providers that we are using in this training. The AWS provider is for creating the <code class="docutils literal notranslate"><span class="pre">BU1</span></code> and <code class="docutils literal notranslate"><span class="pre">BU2</span></code> bastion and app instances. All other resources, including vpc(s), will leverage the <code class="docutils literal notranslate"><span class="pre">Aviatrix</span></code> provider.</p></li>
+<li><p><strong><a class="reference external" href="http://variables.tf">variables.tf</a></strong> - Any variable with optional default values are provided here. For example, if you wanted to deploy the AWS infrastructure in a different default region than us-west-2 (Oregon), you would modify it here. You’ll note there are a couple variables with no default value. We will configured <code class="docutils literal notranslate"><span class="pre">Terraform</span> <span class="pre">Cloud</span></code> to provide those values.</p></li>
+<li><p><strong><a class="reference external" href="http://versions.tf">versions.tf</a></strong> - This file has the configuration for the Terraform providers being used as well as the backend configuration (where the execution runtime and terraform state should be stored). In this case we’re using the terraform cloud backend for the organization you’ve created to both execute Terraform and store its state config.</p></li>
+</ul>
+</section>
+<section id="personalize-the-code-for-your-accounts">
+<h2>Personalize the code for your accounts<a class="headerlink" href="#personalize-the-code-for-your-accounts" title="Permalink to this heading">#</a></h2>
+<p>Now, let’s edit <code class="docutils literal notranslate"><span class="pre">versions.tf</span></code></p>
+<p>Be sure you’re on the <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> repo in your GitHub account.</p>
+<p><img alt="Backend" src="../_images/lab1-3-backend.png" /></p>
+<p>Click the Pencil icon to edit directly on <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI</p>
+<p><img alt="Edit" src="../_images/lab1-4-edit.png" /></p>
+<p>Uncomment this line:</p>
+<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="c1"># organization = &quot;&lt;replace-with-your-Terraform-Cloud-organization-and-uncomment&gt;&quot;</span>
+</pre></div>
+</div>
+<p>Edit it with the username of your Terraform Cloud organization account. Find it in the bottom-left corner on the Terraform Cloud UI page:</p>
+<p><img alt="TFC" src="../_images/lab1-5-tfc.png" /></p>
+<p>Back in GitHub page, at the bottom, click Commit changes directly to the main branch.</p>
+<p><img alt="Commit" src="../_images/lab1-6-commit.png" /></p>
+</section>
+<section id="terraform-cloud">
+<h2>Terraform Cloud<a class="headerlink" href="#terraform-cloud" title="Permalink to this heading">#</a></h2>
+<section id="set-up-workspace">
+<h3>Set up workspace<a class="headerlink" href="#set-up-workspace" title="Permalink to this heading">#</a></h3>
+<p>Create a new Workspace by clicking <code class="docutils literal notranslate"><span class="pre">New</span></code>, then <code class="docutils literal notranslate"><span class="pre">Workspace</span></code>.</p>
+<p><img alt="Workspace" src="../_images/lab1-7-workspace.png" /></p>
+<p>Select Version control workflow.</p>
+<p><img alt="Workflow" src="../_images/lab1-8-workflow.png" /></p>
+<p>Under Connect to a version control provider, select <a class="reference external" href="http://GitHub.com">GitHub.com</a></p>
+<p><img alt="VCS" src="../_images/lab1-9-vcs.png" /></p>
+<p>Authorize Terraform Cloud to verify your GitHub identity. If you do not see this message, disable your browser Ad Blocker as it is a pop-up dialog.</p>
+<p><img alt="Confirm" src="../_images/lab1-10-confirm.png" /></p>
+<p>Install Terraform Cloud on your GitHub account. Keep the default of All repositories</p>
+<p><img alt="TFC" src="../_images/lab1-11-tfc.png" /></p>
+<p>Choose the <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> repository</p>
+<p><img alt="Repo" src="../_images/lab1-12-repo.png" /></p>
+<p>Keep the <code class="docutils literal notranslate"><span class="pre">Workspace</span> <span class="pre">Name</span></code> and <code class="docutils literal notranslate"><span class="pre">Project</span></code> as-is and click <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">Workspace</span></code>.</p>
+<p><img alt="TFC-Config" src="../_images/lab1-13-tfc-config.png" /></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Workspace</span></code> will be created. For the next section, click on the <code class="docutils literal notranslate"><span class="pre">workspace</span> <span class="pre">variables</span> <span class="pre">page</span></code> link.</p>
+<p><img alt="TFC-WS-Vars" src="../_images/lab1-14-tfc-ws-vars.png" /></p>
+</section>
+</section>
+<section id="configure-variables">
+<h2>Configure Variables<a class="headerlink" href="#configure-variables" title="Permalink to this heading">#</a></h2>
+<p>Here you will configure Terraform Variables and Environment Variables.</p>
+<p>Locate the <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">Add</span> <span class="pre">variable</span></code> button.</p>
+<p><img alt="Add-Var" src="../_images/lab1-15-addvar.png" /></p>
+<p>Then create/configure these two (2) <code class="docutils literal notranslate"><span class="pre">Terraform</span> <span class="pre">Variable</span></code>(s) as follows. Be sure to click the sensitive box for the <code class="docutils literal notranslate"><span class="pre">password</span></code> value:</p>
+<ul class="simple">
+<li><p><strong>controller_ip</strong> = <em>Public IP address of your Controller</em></p></li>
+<li><p><strong>password</strong> = <em>password you assigned to your Controller</em></p></li>
+</ul>
+<p>If you didn’t deploy your Aviatrix Controller with the <code class="docutils literal notranslate"><span class="pre">Self-Service</span></code> tool, add an additional variable to override the default:</p>
+<ul class="simple">
+<li><p><strong>aws_account_name</strong> = <em>the name your Aviatrix Access Account as it appears in CoPilot under <code class="docutils literal notranslate"><span class="pre">Cloud</span> <span class="pre">Resources--&gt;Cloud</span> <span class="pre">Account</span></code></em></p></li>
+</ul>
+<p><img alt="Account" src="../_images/lab1-16-account.png" /></p>
+<p>Then add these two (2) Environment Variables for your AWS Access and Secret Access Keys. As with the <code class="docutils literal notranslate"><span class="pre">password</span></code> above, be sure to click the sensitive box for the each value:</p>
+<ul class="simple">
+<li><p><strong>AWS_ACCESS_KEY_ID</strong> = <em>AWS Access Key ID that has access to deploy EC2 instances, Security Groups, and Keypairs</em></p></li>
+<li><p><strong>AWS_SECRET_ACCESS_KEY</strong> = <em>AWS Secret Access Key that matches the above access key</em></p></li>
+</ul>
+<p>When you are done, it should look somewhat like this:</p>
+<p><img alt="WS-Vars" src="../_images/lab1-17-ws-vars.png" /></p>
+</section>
+<section id="terraform-plan-and-terraform-apply">
+<h2>Terraform plan and terraform apply<a class="headerlink" href="#terraform-plan-and-terraform-apply" title="Permalink to this heading">#</a></h2>
+<p>Move to the <code class="docutils literal notranslate"><span class="pre">Overview</span></code> tab in the left-hand navigation and perform a terraform <code class="docutils literal notranslate"><span class="pre">Start</span> <span class="pre">new</span> <span class="pre">run</span></code> by from the <code class="docutils literal notranslate"><span class="pre">Actions</span></code> menu on the right side.</p>
+<p><img alt="Start Run" src="../_images/lab1-18-start-run.png" /></p>
+<p>Then <code class="docutils literal notranslate"><span class="pre">Start</span> <span class="pre">run</span></code></p>
+<p><img alt="Start Run Confirm" src="../_images/lab1-18-start-run-confirm.png" /></p>
+<p>On the next page, you will see the output of the terraform plan and what resources will be built (number of resources may vary from screenshot).</p>
+<p><img alt="Trigger" src="../_images/lab1-19-trigger.png" /></p>
+<p>Click <code class="docutils literal notranslate"><span class="pre">Confirm</span> <span class="pre">&amp;</span> <span class="pre">Apply</span></code> and add any notes. Then, click <code class="docutils literal notranslate"><span class="pre">Confirm</span> <span class="pre">Plan</span></code> This will issue the equivalent of terraform apply. Observe the progress of the resources being created by Terraform.</p>
+<p>The infrastructure in Lab 1 should take about 10 minutes to build. When it has completes, you will see green output like this:</p>
+<p><img alt="Trigger-UI" src="../_images/lab1-20-trigger-ui.png" /></p>
+<p>At the bottom of the <code class="docutils literal notranslate"><span class="pre">Apply</span> <span class="pre">finished</span></code> section, you will see output generated from the code in <code class="docutils literal notranslate"><span class="pre">outputs.tf</span></code> that will look like this:</p>
+<p><img alt="Outputs" src="../_images/lab1-21-outputs.png" /></p>
+<p>These are the Public and Private IPs of the Bastion host in <code class="docutils literal notranslate"><span class="pre">BU1</span></code> (bastion spoke) as well as the Private IP of the App host in <code class="docutils literal notranslate"><span class="pre">BU2</span></code> (app spoke).</p>
+<p>At this point, you should be able to SSH to the <code class="docutils literal notranslate"><span class="pre">BU1</span></code> Bastion as ubuntu and the password you set the password variable to above, but from there you won’t be able to SSH to the <code class="docutils literal notranslate"><span class="pre">BU2</span></code> App. The reason for that is BU1 and BU2 are not yet connected. Verify from CoPilot by navigating to <code class="docutils literal notranslate"><span class="pre">Networking--&gt;Network</span> <span class="pre">Segmentation</span></code> and and note that the 2 BUs are not connected:</p>
+<p><img alt="Policy" src="../_images/lab1-22-policy.png" /></p>
+<p>In Lab 2, you will configure a network domain Connection Policy via Terraform.</p>
+<p>When you are ready to begin, click <code class="docutils literal notranslate"><span class="pre">Lab</span> <span class="pre">2</span> <span class="pre">-</span> <span class="pre">Day</span> <span class="pre">1</span></code> below.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="introduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lab2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Overview</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aviatrix-self-service">Aviatrix Self-Service</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github">GitHub</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fork-ace-code-for-this-lab">Fork ACE code for this lab</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-cloud">Terraform Cloud</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-workspace">Set up workspace</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-variables">Configure Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-plan-and-terraform-apply">Terraform plan and terraform apply</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aviatrix Certified Engineer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
