@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Overview &#8212; ACE Automation (IaC)</title>
+    <title>Lab 2 - Day 1 &#8212; ACE Automation (IaC)</title>
   
   
   
@@ -62,10 +62,11 @@ const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/lab2';</script>
+    <link rel="shortcut icon" href="../_static/aviatrix-favicon-32.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Overview" href="lab3.html" />
-    <link rel="prev" title="Overview" href="lab1.html" />
+    <link rel="next" title="Lab 3 - Day 2" href="lab3.html" />
+    <link rel="prev" title="Lab 1 - Day 0" href="lab1.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -136,8 +137,14 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
+    
+    
+      
+    
+    
+    <img src="../_static/aviatrix-logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/aviatrix-logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
-    <p class="title logo__title">ACE Automation (IaC)</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -151,9 +158,9 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="lab1.html">Overview</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab3.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab1.html">Lab 1 - Day 0</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 2 - Day 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab3.html">Lab 3 - Day 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cleanup.html">Cleanup</a></li>
 </ul>
@@ -292,7 +299,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Overview</h1>
+    <h1>Lab 2 - Day 1</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -302,6 +309,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-modification">Code Modification</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resize-gateways">Resize gateways</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-a-connection-policy">Configure a Connection Policy</a></li>
@@ -318,8 +326,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-2-day-1">
+<h1>Lab 2 - Day 1<a class="headerlink" href="#lab-2-day-1" title="Permalink to this heading">#</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>In this lab you will simulate the day-to-day operations of your cloud infrastructure built in Lab 1 using the Aviatrix Multicloud Networking and Security platform. You will be conducting all changes on the <code class="docutils literal notranslate"><span class="pre">Main</span></code> branch of your existing repository from Lab 1. We are using the term <code class="docutils literal notranslate"><span class="pre">Day</span> <span class="pre">1</span></code> for the work done in this lab.</p>
 <p>This lab is intended to familiarize you with how to change Terraform code and enact those changes against your cloud network infrastructure.</p>
 <p>We’ll take you through the process of:</p>
@@ -327,6 +337,7 @@ document.write(`
 <li><p>Modifying gateway instances sizes</p></li>
 <li><p>Modify <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Segmentation</span></code> policies to connect isolated cloud networks.</p></li>
 </ol>
+</section>
 <section id="code-modification">
 <h2>Code Modification<a class="headerlink" href="#code-modification" title="Permalink to this heading">#</a></h2>
 <p>It is recommended to use a localized setup with an IDE that integrates with your GitHub account. However, you can also make the code changes directly on the <a class="reference external" href="http://GitHub.com">GitHub.com</a> UI.</p>
@@ -441,7 +452,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Overview</p>
+        <p class="prev-next-title">Lab 1 - Day 0</p>
       </div>
     </a>
     <a class="right-next"
@@ -449,7 +460,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Overview</p>
+        <p class="prev-next-title">Lab 3 - Day 2</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -471,6 +482,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-modification">Code Modification</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resize-gateways">Resize gateways</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-a-connection-policy">Configure a Connection Policy</a></li>

@@ -1,4 +1,6 @@
-# Overview
+# Lab 2 - Day 1
+
+## Overview
 
 In this lab you will simulate the day-to-day operations of your cloud infrastructure built in Lab 1 using the Aviatrix Multicloud Networking and Security platform. You will be conducting all changes on the `Main` branch of your existing repository from Lab 1. We are using the term `Day 1` for the work done in this lab.
 

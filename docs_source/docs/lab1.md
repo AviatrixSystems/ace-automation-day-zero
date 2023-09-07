@@ -1,4 +1,6 @@
-# Overview
+# Lab 1 - Day 0
+
+## Overview
 
 In this lab you will deploy cloud infrastructure for ACE Inc. from scratch using the Aviatrix Multicloud Networking and Security platform. We are using the term `Day 0` for the work done in this lab. Make sure you are logged in to your GitHub and Terraform Cloud accounts.
 

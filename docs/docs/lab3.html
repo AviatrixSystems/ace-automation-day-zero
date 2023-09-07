@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Overview &#8212; ACE Automation (IaC)</title>
+    <title>Lab 3 - Day 2 &#8212; ACE Automation (IaC)</title>
   
   
   
@@ -62,10 +62,11 @@ const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/lab3';</script>
+    <link rel="shortcut icon" href="../_static/aviatrix-favicon-32.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Summary" href="summary.html" />
-    <link rel="prev" title="Overview" href="lab2.html" />
+    <link rel="prev" title="Lab 2 - Day 1" href="lab2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -136,8 +137,14 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
+    
+    
+      
+    
+    
+    <img src="../_static/aviatrix-logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/aviatrix-logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
-    <p class="title logo__title">ACE Automation (IaC)</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -151,9 +158,9 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="lab1.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab2.html">Overview</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab1.html">Lab 1 - Day 0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab2.html">Lab 2 - Day 1</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 3 - Day 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cleanup.html">Cleanup</a></li>
 </ul>
@@ -292,7 +299,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Overview</h1>
+    <h1>Lab 3 - Day 2</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -302,6 +309,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github">GitHub</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>
@@ -336,8 +344,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-3-day-2">
+<h1>Lab 3 - Day 2<a class="headerlink" href="#lab-3-day-2" title="Permalink to this heading">#</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>In this lab you will adopt a CI/CD pipeline for making secure changes to your cloud infrastructure using the Aviatrix Multicloud Networking and Security platform.</p>
 <p>Specifically, you will implement Distributed Cloud Firewall (DCF) for Egress by collaborating with Applications development (DevOps) and InfoSec (SecOps) teams. The Developers will be making changes to a single file whenever they need to make changes to the FQDNs that their app needs to access on the Internet. We are using the term <code class="docutils literal notranslate"><span class="pre">Day</span> <span class="pre">2</span></code> for the work done in this lab.</p>
 <p><strong>Here is an overview of the tasks:</strong></p>
@@ -356,6 +366,7 @@ document.write(`
 <li><p><strong>SecOps</strong> (Aviatrix): This PR will automatically request Aviatrix review of the changes in the PR. SecOps can approve or suggest modification before approval to the proposed updates.</p></li>
 <li><p><strong>NetOps</strong> (You): With the approval of SecOps, you will now be able to merge the PR and automatically implement the change.</p></li>
 </ul>
+</section>
 <section id="github">
 <h2>GitHub<a class="headerlink" href="#github" title="Permalink to this heading">#</a></h2>
 <section id="code-review">
@@ -550,7 +561,7 @@ AVIATRIX_PASSWORD</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Overview</p>
+        <p class="prev-next-title">Lab 2 - Day 1</p>
       </div>
     </a>
     <a class="right-next"
@@ -580,6 +591,7 @@ AVIATRIX_PASSWORD</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github">GitHub</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>

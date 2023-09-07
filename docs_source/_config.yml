@@ -1,7 +1,7 @@
 title : ACE Automation (IaC)
 author: Aviatrix Certified Engineer
 copyright: '2023'
-logo: '../docs/_logos/aviatrix-logo.png'
+logo: 'docs/images/aviatrix-logo.png'
 
 # Short description about the book
 description: >-
@@ -13,4 +13,4 @@ execute:
 # HTML-specific settings
 html:
   home_page_in_navbar         : true
-  favicon                     : '../docs/_logos/aviatrix-favicon-32.png'
+  favicon                     : 'docs/images/aviatrix-favicon-32.png'

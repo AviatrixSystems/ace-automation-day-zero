@@ -1,4 +1,6 @@
-# Overview
+# Lab 3 - Day 2
+
+## Overview
 
 In this lab you will adopt a CI/CD pipeline for making secure changes to your cloud infrastructure using the Aviatrix Multicloud Networking and Security platform.
 
