@@ -6,7 +6,7 @@ The ACE Automation Specialty Training (Infrastructure as Code - IaC) brings the 
 
 No coding experience is required.
 
-There are 3 labs in this training, intended to be performed in sequence. Terraform is used for these labs. Many of Aviatrix's largest customers do not even leverage the Aviatrix UI to deploy or configure infrastructure. They perform every change in their using Terraform. At no point in this training will you be making any changes on the Aviatrix UI. This training is intended get you on the path of provisioning and automating your cloud network infrastructure with code.
+There are 3 labs in this training, intended to be performed in sequence. Terraform is used for these labs. Many of Aviatrix's largest customers do not leverage the Aviatrix UI to deploy or configure cloud network infrastructure. They perform every change in their using Terraform. At no point in this training will you be making any changes with the Aviatrix UI. This training is intended get you on the path of provisioning and automating your cloud network infrastructure with code.
 
 ## Prerequisites
 
@@ -45,9 +45,9 @@ Gain familiarity with tools at your disposal for automating real-world cloud net
 
 ACE Inc. is a fictitious company with infrastructure in AWS with 3 teams/stakeholders:
 
-- Network Operators, aka `NetOps`
-- Application Developers, aka `DevOps`
-- InfoSec team, aka `SecOps`
+- Network Operators (`NetOps`)
+- Application Developers (`DevOps`)
+- InfoSec team, (`SecOps`)
 
 These labs will ask you to think in terms of these different personas as you perform different lab tasks.
 
