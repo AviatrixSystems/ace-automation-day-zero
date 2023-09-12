@@ -387,8 +387,12 @@ document.write(`
 <p>Click the Pencil icon to edit directly on <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI</p>
 <p><img alt="Edit" src="../_images/lab1-4-edit.png" /></p>
 <p>Uncomment this line:</p>
-<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="c1"># organization = &quot;&lt;replace-with-your-Terraform-Cloud-organization-and-uncomment&gt;&quot;</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="c1"># organization = &quot;&lt;replace-with-your-Terraform-Cloud-organization-and-uncomment&gt;&quot;</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>Edit it with the username of your Terraform Cloud organization account. Find it in the bottom-left corner on the Terraform Cloud UI page:</p>
 <p><img alt="TFC" src="../_images/lab1-5-tfc.png" /></p>
@@ -470,16 +474,16 @@ document.write(`
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "terraform"
         },
         kernelOptions: {
-            name: "python3",
+            name: "terraform",
             path: "./docs"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'terraform'</script>
 
                 </article>
               

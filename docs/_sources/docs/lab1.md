@@ -1,3 +1,15 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Terraform
+  language: terraform
+  name: terraform
+---
+
 # Lab 1 - Day 0
 
 ## Overview
@@ -64,7 +76,7 @@ Click the Pencil icon to edit directly on GitHub.com cloud UI
 
 Uncomment this line:
 
-```hcl
+```{code-cell} terraform
 # organization = "<replace-with-your-Terraform-Cloud-organization-and-uncomment>"
 ```
 
@@ -126,6 +138,7 @@ Then create/configure these two (2) `Terraform Variable`(s) as follows. Be sure 
 - **password** = _password you assigned to your Controller_
 
 If you didn't deploy your Aviatrix Controller with the `Self-Service` tool, add an additional variable to override the default:
+
 - **aws_account_name** = _the name your Aviatrix Access Account as it appears in CoPilot under `Cloud Resources-->Cloud Account`_
 
 ![Account](images/lab1-16-account.png)

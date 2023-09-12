@@ -310,7 +310,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destroy-lab-3-resources">Destroy Lab 3 resources</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destroy-lab-1-and-lab-2-resources">Destroy Lab 1 and Lab 2 resources</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destroy-controller-and-copilot-from-sandbox-starter-tool">Destroy Controller and CoPilot from Sandbox Starter Tool</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destroy-controller-and-copilot-from-aviatrix-self-service">Destroy Controller and CoPilot from Aviatrix Self-service</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
 </ul>
             </nav>
@@ -328,36 +328,37 @@ document.write(`
 <p>Avoid excess charges by destroying your environment when done. The sequence is as follows:</p>
 <section id="destroy-lab-3-resources">
 <h2>Destroy Lab 3 resources<a class="headerlink" href="#destroy-lab-3-resources" title="Permalink to this heading">#</a></h2>
-<p>Visit Terraform Cloud &gt; ace-iac-day-two workspace &gt; Settings menu &gt; Destruction &amp; Deletion &gt; Queue Destroy Plan. Make sure you confirm the plan to proceed with the equivalent of a terraform destroy. This is sufficient for removing your resources created by Lab 3.</p>
+<p>Visit <code class="docutils literal notranslate"><span class="pre">Terraform</span> <span class="pre">Cloud</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">ace-automation-day-two</span></code> workspace &gt; <code class="docutils literal notranslate"><span class="pre">Settings</span></code> menu &gt; <code class="docutils literal notranslate"><span class="pre">Destruction</span> <span class="pre">&amp;</span> <span class="pre">Deletion</span></code>. Click <code class="docutils literal notranslate"><span class="pre">Queue</span> <span class="pre">Destroy</span> <span class="pre">Plan</span></code>.</p>
+<p>Make sure you confirm the plan to proceed with the equivalent of a terraform destroy. This is sufficient for removing your resources created by <code class="docutils literal notranslate"><span class="pre">Lab</span> <span class="pre">3</span></code>.</p>
 <p><img alt="Destroy" src="../_images/clean-1-destroy.png" /></p>
 <p>When it is complete, you can also delete the Workspace from Terraform Cloud.</p>
 <p><img alt="Delete" src="../_images/clean-2-delete.png" /></p>
-<p>This is all documented officially here.
-Delete the remote repository for ace-iac-day-two in GitHub. Click on Settings and scroll all the way to the bottom to Danger Zone. Click  Delete this repository.</p>
-<p><img alt="Danger" src="../_images/clean-3-danger.png" /></p>
-<p>Type your repository name and click I understand the consequences, delete this repository.</p>
-<p><img alt="Confirm" src="../_images/clean-4-confirm.png" /></p>
+<p>This is all documented officially <a class="reference external" href="https://learn.hashicorp.com/tutorials/terraform/cloud-destroy">here</a>.</p>
 </section>
 <section id="destroy-lab-1-and-lab-2-resources">
 <h2>Destroy Lab 1 and Lab 2 resources<a class="headerlink" href="#destroy-lab-1-and-lab-2-resources" title="Permalink to this heading">#</a></h2>
 <p>Recall that Lab 1 and Lab 2 share the same Terraform state in the same Terraform Cloud Workspace. The process of Lab 1 and Lab 2 cleanup is identical to the process for Lab 3.</p>
-<p>Visit Terraform Cloud &gt; ace-iac-day-zero workspace &gt; Settings menu &gt; Destruction &amp; Deletion &gt; Queue Destroy Plan. Make sure you confirm the plan to proceed with the equivalent of a terraform destroy. This is sufficient for removing your resources created by Lab 1 and Lab 2.</p>
-<p>When it is complete, you can also delete the Workspace from Terraform Cloud. This is all documented officially here.
-Delete the remote repository for ace-iac-day-zero in GitHub. Click on Settings and scroll all the way to the bottom to Danger Zone. Click Delete this repository.</p>
-<p><img alt="Understand" src="../_images/clean-5-understand.png" /></p>
+<p>Visit <code class="docutils literal notranslate"><span class="pre">Terraform</span> <span class="pre">Cloud</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> workspace &gt; <code class="docutils literal notranslate"><span class="pre">Settings</span></code> menu &gt; <code class="docutils literal notranslate"><span class="pre">Destruction</span> <span class="pre">&amp;</span> <span class="pre">Deletion</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Queue</span> <span class="pre">Destroy</span> <span class="pre">Plan</span></code>.</p>
+<p>Make sure you confirm the plan to proceed with the equivalent of a terraform destroy. This is sufficient for removing your resources created by Lab 1 and Lab 2.</p>
+<p>When it is complete, you can also delete the Workspace from Terraform Cloud. This is all documented officially <a class="reference external" href="https://learn.hashicorp.com/tutorials/terraform/cloud-destroy">here</a>.</p>
+<p>Delete the repository for <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> in <code class="docutils literal notranslate"><span class="pre">GitHub</span></code>. Click on Settings and scroll all the way to the bottom to <code class="docutils literal notranslate"><span class="pre">Danger</span> <span class="pre">Zone</span></code>. Click <code class="docutils literal notranslate"><span class="pre">Delete</span> <span class="pre">this</span> <span class="pre">repository</span></code>.</p>
+<p><img alt="Delete" src="../_images/clean-5-understand.png" /></p>
 </section>
-<section id="destroy-controller-and-copilot-from-sandbox-starter-tool">
-<h2>Destroy Controller and CoPilot from Sandbox Starter Tool<a class="headerlink" href="#destroy-controller-and-copilot-from-sandbox-starter-tool" title="Permalink to this heading">#</a></h2>
-<p>Destroy the Controller and CoPilot from the Sandbox Starter Tool UI by following the instructions here.</p>
+<section id="destroy-controller-and-copilot-from-aviatrix-self-service">
+<h2>Destroy Controller and CoPilot from Aviatrix Self-service<a class="headerlink" href="#destroy-controller-and-copilot-from-aviatrix-self-service" title="Permalink to this heading">#</a></h2>
+<p>Destroy the Controller and CoPilot from the Aviatrix Self-Service UI by clicking the <code class="docutils literal notranslate"><span class="pre">Destroy</span></code> icon in the upper-right corner of the tool.</p>
+<p><img alt="Delete" src="../_images/clean-6-self-service.png" /></p>
 </section>
 <section id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">#</a></h2>
-<p>You should now have a solid idea of how multicloud IaC components fit together. The next steps should be to follow this learning path at your pace:</p>
-<p>Learn git basics. The tutorials on Atlassian are some of the best.
-Learn more about GitHub from this tutorial.
-Learn more about Terraform from the Hashicorp website
-Visit some of the published Hashicorp workshops
-Review the Aviatrix Terraform Provider documentation. Remember: Anything that can be configured on the Controller UI can be configured via Terraform as well.</p>
+<p>You should now have a basic understanding of Infrastructure as Code (IaC) concepts and tools for network automation. Your next steps to follow on this learning path at your own pace include:</p>
+<ul class="simple">
+<li><p>Learn git basics. The tutorials on <a class="reference external" href="https://www.atlassian.com/git/tutorials">Atlassian</a> are some of the best.</p></li>
+<li><p>Learn more about GitHub from <a class="reference external" href="https://guides.github.com/activities/hello-world/">this tutorial</a>.</p></li>
+<li><p>Learn more about Terraform from the <a class="reference external" href="https://learn.hashicorp.com/terraform">Hashicorp website</a></p></li>
+<li><p>Visit some of the published <a class="reference external" href="https://hashicorp.github.io/workshops/">Hashicorp workshops</a></p></li>
+<li><p>Review the Aviatrix <a class="reference external" href="https://registry.terraform.io/providers/AviatrixSystems/aviatrix/latest/docs">Terraform Provider</a> documentation. <strong>Remember:</strong> Anything that can be configured on the CoPilot UI can be configured via Terraform as well.</p></li>
+</ul>
 </section>
 </section>
 
@@ -421,7 +422,7 @@ Review the Aviatrix Terraform Provider documentation. Remember: Anything that ca
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destroy-lab-3-resources">Destroy Lab 3 resources</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destroy-lab-1-and-lab-2-resources">Destroy Lab 1 and Lab 2 resources</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destroy-controller-and-copilot-from-sandbox-starter-tool">Destroy Controller and CoPilot from Sandbox Starter Tool</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#destroy-controller-and-copilot-from-aviatrix-self-service">Destroy Controller and CoPilot from Aviatrix Self-service</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
 </ul>
   </nav></div>

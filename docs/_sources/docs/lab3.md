@@ -1,3 +1,15 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Terraform
+  language: terraform
+  name: terraform
+---
+
 # Lab 3 - Day 2
 
 ## Overview
@@ -48,7 +60,7 @@ Click the Pencil icon to edit directly on GitHub.com cloud UI
 
 Uncomment this line:
 
-```hcl
+```{code-cell} terraform
 # organization = "<replace-with-your-Terraform-Cloud-organization-and-uncomment>"
 ```
 
@@ -56,36 +68,12 @@ Edit it with the username of your Terraform Cloud organization account.
 
 Commit the changes directly to the main branch.
 
-Next, edit ace-iac-day-two > .github > CODEOWNERS (https://github.com/<student-account>/ace-iac-day-two/blob/main/.github/CODEOWNERS)
+### Create and enable branch automation
 
-![Code](images/lab3-5-code.png)
+Create two new branches
 
-Click on the Pencil icon to edit directly on GitHub.com cloud UI
-
-![Edit](images/lab3-6-edit.png)
-
-Edit the line for this CODEOWNERS file to specify the ACE SecOps GitHub account as the Owner. For example,
-
-app-fqdn-rules.tf @ace-secops
-
-Edit the other 4 lines and specify the Student’s own GitHub account (NetOps role).
-
-Commit the changes directly to the main branch.
-
-### Invite Collaborators for the Repository
-
-Remember that you are playing the Network Operator role and will need to invite the DevOps and SecOps personas as Collaborators to your Repository.
-
-Click on Settings > Collaborators > Manage access. Make sure these are the Settings for the Repository, not the Settings for your account. 
-Click on Invite a collaborator.
-Invite your GitHub account that will serve the purpose of the DevOps.
-Click on Invite a collaborator again.
-Invite your GitHub account that will serve the purpose of SecOps.
-Check the email for your respective accounts for DevOps and SecOps and approve the invitations to become a collaborator for your Network Operator Repository.
-
-### Create, Automate, and Secure a Branch
-
-Create a new branch called updates
+- updates
+- day-zero
 
 ![Branch](images/lab3-7-branch.png)
 
@@ -97,51 +85,78 @@ Click Actions
 
 ![Actions](images/lab3-9-actions.png)
 
-Click I understand my workflows, go ahead and enable them
+Click "I understand my workflows, go ahead and enable them".
 
-Secure the main branch by creating a Branch Protection Rule. This will ensure that only the GitHub account(s) mentioned in the CODEOWNERS file are authorized to review/approve the Pull Request.
+We already have the github actions workflow defined at `ace-automation` > `.github` > `workflows` > `terraform.yml`. This file causes github actions to execute when:
 
-Click on Settings > Branches > Add rule
-Name the Branch Name Pattern main
-Check the following 7 fields:
+- Pull requests are created with changes in the `day-two` folder, actions will execute `terraform apply` and report the result back to the PR.
+- Pull requests are merged to main with changes in the `day-two` folder, actions will execute `terraform apply`
 
-Require pull request reviews before merging
-Require approvals
-Dismiss stale pull request approvals when new commits are pushed
-Require review from Code Owners
-Require status checks to pass before merging
-Require branches to be up to date before merging
-Include administrators
+### Codeowners and branch protections
+
+The repository codeowners file and branch protections are the means by which you can enforce responsibility and collaboration between teams.
+
+Consider the scenario for this lab. The development team for ACE, Inc is responsible for applications deployed in the organization. They are best positioned to understand the egress requirements of their applications. We'll have them communicate those changes by modifying the code directly and creating a PR (more on that below). This will automatically trigger a review by the security team to ensure these changes meet corporate standards of appropriateness. Once the security team approves, the network team can now merge the PR and trigger a workflow that implements the change in the network itself. Communication, collaboration, and implementation are all codifed and enforced by the configuration of the repository.
+
+Take a look at the repository codeowners file located at `ace-automation` > `.github` > `CODEOWNERS`
+
+![Codeowners](images/lab3-5-code.png)
+
+Read the comments for an explanation of this file. We won't be implementing these rules for this lab, but it's important to understand the concept.
+
+You can read more about the codeowners file by clicking [this link](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
+
+Next, let's take a look at branch protections and how they work in tandem with the codeowners file to codify responsibility and collaboration.
+
+Go to your repository and click on `Settings` > `Branches` > `Add branch protection rule`
+
+Set the Branch Name Pattern: `main`
+
+Check the following 7 fields (except for require approvals since you're the only one doing the lab):
+
+- Require a pull request before merging
+- Require approvals
+- Dismiss stale pull request approvals when new commits are pushed
+- Require review from Code Owners
+- Require status checks to pass before merging
+- Require branches to be up to date before merging
+- Do not allow bypassing the above settings
 
 ![Protect](images/lab3-10-protect.png)
 
-By setting this up, you are adding several layers of security to the main branch which is where Terraform will be looking at for terraform apply.
+Click `Create`
+
+With these protections in place no one person can makes changes to the network. Additionally, for the `allowed_domains.tf` code, the Security team will also need to provide an approval to implement changes.
 
 ## Terraform Cloud
 
-### Set up workspace
+For this lab, we no longer want the vcs-driven workspace for lab1 and 2 to execute on changes to the repository. Navigate to the `ace-automation` workspace, click `Settings` then `Version Control`. Change the `VCS` branch to `day-zero`.
 
-Create a new Workspace.
+![VCS Branch](images/lab3-11-vcs.png)
 
-![Workspace](images/lab3-11-workspace.png)
+### Set up the day-two workspace
+
+Back at the root of your org's `Projects & workspaces`, create a new workspace by clicking `New`, then `Workspace`.
+
+![Workspace](images/lab1-7-workspace.png)
 
 Select API-driven workflow.
 
 ![Workflow](images/lab3-12-workflow.png)
 
-Name the workspace ace-iac-day-two and click Create workspace
+Name the workspace ace-automation-day-two and click Create workspace
 
 ![Workspace](images/lab3-13-workspace.png)
 
 ### Configure Variables
 
-Navigate to the Variables tab and add these credentials for accessing the Controller as Environment Variables:
+Navigate to the Variables section and add these credentials for accessing the Controller as Environment Variables:
 
-AVIATRIX_CONTROLLER_IP
-AVIATRIX_USERNAME
-AVIATRIX_PASSWORD
+- AVIATRIX_CONTROLLER_IP
+- AVIATRIX_PASSWORD
+- AVIATRIX_USERNAME
 
-Mark the value for AVIATRIX_CONTROLLER_IP and AVIATRIX_PASSWORD as sensitive.
+Mark the value for `AVIATRIX_CONTROLLER_IP` and `AVIATRIX_PASSWORD` as sensitive.
 
 As a learning exercise, note that the credentials for accessing the Aviatrix Controller are defined as Environment variables in this Lab. However, in Lab 1 and Lab 2, the credentials were instead defined as Terraform variables that were called in the provider.tf file. Both methods are valid.
 
@@ -165,19 +180,25 @@ Save the token in a safe place. You will add it to GitHub later as a secret, so 
 
 ### GitHub side
 
-Back in GitHub, for the repository (not the user), navigate to Settings > Secrets > Actions.
+Back in GitHub, for the repository (not the user), navigate to `Settings` > `Secrets and variables` > `Actions`.
 
-Create a New repository secret named TF_API_TOKEN, setting the Terraform Cloud API token you created in the previous step as the value.
+![Settings](images/lab3-16-gh-settings.png)
 
-Now your Terraform Cloud account and the repository in your GitHub account are securely linked via API.
+Create a New repository secret named `TF_API_TOKEN`, setting the Terraform Cloud API token you created in the previous step as the value.
+
+![Secret](images/lab3-16-gh-secret.png)
+
+Now your github repository can securely control your terraform cloud workspace via the tfc api.
 
 ## Collaboration with other stakeholders
 
-### Work done by DevOps team
+For the remainder of the lab, we're going to be thinking in terms of the personas we've described previously - the DevOps, NetOps, and SecOps teams.
 
-Please check your work carefully for any errors. If all looks good, navigate to the browser window where you are logged on in GitHub as the DevOps team.
+### Work done by the DevOps team
 
-Since Branch Protection Rules are in place for the main branch, make sure you navigate to the updates branch to make any changes. Click on the app-fqdn-rules.tf file in the updates branch to request access to a new FQDN.
+The development team has a new egress requirement to add `ai` integration the their application. They're going to communicate that to the other teams by making the change directly to the code that implements that change in the network.
+
+Make sure you're in the updates branch and select the `day-two/allowed_domains.tf` file.
 
 ![Update](images/lab3-17-update.png)
 
@@ -185,64 +206,76 @@ Click on the Pencil icon to edit directly on GitHub.com cloud UI
 
 ![Edit](images/lab3-18-edit.png)
 
-Below the two existing lines for aviatrix, add the following line:
+Below the existing lines for `allowed_https_domains`, add the following line:
 
-      "*.ubuntu.com"   = "80"
+```{code-cell} terraform
+    "api.openai.com",
+```
 
-Make sure the formatting (white spaces and alignment) matches the two existing lines. Otherwise, the GitHub Actions check will fail. GitHub Actions is configured for best practices, which is to check for formatting inconsistencies. As an FYI, this file is ace-iac-day-two > .github > workflows > terraform.yml, but it is beyond the scope of this training to go into the configuration and syntax of this file.
+Make sure the formatting (white spaces and alignment) matches the existing lines. Otherwise, the GitHub Actions check will fail. GitHub Actions is configured for best practices, which is to check for terraform formatting inconsistencies. As an FYI, the configuration for GitHub Actions is `ace-automation-day-two` > `.github` > `workflows` > `terraform.yml`. It is beyond the scope of this training to go into the configuration and syntax of this file.
 
 Next, click Commit changes:
 
 ![Commit](images/lab3-19-commit.png)
 
-After the DevOps account makes the code change, they need to create a Pull Request (PR) on the branch. Click New pull request.
+After the DevOps team makes the code change, they need to create a Pull Request (PR) on the branch to request its implementation. Click `Pull requests` and you'll notice there's a banner message prompting to `Compare & pull request`.
 
 ![PR](images/lab3-20-pr.png)
 
-Make sure you select the main branch of your repository (NOT the one that you forked) as the base and the updates branch as the compare.
+For the PR, make sure you select the main branch of your repository (NOT the `AviatrixSystems` repo that you forked) as the base (main) and the updates branch as the compare.
 
 ![Compare](images/lab3-21-compare.png)
 
-Add relevant comments and then click Create pull request one more time.
+Add relevant comments and then click `Create pull request` one more time.
 
-![PR](images/lab3-22-pr.png)
+GitHub Actions will then automatically do some checks for formatting, execute a terraform plan and then update the PR with the results of the plan.
 
-GitHub Actions will then automatically do some checks for formatting, and then notify the SecOps GitHub account that their Approval of the PR is pending.
+![Compare](images/lab3-22-update-pr.png)
 
-![PR-Check](images/lab3-23-pr-check.png)
+### Work done by the SecOps team
 
-You can click on Details to see the progress at any point.
+You'll notice that the PR (and the code changes it contains) is now ready to be merged to the main branch.
 
-### Work done by SecOps team
+![Compare](images/lab3-23-merge.png)
 
-Now you can navigate to the browser window where you are logged on in GitHub as the SecOps team to approve the PR.
+Think back to the `CODEOWNERS` file and branch protections we set. Had we fully enabled these setting to require review and approval by the SecOps team. The `Merge pull request` button would not be enabled and look like this:
 
-Specifically, navigate to Pull requests > Review requests and click on the request.
+![Compare](images/lab3-24-pr-check.png)
 
-![PR](images/lab3-24-pr.png)
+The SecOps team would have been alerted that their review was _required_. This gives security the opportunity to deny the change or request changes be made to it before the PR is approved - perhaps the code change doesn't meet organizational standards.
 
-Click Add your review.
+For the sake of this exercise, we'll assume that the changes meet SecOps standards and the PR has been approved. The `Merge pull request` button is enabled, but neither the SecOps or DevOps teams have the permissions required to implement the change.
 
-![Review](images/lab3-25-review.png)
+### Work done by the NetOps team
 
-Click Review changes one more time. If you are okay with the changes, click the Approve button and the Submit review.
+As the owner of the repository, the `NetOps` team is responsible for merging the PR to the main branch. Doing so will implement changes to the network so there may be timing considerations for doing so. GitHub Actions will trigger a Deployment (CD part of Continuous Deployment), which is a terraform apply and the Network Team can monitor the progress of the apply on Terraform Cloud.
 
-![Submit](images/lab3-26-submit.png)
+Go ahead and click `Merge pull request` and `Confirm merge` now.
 
-Once the SecOps team has Approved the PR, it will look like this:
-
-![Approve](images/lab3-27-approve.png)
-
-Now, any team can Merge the PR back into the Main branch. Upon doing so, GitHub Actions will trigger a Deployment (CD part of Continuous Deployment), which is a terraform apply and the Network Team can monitor the progress of the apply on Terraform Cloud.
+![Merge](images/lab3-25-confirm.png)
 
 At any time in this workflow, you can see the status of the GitHub Actions by clicking on Actions in GitHub.
 
-On the Controller, you should now see the new rule in your Egress FQDN filter.
+You may have noticed from the terraform plan, but this initial merge and terraform apply is doing more than just adding egress access to the domain that was edited. It's also enabling and configuring Aviatrix's [Distributed Cloud Firewall](https://aviatrix.com/distributed-cloud-firewall/)
 
-![Egress](images/lab3-28-egress.png)
+## Validation
+
+Let's take a look at this in CoPilot. Log in and navigate to `Security-->Distributed Cloud Firewall`
+
+You'll see a base set of rules:
+
+- **default-deny-all** - block anywhere to anywhere across all Aviatrix gateways
+- **allow-rfc1918** - however, allow all protocols and ports between rfc1918 (LAN) addresses.
+- **allow-internet-http|https** - and allow egress to domains in the configured WebGroups.
+
+Next, click on the `WebGroups` tab and note that `api.openai.com` is configured.
+
+![Web Groups](images/lab3-26-web-groups.png)
+
+If you'd like, repeat the process and add an additional domain. You could also validate by ssh-ing to your app instance (via the proxy instance) that you built in lab1 and test Internet access via curl/wget.
 
 ## Final Thoughts
 
-Congratulations! You have just built, enhanced, and secured a multicloud network by using automation. By using git branches and enabling collaboration with DevOps and SecOps teams to build CI/CD pipelines with secured branches, you have experienced true NetOps in action. Many of Aviatrix's largest customers practice IaC day in and day out. While the choice of tools (e.g. Jenkins instead of Terraform Cloud, GitLab instead of GitHub) may vary across enterprises, the concepts of Infrastructure as Code remain the same.
+Congratulations! You have just built, operated, and secured a multicloud network using automation. By using `GitHub Actions` and `Terraform Cloud`, you have experienced true `"GitOps"` in action. You also learned how collaboration between teams can be enabled and enforced through code. No meetings necessary!
 
-Be sure to clean up your resources to avoid any excess charges.
+Many of Aviatrix's largest customers rely on IaC to ensure their cloud networks are dependable, flexible and auditable. While the choice of tools (e.g. Jenkins instead of Terraform Cloud, GitLab instead of GitHub) may vary across enterprises, the concepts of Infrastructure as Code remain the same.

@@ -313,12 +313,12 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github">GitHub</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#invite-collaborators-for-the-repository">Invite Collaborators for the Repository</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-automate-and-secure-a-branch">Create, Automate, and Secure a Branch</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-and-enable-branch-automation">Create and enable branch automation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#codeowners-and-branch-protections">Codeowners and branch protections</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-cloud">Terraform Cloud</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-workspace">Set up workspace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-day-two-workspace">Set up the day-two workspace</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-variables">Configure Variables</a></li>
 </ul>
 </li>
@@ -328,10 +328,12 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaboration-with-other-stakeholders">Collaboration with other stakeholders</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-devops-team">Work done by DevOps team</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-secops-team">Work done by SecOps team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-the-devops-team">Work done by the DevOps team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-the-secops-team">Work done by the SecOps team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-the-netops-team">Work done by the NetOps team</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation">Validation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-thoughts">Final Thoughts</a></li>
 </ul>
             </nav>
@@ -386,72 +388,83 @@ document.write(`
 <p>Click the Pencil icon to edit directly on <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI</p>
 <p><img alt="Edit" src="../_images/lab3-4-edit.png" /></p>
 <p>Uncomment this line:</p>
-<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="c1"># organization = &quot;&lt;replace-with-your-Terraform-Cloud-organization-and-uncomment&gt;&quot;</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="c1"># organization = &quot;&lt;replace-with-your-Terraform-Cloud-organization-and-uncomment&gt;&quot;</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>Edit it with the username of your Terraform Cloud organization account.</p>
 <p>Commit the changes directly to the main branch.</p>
-<p>Next, edit ace-iac-day-two &gt; .github &gt; CODEOWNERS (<a class="github reference external" href="https://github.com/"></a><student-account>/ace-iac-day-two/blob/main/.github/CODEOWNERS)</p>
-<p><img alt="Code" src="../_images/lab3-5-code.png" /></p>
-<p>Click on the Pencil icon to edit directly on <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI</p>
-<p><img alt="Edit" src="../_images/lab3-6-edit.png" /></p>
-<p>Edit the line for this CODEOWNERS file to specify the ACE SecOps GitHub account as the Owner. For example,</p>
-<p><a class="reference external" href="http://app-fqdn-rules.tf">app-fqdn-rules.tf</a> &#64;ace-secops</p>
-<p>Edit the other 4 lines and specify the Student’s own GitHub account (NetOps role).</p>
-<p>Commit the changes directly to the main branch.</p>
 </section>
-<section id="invite-collaborators-for-the-repository">
-<h3>Invite Collaborators for the Repository<a class="headerlink" href="#invite-collaborators-for-the-repository" title="Permalink to this heading">#</a></h3>
-<p>Remember that you are playing the Network Operator role and will need to invite the DevOps and SecOps personas as Collaborators to your Repository.</p>
-<p>Click on Settings &gt; Collaborators &gt; Manage access. Make sure these are the Settings for the Repository, not the Settings for your account.
-Click on Invite a collaborator.
-Invite your GitHub account that will serve the purpose of the DevOps.
-Click on Invite a collaborator again.
-Invite your GitHub account that will serve the purpose of SecOps.
-Check the email for your respective accounts for DevOps and SecOps and approve the invitations to become a collaborator for your Network Operator Repository.</p>
-</section>
-<section id="create-automate-and-secure-a-branch">
-<h3>Create, Automate, and Secure a Branch<a class="headerlink" href="#create-automate-and-secure-a-branch" title="Permalink to this heading">#</a></h3>
-<p>Create a new branch called updates</p>
+<section id="create-and-enable-branch-automation">
+<h3>Create and enable branch automation<a class="headerlink" href="#create-and-enable-branch-automation" title="Permalink to this heading">#</a></h3>
+<p>Create two new branches</p>
+<ul class="simple">
+<li><p>updates</p></li>
+<li><p>day-zero</p></li>
+</ul>
 <p><img alt="Branch" src="../_images/lab3-7-branch.png" /></p>
 <p>Automate workflows on the branch by configuring GitHub Actions</p>
 <p><img alt="Actions" src="../_images/lab3-8-actions.png" /></p>
 <p>Click Actions</p>
 <p><img alt="Actions" src="../_images/lab3-9-actions.png" /></p>
-<p>Click I understand my workflows, go ahead and enable them</p>
-<p>Secure the main branch by creating a Branch Protection Rule. This will ensure that only the GitHub account(s) mentioned in the CODEOWNERS file are authorized to review/approve the Pull Request.</p>
-<p>Click on Settings &gt; Branches &gt; Add rule
-Name the Branch Name Pattern main
-Check the following 7 fields:</p>
-<p>Require pull request reviews before merging
-Require approvals
-Dismiss stale pull request approvals when new commits are pushed
-Require review from Code Owners
-Require status checks to pass before merging
-Require branches to be up to date before merging
-Include administrators</p>
+<p>Click “I understand my workflows, go ahead and enable them”.</p>
+<p>We already have the github actions workflow defined at <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">.github</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">workflows</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">terraform.yml</span></code>. This file causes github actions to execute when:</p>
+<ul class="simple">
+<li><p>Pull requests are created with changes in the <code class="docutils literal notranslate"><span class="pre">day-two</span></code> folder, actions will execute <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code> and report the result back to the PR.</p></li>
+<li><p>Pull requests are merged to main with changes in the <code class="docutils literal notranslate"><span class="pre">day-two</span></code> folder, actions will execute <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code></p></li>
+</ul>
+</section>
+<section id="codeowners-and-branch-protections">
+<h3>Codeowners and branch protections<a class="headerlink" href="#codeowners-and-branch-protections" title="Permalink to this heading">#</a></h3>
+<p>The repository codeowners file and branch protections are the means by which you can enforce responsibility and collaboration between teams.</p>
+<p>Consider the scenario for this lab. The development team for ACE, Inc is responsible for applications deployed in the organization. They are best positioned to understand the egress requirements of their applications. We’ll have them communicate those changes by modifying the code directly and creating a PR (more on that below). This will automatically trigger a review by the security team to ensure these changes meet corporate standards of appropriateness. Once the security team approves, the network team can now merge the PR and trigger a workflow that implements the change in the network itself. Communication, collaboration, and implementation are all codifed and enforced by the configuration of the repository.</p>
+<p>Take a look at the repository codeowners file located at <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">.github</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">CODEOWNERS</span></code></p>
+<p><img alt="Codeowners" src="../_images/lab3-5-code.png" /></p>
+<p>Read the comments for an explanation of this file. We won’t be implementing these rules for this lab, but it’s important to understand the concept.</p>
+<p>You can read more about the codeowners file by clicking <a class="reference external" href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners">this link</a>.</p>
+<p>Next, let’s take a look at branch protections and how they work in tandem with the codeowners file to codify responsibility and collaboration.</p>
+<p>Go to your repository and click on <code class="docutils literal notranslate"><span class="pre">Settings</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Branches</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">branch</span> <span class="pre">protection</span> <span class="pre">rule</span></code></p>
+<p>Set the Branch Name Pattern: <code class="docutils literal notranslate"><span class="pre">main</span></code></p>
+<p>Check the following 7 fields (except for require approvals since you’re the only one doing the lab):</p>
+<ul class="simple">
+<li><p>Require a pull request before merging</p></li>
+<li><p>Require approvals</p></li>
+<li><p>Dismiss stale pull request approvals when new commits are pushed</p></li>
+<li><p>Require review from Code Owners</p></li>
+<li><p>Require status checks to pass before merging</p></li>
+<li><p>Require branches to be up to date before merging</p></li>
+<li><p>Do not allow bypassing the above settings</p></li>
+</ul>
 <p><img alt="Protect" src="../_images/lab3-10-protect.png" /></p>
-<p>By setting this up, you are adding several layers of security to the main branch which is where Terraform will be looking at for terraform apply.</p>
+<p>Click <code class="docutils literal notranslate"><span class="pre">Create</span></code></p>
+<p>With these protections in place no one person can makes changes to the network. Additionally, for the <code class="docutils literal notranslate"><span class="pre">allowed_domains.tf</span></code> code, the Security team will also need to provide an approval to implement changes.</p>
 </section>
 </section>
 <section id="terraform-cloud">
 <h2>Terraform Cloud<a class="headerlink" href="#terraform-cloud" title="Permalink to this heading">#</a></h2>
-<section id="set-up-workspace">
-<h3>Set up workspace<a class="headerlink" href="#set-up-workspace" title="Permalink to this heading">#</a></h3>
-<p>Create a new Workspace.</p>
-<p><img alt="Workspace" src="../_images/lab3-11-workspace.png" /></p>
+<p>For this lab, we no longer want the vcs-driven workspace for lab1 and 2 to execute on changes to the repository. Navigate to the <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> workspace, click <code class="docutils literal notranslate"><span class="pre">Settings</span></code> then <code class="docutils literal notranslate"><span class="pre">Version</span> <span class="pre">Control</span></code>. Change the <code class="docutils literal notranslate"><span class="pre">VCS</span></code> branch to <code class="docutils literal notranslate"><span class="pre">day-zero</span></code>.</p>
+<p><img alt="VCS Branch" src="../_images/lab3-11-vcs.png" /></p>
+<section id="set-up-the-day-two-workspace">
+<h3>Set up the day-two workspace<a class="headerlink" href="#set-up-the-day-two-workspace" title="Permalink to this heading">#</a></h3>
+<p>Back at the root of your org’s <code class="docutils literal notranslate"><span class="pre">Projects</span> <span class="pre">&amp;</span> <span class="pre">workspaces</span></code>, create a new workspace by clicking <code class="docutils literal notranslate"><span class="pre">New</span></code>, then <code class="docutils literal notranslate"><span class="pre">Workspace</span></code>.</p>
+<p><img alt="Workspace" src="../_images/lab1-7-workspace.png" /></p>
 <p>Select API-driven workflow.</p>
 <p><img alt="Workflow" src="../_images/lab3-12-workflow.png" /></p>
-<p>Name the workspace ace-iac-day-two and click Create workspace</p>
+<p>Name the workspace ace-automation-day-two and click Create workspace</p>
 <p><img alt="Workspace" src="../_images/lab3-13-workspace.png" /></p>
 </section>
 <section id="configure-variables">
 <h3>Configure Variables<a class="headerlink" href="#configure-variables" title="Permalink to this heading">#</a></h3>
-<p>Navigate to the Variables tab and add these credentials for accessing the Controller as Environment Variables:</p>
-<p>AVIATRIX_CONTROLLER_IP
-AVIATRIX_USERNAME
-AVIATRIX_PASSWORD</p>
-<p>Mark the value for AVIATRIX_CONTROLLER_IP and AVIATRIX_PASSWORD as sensitive.</p>
+<p>Navigate to the Variables section and add these credentials for accessing the Controller as Environment Variables:</p>
+<ul class="simple">
+<li><p>AVIATRIX_CONTROLLER_IP</p></li>
+<li><p>AVIATRIX_PASSWORD</p></li>
+<li><p>AVIATRIX_USERNAME</p></li>
+</ul>
+<p>Mark the value for <code class="docutils literal notranslate"><span class="pre">AVIATRIX_CONTROLLER_IP</span></code> and <code class="docutils literal notranslate"><span class="pre">AVIATRIX_PASSWORD</span></code> as sensitive.</p>
 <p>As a learning exercise, note that the credentials for accessing the Aviatrix Controller are defined as Environment variables in this Lab. However, in Lab 1 and Lab 2, the credentials were instead defined as Terraform variables that were called in the <a class="reference external" href="http://provider.tf">provider.tf</a> file. Both methods are valid.</p>
 <p><img alt="Vars" src="../_images/lab3-14-vars.png" /></p>
 </section>
@@ -469,58 +482,77 @@ AVIATRIX_PASSWORD</p>
 </section>
 <section id="github-side">
 <h3>GitHub side<a class="headerlink" href="#github-side" title="Permalink to this heading">#</a></h3>
-<p>Back in GitHub, for the repository (not the user), navigate to Settings &gt; Secrets &gt; Actions.</p>
-<p>Create a New repository secret named TF_API_TOKEN, setting the Terraform Cloud API token you created in the previous step as the value.</p>
-<p>Now your Terraform Cloud account and the repository in your GitHub account are securely linked via API.</p>
+<p>Back in GitHub, for the repository (not the user), navigate to <code class="docutils literal notranslate"><span class="pre">Settings</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Secrets</span> <span class="pre">and</span> <span class="pre">variables</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Actions</span></code>.</p>
+<p><img alt="Settings" src="../_images/lab3-16-gh-settings.png" /></p>
+<p>Create a New repository secret named <code class="docutils literal notranslate"><span class="pre">TF_API_TOKEN</span></code>, setting the Terraform Cloud API token you created in the previous step as the value.</p>
+<p><img alt="Secret" src="../_images/lab3-16-gh-secret.png" /></p>
+<p>Now your github repository can securely control your terraform cloud workspace via the tfc api.</p>
 </section>
 </section>
 <section id="collaboration-with-other-stakeholders">
 <h2>Collaboration with other stakeholders<a class="headerlink" href="#collaboration-with-other-stakeholders" title="Permalink to this heading">#</a></h2>
-<section id="work-done-by-devops-team">
-<h3>Work done by DevOps team<a class="headerlink" href="#work-done-by-devops-team" title="Permalink to this heading">#</a></h3>
-<p>Please check your work carefully for any errors. If all looks good, navigate to the browser window where you are logged on in GitHub as the DevOps team.</p>
-<p>Since Branch Protection Rules are in place for the main branch, make sure you navigate to the updates branch to make any changes. Click on the <a class="reference external" href="http://app-fqdn-rules.tf">app-fqdn-rules.tf</a> file in the updates branch to request access to a new FQDN.</p>
+<p>For the remainder of the lab, we’re going to be thinking in terms of the personas we’ve described previously - the DevOps, NetOps, and SecOps teams.</p>
+<section id="work-done-by-the-devops-team">
+<h3>Work done by the DevOps team<a class="headerlink" href="#work-done-by-the-devops-team" title="Permalink to this heading">#</a></h3>
+<p>The development team has a new egress requirement to add <code class="docutils literal notranslate"><span class="pre">ai</span></code> integration the their application. They’re going to communicate that to the other teams by making the change directly to the code that implements that change in the network.</p>
+<p>Make sure you’re in the updates branch and select the <code class="docutils literal notranslate"><span class="pre">day-two/allowed_domains.tf</span></code> file.</p>
 <p><img alt="Update" src="../_images/lab3-17-update.png" /></p>
 <p>Click on the Pencil icon to edit directly on <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI</p>
 <p><img alt="Edit" src="../_images/lab3-18-edit.png" /></p>
-<p>Below the two existing lines for aviatrix, add the following line:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &quot;*.ubuntu.com&quot;   = &quot;80&quot;
+<p>Below the existing lines for <code class="docutils literal notranslate"><span class="pre">allowed_https_domains</span></code>, add the following line:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="s2">&quot;api.openai.com&quot;</span><span class="p">,</span>
 </pre></div>
 </div>
-<p>Make sure the formatting (white spaces and alignment) matches the two existing lines. Otherwise, the GitHub Actions check will fail. GitHub Actions is configured for best practices, which is to check for formatting inconsistencies. As an FYI, this file is ace-iac-day-two &gt; .github &gt; workflows &gt; terraform.yml, but it is beyond the scope of this training to go into the configuration and syntax of this file.</p>
+</div>
+</div>
+<p>Make sure the formatting (white spaces and alignment) matches the existing lines. Otherwise, the GitHub Actions check will fail. GitHub Actions is configured for best practices, which is to check for terraform formatting inconsistencies. As an FYI, the configuration for GitHub Actions is <code class="docutils literal notranslate"><span class="pre">ace-automation-day-two</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">.github</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">workflows</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">terraform.yml</span></code>. It is beyond the scope of this training to go into the configuration and syntax of this file.</p>
 <p>Next, click Commit changes:</p>
 <p><img alt="Commit" src="../_images/lab3-19-commit.png" /></p>
-<p>After the DevOps account makes the code change, they need to create a Pull Request (PR) on the branch. Click New pull request.</p>
+<p>After the DevOps team makes the code change, they need to create a Pull Request (PR) on the branch to request its implementation. Click <code class="docutils literal notranslate"><span class="pre">Pull</span> <span class="pre">requests</span></code> and you’ll notice there’s a banner message prompting to <code class="docutils literal notranslate"><span class="pre">Compare</span> <span class="pre">&amp;</span> <span class="pre">pull</span> <span class="pre">request</span></code>.</p>
 <p><img alt="PR" src="../_images/lab3-20-pr.png" /></p>
-<p>Make sure you select the main branch of your repository (NOT the one that you forked) as the base and the updates branch as the compare.</p>
+<p>For the PR, make sure you select the main branch of your repository (NOT the <code class="docutils literal notranslate"><span class="pre">AviatrixSystems</span></code> repo that you forked) as the base (main) and the updates branch as the compare.</p>
 <p><img alt="Compare" src="../_images/lab3-21-compare.png" /></p>
-<p>Add relevant comments and then click Create pull request one more time.</p>
-<p><img alt="PR" src="../_images/lab3-22-pr.png" /></p>
-<p>GitHub Actions will then automatically do some checks for formatting, and then notify the SecOps GitHub account that their Approval of the PR is pending.</p>
-<p><img alt="PR-Check" src="../_images/lab3-23-pr-check.png" /></p>
-<p>You can click on Details to see the progress at any point.</p>
+<p>Add relevant comments and then click <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">pull</span> <span class="pre">request</span></code> one more time.</p>
+<p>GitHub Actions will then automatically do some checks for formatting, execute a terraform plan and then update the PR with the results of the plan.</p>
+<p><img alt="Compare" src="../_images/lab3-22-update-pr.png" /></p>
 </section>
-<section id="work-done-by-secops-team">
-<h3>Work done by SecOps team<a class="headerlink" href="#work-done-by-secops-team" title="Permalink to this heading">#</a></h3>
-<p>Now you can navigate to the browser window where you are logged on in GitHub as the SecOps team to approve the PR.</p>
-<p>Specifically, navigate to Pull requests &gt; Review requests and click on the request.</p>
-<p><img alt="PR" src="../_images/lab3-24-pr.png" /></p>
-<p>Click Add your review.</p>
-<p><img alt="Review" src="../_images/lab3-25-review.png" /></p>
-<p>Click Review changes one more time. If you are okay with the changes, click the Approve button and the Submit review.</p>
-<p><img alt="Submit" src="../_images/lab3-26-submit.png" /></p>
-<p>Once the SecOps team has Approved the PR, it will look like this:</p>
-<p><img alt="Approve" src="../_images/lab3-27-approve.png" /></p>
-<p>Now, any team can Merge the PR back into the Main branch. Upon doing so, GitHub Actions will trigger a Deployment (CD part of Continuous Deployment), which is a terraform apply and the Network Team can monitor the progress of the apply on Terraform Cloud.</p>
+<section id="work-done-by-the-secops-team">
+<h3>Work done by the SecOps team<a class="headerlink" href="#work-done-by-the-secops-team" title="Permalink to this heading">#</a></h3>
+<p>You’ll notice that the PR (and the code changes it contains) is now ready to be merged to the main branch.</p>
+<p><img alt="Compare" src="../_images/lab3-23-merge.png" /></p>
+<p>Think back to the <code class="docutils literal notranslate"><span class="pre">CODEOWNERS</span></code> file and branch protections we set. Had we fully enabled these setting to require review and approval by the SecOps team. The <code class="docutils literal notranslate"><span class="pre">Merge</span> <span class="pre">pull</span> <span class="pre">request</span></code> button would not be enabled and look like this:</p>
+<p><img alt="Compare" src="../_images/lab3-24-pr-check.png" /></p>
+<p>The SecOps team would have been alerted that their review was <em>required</em>. This gives security the opportunity to deny the change or request changes be made to it before the PR is approved - perhaps the code change doesn’t meet organizational standards.</p>
+<p>For the sake of this exercise, we’ll assume that the changes meet SecOps standards and the PR has been approved. The <code class="docutils literal notranslate"><span class="pre">Merge</span> <span class="pre">pull</span> <span class="pre">request</span></code> button is enabled, but neither the SecOps or DevOps teams have the permissions required to implement the change.</p>
+</section>
+<section id="work-done-by-the-netops-team">
+<h3>Work done by the NetOps team<a class="headerlink" href="#work-done-by-the-netops-team" title="Permalink to this heading">#</a></h3>
+<p>As the owner of the repository, the <code class="docutils literal notranslate"><span class="pre">NetOps</span></code> team is responsible for merging the PR to the main branch. Doing so will implement changes to the network so there may be timing considerations for doing so. GitHub Actions will trigger a Deployment (CD part of Continuous Deployment), which is a terraform apply and the Network Team can monitor the progress of the apply on Terraform Cloud.</p>
+<p>Go ahead and click <code class="docutils literal notranslate"><span class="pre">Merge</span> <span class="pre">pull</span> <span class="pre">request</span></code> and <code class="docutils literal notranslate"><span class="pre">Confirm</span> <span class="pre">merge</span></code> now.</p>
+<p><img alt="Merge" src="../_images/lab3-25-confirm.png" /></p>
 <p>At any time in this workflow, you can see the status of the GitHub Actions by clicking on Actions in GitHub.</p>
-<p>On the Controller, you should now see the new rule in your Egress FQDN filter.</p>
-<p><img alt="Egress" src="../_images/lab3-28-egress.png" /></p>
+<p>You may have noticed from the terraform plan, but this initial merge and terraform apply is doing more than just adding egress access to the domain that was edited. It’s also enabling and configuring Aviatrix’s <a class="reference external" href="https://aviatrix.com/distributed-cloud-firewall/">Distributed Cloud Firewall</a></p>
 </section>
+</section>
+<section id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this heading">#</a></h2>
+<p>Let’s take a look at this in CoPilot. Log in and navigate to <code class="docutils literal notranslate"><span class="pre">Security--&gt;Distributed</span> <span class="pre">Cloud</span> <span class="pre">Firewall</span></code></p>
+<p>You’ll see a base set of rules:</p>
+<ul class="simple">
+<li><p><strong>default-deny-all</strong> - block anywhere to anywhere across all Aviatrix gateways</p></li>
+<li><p><strong>allow-rfc1918</strong> - however, allow all protocols and ports between rfc1918 (LAN) addresses.</p></li>
+<li><p><strong>allow-internet-http|https</strong> - and allow egress to domains in the configured WebGroups.</p></li>
+</ul>
+<p>Next, click on the <code class="docutils literal notranslate"><span class="pre">WebGroups</span></code> tab and note that <code class="docutils literal notranslate"><span class="pre">api.openai.com</span></code> is configured.</p>
+<p><img alt="Web Groups" src="../_images/lab3-26-web-groups.png" /></p>
+<p>If you’d like, repeat the process and add an additional domain. You could also validate by ssh-ing to your app instance (via the proxy instance) that you built in lab1 and test Internet access via curl/wget.</p>
 </section>
 <section id="final-thoughts">
 <h2>Final Thoughts<a class="headerlink" href="#final-thoughts" title="Permalink to this heading">#</a></h2>
-<p>Congratulations! You have just built, enhanced, and secured a multicloud network by using automation. By using git branches and enabling collaboration with DevOps and SecOps teams to build CI/CD pipelines with secured branches, you have experienced true NetOps in action. Many of Aviatrix’s largest customers practice IaC day in and day out. While the choice of tools (e.g. Jenkins instead of Terraform Cloud, GitLab instead of GitHub) may vary across enterprises, the concepts of Infrastructure as Code remain the same.</p>
-<p>Be sure to clean up your resources to avoid any excess charges.</p>
+<p>Congratulations! You have just built, operated, and secured a multicloud network using automation. By using <code class="docutils literal notranslate"><span class="pre">GitHub</span> <span class="pre">Actions</span></code> and <code class="docutils literal notranslate"><span class="pre">Terraform</span> <span class="pre">Cloud</span></code>, you have experienced true <code class="docutils literal notranslate"><span class="pre">&quot;GitOps&quot;</span></code> in action. You also learned how collaboration between teams can be enabled and enforced through code. No meetings necessary!</p>
+<p>Many of Aviatrix’s largest customers rely on IaC to ensure their cloud networks are dependable, flexible and auditable. While the choice of tools (e.g. Jenkins instead of Terraform Cloud, GitLab instead of GitHub) may vary across enterprises, the concepts of Infrastructure as Code remain the same.</p>
 </section>
 </section>
 
@@ -533,16 +565,16 @@ AVIATRIX_PASSWORD</p>
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "terraform"
         },
         kernelOptions: {
-            name: "python3",
+            name: "terraform",
             path: "./docs"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'terraform'</script>
 
                 </article>
               
@@ -595,12 +627,12 @@ AVIATRIX_PASSWORD</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#github">GitHub</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#invite-collaborators-for-the-repository">Invite Collaborators for the Repository</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-automate-and-secure-a-branch">Create, Automate, and Secure a Branch</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-and-enable-branch-automation">Create and enable branch automation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#codeowners-and-branch-protections">Codeowners and branch protections</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terraform-cloud">Terraform Cloud</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-workspace">Set up workspace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-day-two-workspace">Set up the day-two workspace</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-variables">Configure Variables</a></li>
 </ul>
 </li>
@@ -610,10 +642,12 @@ AVIATRIX_PASSWORD</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collaboration-with-other-stakeholders">Collaboration with other stakeholders</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-devops-team">Work done by DevOps team</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-secops-team">Work done by SecOps team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-the-devops-team">Work done by the DevOps team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-the-secops-team">Work done by the SecOps team</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#work-done-by-the-netops-team">Work done by the NetOps team</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation">Validation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-thoughts">Final Thoughts</a></li>
 </ul>
   </nav></div>

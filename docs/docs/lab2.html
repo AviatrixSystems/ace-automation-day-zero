@@ -363,12 +363,16 @@ document.write(`
 <section id="configure-a-connection-policy">
 <h2>Configure a Connection Policy<a class="headerlink" href="#configure-a-connection-policy" title="Permalink to this heading">#</a></h2>
 <p>Connect BU1 to BU2 by uncommenting this block of code at the bottom of <a class="reference external" href="http://main.tf">main.tf</a>.</p>
-<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="c1"># resource &quot;aviatrix_segmentation_network_domain_connection_policy&quot; &quot;ace_automation&quot; {</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="c1"># resource &quot;aviatrix_segmentation_network_domain_connection_policy&quot; &quot;ace_automation&quot; {</span>
 <span class="c1">#   domain_name_1 = &quot;bu1&quot;</span>
 <span class="c1">#   domain_name_2 = &quot;bu2&quot;</span>
 <span class="c1">#   depends_on    = [module.ace_automation]</span>
 <span class="c1"># }</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>On <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI, click the Pencil icon to edit directly.</p>
 <p><img alt="Edit" src="../_images/lab2-7-edit.png" /></p>
@@ -389,19 +393,27 @@ document.write(`
 <section id="code-optimization">
 <h2>Code Optimization<a class="headerlink" href="#code-optimization" title="Permalink to this heading">#</a></h2>
 <p>Take a look at the following block of Terraform code that you just enabled on <a class="reference external" href="http://main.tf">main.tf</a>:</p>
-<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aviatrix_segmentation_network_domain_connection_policy&quot;</span><span class="w"> </span><span class="nv">&quot;ace_automation&quot;</span><span class="w"> </span><span class="p">{</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aviatrix_segmentation_network_domain_connection_policy&quot;</span><span class="w"> </span><span class="nv">&quot;ace_automation&quot;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="na">domain_name_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bu1&quot;</span>
 <span class="w">    </span><span class="na">domain_name_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bu2&quot;</span>
 <span class="w">    </span><span class="na">depends_on</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">module.ace_automation</span><span class="p">]</span>
 <span class="w">  </span><span class="p">}</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>This block can be further optimized. The line beginning with depends_on is an <em>explicit</em> dependency on network domains that were created elsewhere in the code. Instead of <code class="docutils literal notranslate"><span class="pre">hard-coding</span></code> domain_name_1 and domain_name_2 as <code class="docutils literal notranslate"><span class="pre">bu1</span></code> and <code class="docutils literal notranslate"><span class="pre">bu2</span></code> respectively, create <em>implicit</em> dependencies. Modify the code as follows:</p>
-<div class="highlight-hcl notranslate"><div class="highlight"><pre><span></span><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aviatrix_segmentation_network_domain_connection_policy&quot;</span><span class="w"> </span><span class="nv">&quot;ace_automation&quot;</span><span class="w"> </span><span class="p">{</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aviatrix_segmentation_network_domain_connection_policy&quot;</span><span class="w"> </span><span class="nv">&quot;ace_automation&quot;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="na">domain_name_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">module.ace_automation.bu1_network_domain_name</span>
 <span class="w">  </span><span class="na">domain_name_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">module.ace_automation.bu2_network_domain_name</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>Since we now have an <em>implicit</em> dependency, we no longer need to create the <em>explicit</em> dependency via <code class="docutils literal notranslate"><span class="pre">depends_on</span></code> and therefore it had been removed.</p>
 <p>When you commit and make the change, you’ll notice that it makes no changes to your infrastructure. However, it is better Terraform code because it relies less on manual hard-coded dependencies.</p>
@@ -424,16 +436,16 @@ document.write(`
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "terraform"
         },
         kernelOptions: {
-            name: "python3",
+            name: "terraform",
             path: "./docs"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'terraform'</script>
 
                 </article>
               

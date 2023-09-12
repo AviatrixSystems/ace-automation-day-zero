@@ -1,3 +1,15 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Terraform
+  language: terraform
+  name: terraform
+---
+
 # Lab 2 - Day 1
 
 ## Overview
@@ -51,7 +63,7 @@ However, `BU1` and `BU2` are still not connected. SSH to `BU1` Bastion and leave
 
 Connect BU1 to BU2 by uncommenting this block of code at the bottom of main.tf.
 
-```hcl
+```{code-cell} terraform
 # resource "aviatrix_segmentation_network_domain_connection_policy" "ace_automation" {
 #   domain_name_1 = "bu1"
 #   domain_name_2 = "bu2"
@@ -93,7 +105,7 @@ Also, you should now be able to SSH to `BU2` App from `BU1` Bastion.
 
 Take a look at the following block of Terraform code that you just enabled on main.tf:
 
-```hcl
+```{code-cell} terraform
   resource "aviatrix_segmentation_network_domain_connection_policy" "ace_automation" {
     domain_name_1 = "bu1"
     domain_name_2 = "bu2"
@@ -103,7 +115,7 @@ Take a look at the following block of Terraform code that you just enabled on ma
 
 This block can be further optimized. The line beginning with depends_on is an _explicit_ dependency on network domains that were created elsewhere in the code. Instead of `hard-coding` domain_name_1 and domain_name_2 as `bu1` and `bu2` respectively, create _implicit_ dependencies. Modify the code as follows:
 
-```hcl
+```{code-cell} terraform
 resource "aviatrix_segmentation_network_domain_connection_policy" "ace_automation" {
   domain_name_1 = module.ace_automation.bu1_network_domain_name
   domain_name_2 = module.ace_automation.bu2_network_domain_name
