@@ -1,6 +1,8 @@
 # Summary  
 
-Congratulations! You have just built, operated, and secured a multicloud network using automation. You've role-played development, security, and networking teams in your organization to understand how each can collaborate in a CI/CD pipeline to implement changes to the network in a secure and automated fashion. Many of Aviatrix's largest customers leverage IaC to manage their networks. While the choice of tools (e.g. Jenkins instead of Terraform Cloud, GitLab instead of GitHub) may vary across enterprises, the concepts of Infrastructure as Code remain the same.
+Congratulations! You have just built, operated, and secured a multicloud network using automation. By using `GitHub Actions` and `Terraform Cloud`, you have experienced true `"GitOps"` in action. You've role-played development, security, and networking team personas in your organization to understand how each can collaborate in a CI/CD pipeline to implement changes to cloud networks in a secure and automated fashion. No meetings necessary!
+
+Many of Aviatrix's largest customers leverage IaC to manage their networks. While the choice of tools (e.g. `Jenkins` instead of `Terraform Cloud`, `GitLab` instead of `GitHub`) may vary across enterprises, the concepts of Infrastructure as Code remain the same.
 
 Now that you've completed the training, be sure to [clean up your resources](./cleanup.md) to avoid any excess charges.
 

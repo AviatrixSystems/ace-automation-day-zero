@@ -26,15 +26,17 @@ Make sure you confirm the plan to proceed with the equivalent of a terraform des
 
 When it is complete, you can also delete the Workspace from Terraform Cloud. This is all documented officially [here](https://learn.hashicorp.com/tutorials/terraform/cloud-destroy).
 
-Delete the repository for `ace-automation` in `GitHub`. Click on Settings and scroll all the way to the bottom to `Danger Zone`. Click `Delete this repository`.
-
-![Delete](images/clean-5-understand.png)
-
 ## Destroy Controller and CoPilot from Aviatrix Self-service
 
 Destroy the Controller and CoPilot from the Aviatrix Self-Service UI by clicking the `Destroy` icon in the upper-right corner of the tool.
 
 ![Delete](images/clean-6-self-service.png)
+
+## Delete your GitHub repository
+
+Once you've submitted the requirements for certification and have received confirmation from Aviatrix, you can now delete the repository for `ace-automation` in `GitHub`. Click on Settings and scroll all the way to the bottom to `Danger Zone`. Click `Delete this repository`.
+
+![Delete](images/clean-5-understand.png)
 
 ## Next Steps
 
