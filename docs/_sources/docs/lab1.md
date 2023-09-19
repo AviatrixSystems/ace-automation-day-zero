@@ -57,16 +57,16 @@ Let's take a look at the files in your forked  `ace-automation` repository.
 
 In Terraform, every file ending in `.tf` is considered. So they could all be in one big file, but the best practice is to have separate files for various purposes. Here is how each file has a purpose in this Lab:
 
-- **main.tf** - This file contains 1 module and 1 resource. We'll be modifying this file at different points of the first two labs. The module is executing code located in the `_modules/day-zero` subfolder. The majority of the infrastructure being deployed is there. You'll see references to other, external `Aviatrix` and AWS `modules` that are available for anyone to use. These will create the networks, security groups, ec2 instances and Aviatrix gateways used in the lab. The power of modules is that you can write code once (or use other's code) and reuse it any number of times to achieve consistent implementations of the configured infrastructure. For the purpose of these labs, we'll keep it simple by modifying the files noted here. But, if you have interest in digging deeper, look into these child modules, particularly [mc-transit](https://registry.terraform.io/modules/terraform-aviatrix-modules/mc-transit/aviatrix/latest) and [mc-spoke](https://registry.terraform.io/modules/terraform-aviatrix-modules/mc-spoke/aviatrix/latest). These are the multicloud Aviatrix modules that deploy Aviatrix gateways and networks consistently across clouds.
-- **providers.tf** - This file contains specific information about the `Aviatrix` and `AWS` Terraform providers that we are using in this training. The AWS provider is for creating the `BU1` and `BU2` bastion and app instances. All other resources, including vpc(s), will leverage the `Aviatrix` provider.
-- **variables.tf** - Any variable with optional default values are provided here. For example, if you wanted to deploy the AWS infrastructure in a different default region than us-west-2 (Oregon), you would modify it here. You'll note there are a couple variables with no default value. We will configured `Terraform Cloud` to provide those values.
-- **versions.tf** - This file has the configuration for the Terraform providers being used as well as the backend configuration (where the execution runtime and terraform state should be stored). In this case we're using the terraform cloud backend for the organization you've created to both execute Terraform and store its state config.
+- **`main.tf`** - This file contains 1 module and 1 resource. We'll be modifying this file at different points of the first two labs. The module is executing code located in the `_modules/day-zero` subfolder. The majority of the infrastructure being deployed is there. You'll see references to other, external `Aviatrix` and AWS `modules` that are available for anyone to use. These will create the networks, security groups, ec2 instances and Aviatrix gateways used in the lab. The power of modules is that you can write code once (or use other's code) and reuse it any number of times to achieve consistent implementations of the configured infrastructure. For the purpose of these labs, we'll keep it simple by modifying the files noted here. But, if you have interest in digging deeper, look into these child modules, particularly [mc-transit](https://registry.terraform.io/modules/terraform-aviatrix-modules/mc-transit/aviatrix/latest) and [mc-spoke](https://registry.terraform.io/modules/terraform-aviatrix-modules/mc-spoke/aviatrix/latest). These are the multicloud Aviatrix modules that deploy Aviatrix gateways and networks consistently across clouds.
+- **`providers.tf`** - This file contains specific information about the `Aviatrix` and `AWS` Terraform providers that we are using in this training. The AWS provider is for creating the `BU1` and `BU2` bastion and app instances. All other resources, including vpc(s), will leverage the `Aviatrix` provider.
+- **`variables.tf`** - Any variable with optional default values are provided here. For example, if you wanted to deploy the AWS infrastructure in a different default region than us-west-2 (Oregon), you would modify it here. You'll note there are a couple variables with no default value. We will configured `Terraform Cloud` to provide those values.
+- **`versions.tf`** - This file has the configuration for the Terraform providers being used as well as the backend configuration (where the execution runtime and terraform state should be stored). In this case we're using the terraform cloud backend for the organization you've created to both execute Terraform and store its state config.
 
 ## Personalize the code for your accounts
 
 Now, let's edit `versions.tf`
 
-Be sure you're on the `ace-automation` repo in your GitHub account.
+Be sure you're on the `ace-automation` repo in your GitHub account (not the `AviatrixSystems` account).
 
 ![Backend](images/lab1-3-backend.png)
 
@@ -178,7 +178,7 @@ At the bottom of the `Apply finished` section, you will see output generated fro
 
 These are the Public and Private IPs of the Bastion host in `BU1` (bastion spoke) as well as the Private IP of the App host in `BU2` (app spoke).
 
-At this point, you should be able to SSH to the `BU1` Bastion as ubuntu and the password you set the password variable to above, but from there you won't be able to SSH to the `BU2` App. The reason for that is BU1 and BU2 are not yet connected. Verify from CoPilot by navigating to `Networking-->Network Segmentation` and and note that the 2 BUs are not connected:
+At this point, you should be able to SSH to the `BU1 Bastion` as ubuntu and the password you set the password variable to above, but from there you won't be able to SSH to the `BU2 App`. The reason for that is BU1 and BU2 are not yet connected. Verify from CoPilot by navigating to `Networking-->Network Segmentation` and and note that the 2 BUs are not connected:
 
 ![Policy](images/lab1-22-policy.png)
 

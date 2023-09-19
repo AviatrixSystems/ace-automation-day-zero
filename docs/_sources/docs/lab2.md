@@ -16,28 +16,24 @@ kernelspec:
 
 In this lab you will simulate the day-to-day operations of your cloud infrastructure built in Lab 1 using the Aviatrix Multicloud Networking and Security platform. You will be conducting all changes on the `Main` branch of your existing repository from Lab 1. We are using the term `Day 1` for the work done in this lab.
 
-This lab is intended to familiarize you with how to change Terraform code and enact those changes against your cloud network infrastructure.
+This lab is intended to familiarize you with how to change Terraform code and implement those changes in your cloud network infrastructure.
 
 We'll take you through the process of:
 
 1. Modifying gateway instances sizes
-2. Modify `Network Segmentation` policies to connect isolated cloud networks.
-
-## Code Modification
-
-It is recommended to use a localized setup with an IDE that integrates with your GitHub account. However, you can also make the code changes directly on the GitHub.com UI.
+2. Modifying `Network Segmentation` policies to connect isolated cloud networks.
 
 ## Resize gateways
 
-ACE Inc is growing now and needs to resize their gateways. The AWS Transit Gateway is currently t3.micro. Verify this in CoPilot by navigating to `Cloud Fabric-->Gateways-->Transit Gateways`. You may have to toggle on the `Instance Size` column.
+ACE Inc is growing now and needs to resize their gateways. The AWS Transit Gateway is currently t3.micro. Verify this in CoPilot by logging in and navigating to `Cloud Fabric-->Gateways-->Transit Gateways`. You will have to toggle on the `Instance Size` column.
 
 ![Size](images/lab2-1-size.png)
 
 ACE needs to resize their AWS gateways from t3.micro to t3.small.
 
-Make this change by editing main.tf file
+Make this change by editing the `'main.tf'` file
 
-On GitHub.com cloud UI, click the Pencil icon to edit directly.
+On the GitHub.com UI, click the Pencil icon to edit directly.
 
 ![Edit](images/lab2-2-edit.png)
 
@@ -45,11 +41,11 @@ Make the change for the `aws_transit_instance_size` on line 4.
 
 ![Vars](images/lab2-3-main.png)
 
-Provide a meaningful commit message at the bottom and click the Commit changes button.
+Provide a meaningful commit message at the bottom and click the `Commit changes` button.
 
 ![Commit](images/lab2-4-commit.png)
 
-As soon as you commit the changes to a file, it will automatically queue a Terraform Plan. Back in Terraform Cloud, navigate to the Overview tab of your workspace. Depending on how soon you navigate there, you will see blue `Planning` or yellow `Planned`, or brown `Cost Estimated` in the Latest Run pane. From there, click on See details to see the planned run with proposed changes such as this:
+As soon as you commit the changes to a file, it will automatically queue a Terraform Plan. Back in Terraform Cloud, navigate to the Overview tab of your workspace. Depending on how soon you navigate there, you will see blue `Planning` or yellow `Planned`, or brown `Cost Estimated` in the Latest Run pane. From there, click on `See details` to see the planned run with proposed changes such as this:
 
 ![Confirm](images/lab2-5-confirm.png)
 
@@ -57,11 +53,11 @@ Click `Confirm & Apply` and `Confirm Plan` to begin the terraform apply. When it
 
 ![Gateway](images/lab2-6-gateway.png)
 
-However, `BU1` and `BU2` are still not connected. SSH to `BU1` Bastion and leave a continuous ping session running in a terminal window destined to `BU2` App.
+However, `bu1` and `bu2` are still not connected. SSH to `BU1 Bastion` and leave a continuous ping session running in a terminal window destined to the `BU2 App`'s private IP. This will not work at this point since the networks are not connected.
 
 ## Configure a Connection Policy
 
-Connect BU1 to BU2 by uncommenting this block of code at the bottom of main.tf.
+Connect `bu1` to `bu2` by uncommenting this block of code at the bottom of `'main.tf'`.
 
 ```{code-cell} terraform
 # resource "aviatrix_segmentation_network_domain_connection_policy" "ace_automation" {
@@ -71,7 +67,7 @@ Connect BU1 to BU2 by uncommenting this block of code at the bottom of main.tf.
 # }
 ```
 
-On GitHub.com cloud UI, click the Pencil icon to edit directly.
+On the GitHub.com UI, click the Pencil icon to edit directly.
 
 ![Edit](images/lab2-7-edit.png)
 
@@ -97,9 +93,9 @@ If you click on the `Network Domains` top tab you'll see where this is configure
 
 ![Domains](images/lab2-11-domains.png)
 
-Revisit the terminal window where `BU1` Bastion was attempting to Ping `BU2` App. You should now see the responses.
+Revisit the terminal window where `BU1 Bastion` was attempting to Ping `BU2 App`. You should now see the responses.
 
-Also, you should now be able to SSH to `BU2` App from `BU1` Bastion.
+Also, you should now be able to SSH to `BU2 App` from `BU1 Bastion`.
 
 ## Code Optimization
 
@@ -130,7 +126,7 @@ When you commit and make the change, you'll notice that it makes no changes to y
 
 ## Observations
 
-As you can see, Terraform is extremely powerful and scalable. With just a few lines of code, you can make a lot of changes. Notice how easy it was to make a change to your infrastructure. It also means you could easily effect your networks with misconfiguration. To mitigate risk, your organization will benefit from having some guard rails, especially in a Production environment.
+As you can see, Terraform is extremely powerful and scalable. With just a few lines of code, you can make a lot of changes. Notice how easy it was to make a change to your infrastructure. It also means you could easily effect your networks with misconfiguration. To mitigate risk, your organization will benefit from having some guardrails, especially in a production environment.
 
 In Lab 3, we will introduce collaboration with those teams.
 

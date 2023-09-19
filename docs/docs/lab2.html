@@ -310,7 +310,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-modification">Code Modification</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resize-gateways">Resize gateways</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-a-connection-policy">Configure a Connection Policy</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-optimization">Code Optimization</a></li>
@@ -331,38 +330,34 @@ document.write(`
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>In this lab you will simulate the day-to-day operations of your cloud infrastructure built in Lab 1 using the Aviatrix Multicloud Networking and Security platform. You will be conducting all changes on the <code class="docutils literal notranslate"><span class="pre">Main</span></code> branch of your existing repository from Lab 1. We are using the term <code class="docutils literal notranslate"><span class="pre">Day</span> <span class="pre">1</span></code> for the work done in this lab.</p>
-<p>This lab is intended to familiarize you with how to change Terraform code and enact those changes against your cloud network infrastructure.</p>
+<p>This lab is intended to familiarize you with how to change Terraform code and implement those changes in your cloud network infrastructure.</p>
 <p>We’ll take you through the process of:</p>
 <ol class="arabic simple">
 <li><p>Modifying gateway instances sizes</p></li>
-<li><p>Modify <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Segmentation</span></code> policies to connect isolated cloud networks.</p></li>
+<li><p>Modifying <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Segmentation</span></code> policies to connect isolated cloud networks.</p></li>
 </ol>
-</section>
-<section id="code-modification">
-<h2>Code Modification<a class="headerlink" href="#code-modification" title="Permalink to this heading">#</a></h2>
-<p>It is recommended to use a localized setup with an IDE that integrates with your GitHub account. However, you can also make the code changes directly on the <a class="reference external" href="http://GitHub.com">GitHub.com</a> UI.</p>
 </section>
 <section id="resize-gateways">
 <h2>Resize gateways<a class="headerlink" href="#resize-gateways" title="Permalink to this heading">#</a></h2>
-<p>ACE Inc is growing now and needs to resize their gateways. The AWS Transit Gateway is currently t3.micro. Verify this in CoPilot by navigating to <code class="docutils literal notranslate"><span class="pre">Cloud</span> <span class="pre">Fabric--&gt;Gateways--&gt;Transit</span> <span class="pre">Gateways</span></code>. You may have to toggle on the <code class="docutils literal notranslate"><span class="pre">Instance</span> <span class="pre">Size</span></code> column.</p>
+<p>ACE Inc is growing now and needs to resize their gateways. The AWS Transit Gateway is currently t3.micro. Verify this in CoPilot by logging in and navigating to <code class="docutils literal notranslate"><span class="pre">Cloud</span> <span class="pre">Fabric--&gt;Gateways--&gt;Transit</span> <span class="pre">Gateways</span></code>. You will have to toggle on the <code class="docutils literal notranslate"><span class="pre">Instance</span> <span class="pre">Size</span></code> column.</p>
 <p><img alt="Size" src="../_images/lab2-1-size.png" /></p>
 <p>ACE needs to resize their AWS gateways from t3.micro to t3.small.</p>
-<p>Make this change by editing <a class="reference external" href="http://main.tf">main.tf</a> file</p>
-<p>On <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI, click the Pencil icon to edit directly.</p>
+<p>Make this change by editing the <code class="docutils literal notranslate"><span class="pre">'main.tf'</span></code> file</p>
+<p>On the <a class="reference external" href="http://GitHub.com">GitHub.com</a> UI, click the Pencil icon to edit directly.</p>
 <p><img alt="Edit" src="../_images/lab2-2-edit.png" /></p>
 <p>Make the change for the <code class="docutils literal notranslate"><span class="pre">aws_transit_instance_size</span></code> on line 4.</p>
 <p><img alt="Vars" src="../_images/lab2-3-main.png" /></p>
-<p>Provide a meaningful commit message at the bottom and click the Commit changes button.</p>
+<p>Provide a meaningful commit message at the bottom and click the <code class="docutils literal notranslate"><span class="pre">Commit</span> <span class="pre">changes</span></code> button.</p>
 <p><img alt="Commit" src="../_images/lab2-4-commit.png" /></p>
-<p>As soon as you commit the changes to a file, it will automatically queue a Terraform Plan. Back in Terraform Cloud, navigate to the Overview tab of your workspace. Depending on how soon you navigate there, you will see blue <code class="docutils literal notranslate"><span class="pre">Planning</span></code> or yellow <code class="docutils literal notranslate"><span class="pre">Planned</span></code>, or brown <code class="docutils literal notranslate"><span class="pre">Cost</span> <span class="pre">Estimated</span></code> in the Latest Run pane. From there, click on See details to see the planned run with proposed changes such as this:</p>
+<p>As soon as you commit the changes to a file, it will automatically queue a Terraform Plan. Back in Terraform Cloud, navigate to the Overview tab of your workspace. Depending on how soon you navigate there, you will see blue <code class="docutils literal notranslate"><span class="pre">Planning</span></code> or yellow <code class="docutils literal notranslate"><span class="pre">Planned</span></code>, or brown <code class="docutils literal notranslate"><span class="pre">Cost</span> <span class="pre">Estimated</span></code> in the Latest Run pane. From there, click on <code class="docutils literal notranslate"><span class="pre">See</span> <span class="pre">details</span></code> to see the planned run with proposed changes such as this:</p>
 <p><img alt="Confirm" src="../_images/lab2-5-confirm.png" /></p>
 <p>Click <code class="docutils literal notranslate"><span class="pre">Confirm</span> <span class="pre">&amp;</span> <span class="pre">Apply</span></code> and <code class="docutils literal notranslate"><span class="pre">Confirm</span> <span class="pre">Plan</span></code> to begin the terraform apply. When it is complete (less than 10 minutes later), the transit gateway in AWS will be t3.small size. Confirm again in CoPilot.</p>
 <p><img alt="Gateway" src="../_images/lab2-6-gateway.png" /></p>
-<p>However, <code class="docutils literal notranslate"><span class="pre">BU1</span></code> and <code class="docutils literal notranslate"><span class="pre">BU2</span></code> are still not connected. SSH to <code class="docutils literal notranslate"><span class="pre">BU1</span></code> Bastion and leave a continuous ping session running in a terminal window destined to <code class="docutils literal notranslate"><span class="pre">BU2</span></code> App.</p>
+<p>However, <code class="docutils literal notranslate"><span class="pre">bu1</span></code> and <code class="docutils literal notranslate"><span class="pre">bu2</span></code> are still not connected. SSH to <code class="docutils literal notranslate"><span class="pre">BU1</span> <span class="pre">Bastion</span></code> and leave a continuous ping session running in a terminal window destined to the <code class="docutils literal notranslate"><span class="pre">BU2</span> <span class="pre">App</span></code>’s private IP. This will not work at this point since the networks are not connected.</p>
 </section>
 <section id="configure-a-connection-policy">
 <h2>Configure a Connection Policy<a class="headerlink" href="#configure-a-connection-policy" title="Permalink to this heading">#</a></h2>
-<p>Connect BU1 to BU2 by uncommenting this block of code at the bottom of <a class="reference external" href="http://main.tf">main.tf</a>.</p>
+<p>Connect <code class="docutils literal notranslate"><span class="pre">bu1</span></code> to <code class="docutils literal notranslate"><span class="pre">bu2</span></code> by uncommenting this block of code at the bottom of <code class="docutils literal notranslate"><span class="pre">'main.tf'</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="c1"># resource &quot;aviatrix_segmentation_network_domain_connection_policy&quot; &quot;ace_automation&quot; {</span>
@@ -374,7 +369,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>On <a class="reference external" href="http://GitHub.com">GitHub.com</a> cloud UI, click the Pencil icon to edit directly.</p>
+<p>On the <a class="reference external" href="http://GitHub.com">GitHub.com</a> UI, click the Pencil icon to edit directly.</p>
 <p><img alt="Edit" src="../_images/lab2-7-edit.png" /></p>
 <p>Remove the preceding <code class="docutils literal notranslate"><span class="pre">#</span></code> on each line (numbers 10-16).</p>
 <p>Provide an appropriate description for the change:</p>
@@ -387,8 +382,8 @@ document.write(`
 <p><img alt="Policy" src="../_images/lab2-11-policy.png" /></p>
 <p>If you click on the <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Domains</span></code> top tab you’ll see where this is configured in the UI.</p>
 <p><img alt="Domains" src="../_images/lab2-11-domains.png" /></p>
-<p>Revisit the terminal window where <code class="docutils literal notranslate"><span class="pre">BU1</span></code> Bastion was attempting to Ping <code class="docutils literal notranslate"><span class="pre">BU2</span></code> App. You should now see the responses.</p>
-<p>Also, you should now be able to SSH to <code class="docutils literal notranslate"><span class="pre">BU2</span></code> App from <code class="docutils literal notranslate"><span class="pre">BU1</span></code> Bastion.</p>
+<p>Revisit the terminal window where <code class="docutils literal notranslate"><span class="pre">BU1</span> <span class="pre">Bastion</span></code> was attempting to Ping <code class="docutils literal notranslate"><span class="pre">BU2</span> <span class="pre">App</span></code>. You should now see the responses.</p>
+<p>Also, you should now be able to SSH to <code class="docutils literal notranslate"><span class="pre">BU2</span> <span class="pre">App</span></code> from <code class="docutils literal notranslate"><span class="pre">BU1</span> <span class="pre">Bastion</span></code>.</p>
 </section>
 <section id="code-optimization">
 <h2>Code Optimization<a class="headerlink" href="#code-optimization" title="Permalink to this heading">#</a></h2>
@@ -421,7 +416,7 @@ document.write(`
 </section>
 <section id="observations">
 <h2>Observations<a class="headerlink" href="#observations" title="Permalink to this heading">#</a></h2>
-<p>As you can see, Terraform is extremely powerful and scalable. With just a few lines of code, you can make a lot of changes. Notice how easy it was to make a change to your infrastructure. It also means you could easily effect your networks with misconfiguration. To mitigate risk, your organization will benefit from having some guard rails, especially in a Production environment.</p>
+<p>As you can see, Terraform is extremely powerful and scalable. With just a few lines of code, you can make a lot of changes. Notice how easy it was to make a change to your infrastructure. It also means you could easily effect your networks with misconfiguration. To mitigate risk, your organization will benefit from having some guardrails, especially in a production environment.</p>
 <p>In Lab 3, we will introduce collaboration with those teams.</p>
 <p>When you are ready to begin, click <code class="docutils literal notranslate"><span class="pre">Lab</span> <span class="pre">3</span> <span class="pre">-</span> <span class="pre">Day</span> <span class="pre">2</span></code> below.</p>
 </section>
@@ -495,7 +490,6 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-modification">Code Modification</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resize-gateways">Resize gateways</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-a-connection-policy">Configure a Connection Policy</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-optimization">Code Optimization</a></li>

@@ -343,14 +343,14 @@ document.write(`
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h1>
 <p>The ACE Automation Specialty Training (Infrastructure as Code - IaC) brings the concepts of DevOps together by automating secure cloud network infrastructure.</p>
 <p>No coding experience is required.</p>
-<p>There are 3 labs in this training, intended to be performed in sequence. Terraform is used for these labs. Many of Aviatrix’s largest customers do not leverage the Aviatrix UI to deploy or configure cloud network infrastructure. They perform every change in their using Terraform. At no point in this training will you be making any changes with the Aviatrix UI. This training is intended get you on the path of provisioning and automating your cloud network infrastructure with code.</p>
+<p>There are 3 labs in this training, intended to be performed in sequence. Terraform is used for these labs. Many of Aviatrix’s largest customers do not leverage the Aviatrix UI to deploy or configure cloud networks. They perform every change in their environment using Terraform. At no point in this training will you be making any changes with the Aviatrix UI. This training is intended get you on the path to provisioning and automating your cloud network infrastructure with code.</p>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>ACE Associate certification</p></li>
 <li><p>An active AWS account</p></li>
 <li><p>AWS Access Keys with permissions to deploy VPCs, EC2 instances, security groups, and keypairs.</p></li>
-<li><p>Aviatrix Controller and CoPilot instances deployed in AWS. The training materials expect you have deployed your Controller using the <a class="reference external" href="https://selfservice.aviatrix.com">Aviatrix Self-Service tool</a>.</p></li>
+<li><p>Aviatrix Controller and CoPilot instances deployed in AWS. The training materials expect you have deployed your Controller and CoPilot using the <a class="reference external" href="https://selfservice.aviatrix.com">Aviatrix Self-Service tool</a>.</p></li>
 <li><p>A GitHub account. <a class="reference external" href="https://github.com/signup">Sign up here</a>.</p></li>
 <li><p>A Terraform Cloud Organization account. <a class="reference external" href="https://app.terraform.io/signup/account">Sign up here</a>.</p></li>
 </ul>
@@ -364,7 +364,7 @@ document.write(`
 </section>
 <section id="recommended-localizations">
 <h2>Recommended Localizations<a class="headerlink" href="#recommended-localizations" title="Permalink to this heading">#</a></h2>
-<p>While you could perform the tasks for these labs directly on the GitHub UI, there are certain localizations on your PC that we recommend for working in a larger environment and/or Production. These include:</p>
+<p>While you will perform the tasks for these labs directly on the GitHub UI, there are certain localizations on your PC that we recommend for working in a larger environment and/or Production. These include:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://developer.hashicorp.com/terraform/downloads">Terraform</a>: Even though you are executing your plans and applies in <code class="docutils literal notranslate"><span class="pre">Terraform</span> <span class="pre">Cloud</span></code>, there are several benefits to having <code class="docutils literal notranslate"><span class="pre">Terraform</span></code> installed locally on your workstation.</p></li>
 <li><p><a class="reference external" href="https://git-scm.com/">Git</a>: The open source vcs (version control system) supported by <code class="docutils literal notranslate"><span class="pre">GitHub</span></code>.</p></li>
@@ -382,7 +382,7 @@ document.write(`
 <ul class="simple">
 <li><p>Network Operators (<code class="docutils literal notranslate"><span class="pre">NetOps</span></code>)</p></li>
 <li><p>Application Developers (<code class="docutils literal notranslate"><span class="pre">DevOps</span></code>)</p></li>
-<li><p>InfoSec team, (<code class="docutils literal notranslate"><span class="pre">SecOps</span></code>)</p></li>
+<li><p>InfoSec team (<code class="docutils literal notranslate"><span class="pre">SecOps</span></code>)</p></li>
 </ul>
 <p>These labs will ask you to think in terms of these different personas as you perform different lab tasks.</p>
 <section id="lab-1">
@@ -393,24 +393,24 @@ document.write(`
 <p>As shown in the diagram, inside the region, there are the following resources:</p>
 <ul class="simple">
 <li><p>A transit vpc with single <code class="docutils literal notranslate"><span class="pre">Aviatrix</span> <span class="pre">Transit</span> <span class="pre">Gateway</span></code>.</p></li>
-<li><p>A spoke vpc with single <code class="docutils literal notranslate"><span class="pre">Aviatrix</span> <span class="pre">Spoke</span> <span class="pre">Gateway</span></code>, for a workload called <code class="docutils literal notranslate"><span class="pre">BU1</span> <span class="pre">Bastion</span></code>, in a <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Domain</span></code> called <code class="docutils literal notranslate"><span class="pre">BU1</span></code>. This host has a public IP as well as a private IP. You can ssh to it as the <code class="docutils literal notranslate"><span class="pre">ubuntu</span></code> user. Be sure to set a strong password.</p></li>
-<li><p>A spoke vpc with single <code class="docutils literal notranslate"><span class="pre">Aviatrix</span> <span class="pre">Spoke</span> <span class="pre">Gateway</span></code>, for a workload called <code class="docutils literal notranslate"><span class="pre">BU2</span> <span class="pre">App</span></code>, in a <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Domain</span></code> called <code class="docutils literal notranslate"><span class="pre">BU2</span></code>. This host has only a private IP. The Spoke Gateway is configured for <code class="docutils literal notranslate"><span class="pre">Single</span> <span class="pre">IP</span> <span class="pre">Source</span> <span class="pre">NAT</span></code> to allow, monitor, and secure egress traffic to the Internet.</p></li>
+<li><p>A spoke vpc with single <code class="docutils literal notranslate"><span class="pre">Aviatrix</span> <span class="pre">Spoke</span> <span class="pre">Gateway</span></code>, for a workload called <code class="docutils literal notranslate"><span class="pre">BU1</span> <span class="pre">Bastion</span></code>, in a <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Domain</span></code> called <code class="docutils literal notranslate"><span class="pre">bu1</span></code>. This host has a public IP as well as a private IP. You can ssh to it as the <code class="docutils literal notranslate"><span class="pre">ubuntu</span></code> user. Be sure to set a strong password.</p></li>
+<li><p>A spoke vpc with single <code class="docutils literal notranslate"><span class="pre">Aviatrix</span> <span class="pre">Spoke</span> <span class="pre">Gateway</span></code>, for a workload called <code class="docutils literal notranslate"><span class="pre">BU2</span> <span class="pre">App</span></code>, in a <code class="docutils literal notranslate"><span class="pre">Network</span> <span class="pre">Domain</span></code> called <code class="docutils literal notranslate"><span class="pre">bu2</span></code>. This host has only a private IP. The Spoke Gateway is configured for <code class="docutils literal notranslate"><span class="pre">Single</span> <span class="pre">IP</span> <span class="pre">Source</span> <span class="pre">NAT</span></code> to allow, monitor, and secure egress traffic to the Internet.</p></li>
 </ul>
 </section>
 <section id="lab-2">
 <h3>Lab 2<a class="headerlink" href="#lab-2" title="Permalink to this heading">#</a></h3>
-<p>In Lab 2, you will configure a <code class="docutils literal notranslate"><span class="pre">Connection</span> <span class="pre">Policy</span></code> via Terraform to connect <code class="docutils literal notranslate"><span class="pre">BU1</span></code> and <code class="docutils literal notranslate"><span class="pre">BU2</span></code>. At that point, you will be able to ssh to <code class="docutils literal notranslate"><span class="pre">BU2</span> <span class="pre">App</span></code> by first connecting to the <code class="docutils literal notranslate"><span class="pre">BU1</span> <span class="pre">Bastion</span></code> public IP.</p>
+<p>In Lab 2, you will configure a <code class="docutils literal notranslate"><span class="pre">Connection</span> <span class="pre">Policy</span></code> via Terraform to connect <code class="docutils literal notranslate"><span class="pre">bu1</span></code> and <code class="docutils literal notranslate"><span class="pre">bu2</span></code>. At that point, you will be able to ssh to <code class="docutils literal notranslate"><span class="pre">BU2</span> <span class="pre">App</span></code> by first connecting to the <code class="docutils literal notranslate"><span class="pre">BU1</span> <span class="pre">Bastion</span></code>’s public IP.</p>
 <p>You will also resize an Aviatrix gateway via Terraform.</p>
 </section>
 <section id="lab-3">
 <h3>Lab 3<a class="headerlink" href="#lab-3" title="Permalink to this heading">#</a></h3>
-<p>In Lab 3, you will collaborate with other stakeholders in ACE, Inc (Application Developers and InfoSec teams) to form a CI/CD pipeline for securing Egress traffic in <code class="docutils literal notranslate"><span class="pre">BU2</span></code>. We will monitor and visualize this in CoPilot as we adjust what FQDNs are allowed to be accessed on the Internet.</p>
+<p>In Lab 3, you will collaborate with other stakeholders in ACE, Inc (Application Developers and InfoSec teams) to form a CI/CD pipeline for securing Egress traffic in <code class="docutils literal notranslate"><span class="pre">bu2</span></code>. We will monitor and visualize this in CoPilot as we implement the Aviatrix <code class="docutils literal notranslate"><span class="pre">Distributed</span> <span class="pre">Cloud</span> <span class="pre">Firewall</span></code> and adjust what FQDNs are allowed to be accessed on the Internet.</p>
 </section>
 </section>
 <section id="a-note-about-terraform-state">
 <h2>A Note about Terraform State<a class="headerlink" href="#a-note-about-terraform-state" title="Permalink to this heading">#</a></h2>
 <p>Terraform maintains its view of the infrastructure in a file called Terraform state.</p>
-<p><strong>Note:</strong> The Aviatrix Self-service tool is an Aviatrix-developed platform that maintains its own Terraform State for the Controller and Copilot you will deploy. However, one the goals of this training is to deploy cloud infrastructure via Terraform in a separate Terraform state file using tools that are more commonly used, such as Terraform Cloud.</p>
+<p><strong>Note:</strong> The Aviatrix Self-service tool is an Aviatrix developed platform that maintains its own Terraform State for the Controller and Copilot you will deploy. One the goals of this training is to deploy cloud infrastructure via Terraform in a separate Terraform state file using tools that are more commonly used, such as Terraform Cloud.</p>
 <p>There will be a total of 3 Terraform State files used during this training residing in these locations:</p>
 <ol class="arabic simple">
 <li><p>Aviatrix Self-service tool</p></li>
@@ -443,7 +443,7 @@ document.write(`
 <li><p>API-driven workflow</p></li>
 <li><p>Create, Automate, and Secure a GitHub Branch</p></li>
 <li><p>Build a CI/CD pipeline</p></li>
-<li><p>Apply use-case for Egress security with IaC guardrails by collaborating with different stakeholders (Network Operators (<code class="docutils literal notranslate"><span class="pre">NetOps</span></code>), Application Developers (<code class="docutils literal notranslate"><span class="pre">DevOps</span></code>), Security (<code class="docutils literal notranslate"><span class="pre">SecOps</span></code>))</p></li>
+<li><p>Enable the <code class="docutils literal notranslate"><span class="pre">Distributed</span> <span class="pre">Cloud</span> <span class="pre">Firewall</span></code> to secure Egress traffic flows with IaC guardrails by collaborating with different stakeholders (Network Operators (<code class="docutils literal notranslate"><span class="pre">NetOps</span></code>), Application Developers (<code class="docutils literal notranslate"><span class="pre">DevOps</span></code>), Security (<code class="docutils literal notranslate"><span class="pre">SecOps</span></code>))</p></li>
 </ul>
 <p>When you are ready to begin, click <code class="docutils literal notranslate"><span class="pre">Lab</span> <span class="pre">1</span> <span class="pre">-</span> <span class="pre">Day</span> <span class="pre">0</span></code> below.</p>
 </section>

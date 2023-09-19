@@ -6,14 +6,14 @@ The ACE Automation Specialty Training (Infrastructure as Code - IaC) brings the 
 
 No coding experience is required.
 
-There are 3 labs in this training, intended to be performed in sequence. Terraform is used for these labs. Many of Aviatrix's largest customers do not leverage the Aviatrix UI to deploy or configure cloud network infrastructure. They perform every change in their using Terraform. At no point in this training will you be making any changes with the Aviatrix UI. This training is intended get you on the path of provisioning and automating your cloud network infrastructure with code.
+There are 3 labs in this training, intended to be performed in sequence. Terraform is used for these labs. Many of Aviatrix's largest customers do not leverage the Aviatrix UI to deploy or configure cloud networks. They perform every change in their environment using Terraform. At no point in this training will you be making any changes with the Aviatrix UI. This training is intended get you on the path to provisioning and automating your cloud network infrastructure with code.
 
 ## Prerequisites
 
 - ACE Associate certification
 - An active AWS account
 - AWS Access Keys with permissions to deploy VPCs, EC2 instances, security groups, and keypairs.
-- Aviatrix Controller and CoPilot instances deployed in AWS. The training materials expect you have deployed your Controller using the [Aviatrix Self-Service tool](https://selfservice.aviatrix.com).
+- Aviatrix Controller and CoPilot instances deployed in AWS. The training materials expect you have deployed your Controller and CoPilot using the [Aviatrix Self-Service tool](https://selfservice.aviatrix.com).
 - A GitHub account. [Sign up here](https://github.com/signup).
 - A Terraform Cloud Organization account. [Sign up here](https://app.terraform.io/signup/account).
 
@@ -29,7 +29,7 @@ On the next page, specify a new Organization name within Terraform Cloud and cli
 
 ## Recommended Localizations
 
-While you could perform the tasks for these labs directly on the GitHub UI, there are certain localizations on your PC that we recommend for working in a larger environment and/or Production. These include:
+While you will perform the tasks for these labs directly on the GitHub UI, there are certain localizations on your PC that we recommend for working in a larger environment and/or Production. These include:
 
 - [Terraform](https://developer.hashicorp.com/terraform/downloads): Even though you are executing your plans and applies in `Terraform Cloud`, there are several benefits to having `Terraform` installed locally on your workstation.
 - [Git](https://git-scm.com/): The open source vcs (version control system) supported by `GitHub`.
@@ -47,7 +47,7 @@ ACE Inc. is a fictitious company with infrastructure in AWS with 3 teams/stakeho
 
 - Network Operators (`NetOps`)
 - Application Developers (`DevOps`)
-- InfoSec team, (`SecOps`)
+- InfoSec team (`SecOps`)
 
 These labs will ask you to think in terms of these different personas as you perform different lab tasks.
 
@@ -62,24 +62,24 @@ The infrastructure is built in the AWS `us-west-2` region by default, although y
 As shown in the diagram, inside the region, there are the following resources:
 
 - A transit vpc with single `Aviatrix Transit Gateway`.
-- A spoke vpc with single `Aviatrix Spoke Gateway`, for a workload called `BU1 Bastion`, in a `Network Domain` called `BU1`. This host has a public IP as well as a private IP. You can ssh to it as the `ubuntu` user. Be sure to set a strong password.
-- A spoke vpc with single `Aviatrix Spoke Gateway`, for a workload called `BU2 App`, in a `Network Domain` called `BU2`. This host has only a private IP. The Spoke Gateway is configured for `Single IP Source NAT` to allow, monitor, and secure egress traffic to the Internet.
+- A spoke vpc with single `Aviatrix Spoke Gateway`, for a workload called `BU1 Bastion`, in a `Network Domain` called `bu1`. This host has a public IP as well as a private IP. You can ssh to it as the `ubuntu` user. Be sure to set a strong password.
+- A spoke vpc with single `Aviatrix Spoke Gateway`, for a workload called `BU2 App`, in a `Network Domain` called `bu2`. This host has only a private IP. The Spoke Gateway is configured for `Single IP Source NAT` to allow, monitor, and secure egress traffic to the Internet.
 
 ### Lab 2
 
-In Lab 2, you will configure a `Connection Policy` via Terraform to connect `BU1` and `BU2`. At that point, you will be able to ssh to `BU2 App` by first connecting to the `BU1 Bastion` public IP.
+In Lab 2, you will configure a `Connection Policy` via Terraform to connect `bu1` and `bu2`. At that point, you will be able to ssh to `BU2 App` by first connecting to the `BU1 Bastion`'s public IP.
 
 You will also resize an Aviatrix gateway via Terraform.
 
 ### Lab 3
 
-In Lab 3, you will collaborate with other stakeholders in ACE, Inc (Application Developers and InfoSec teams) to form a CI/CD pipeline for securing Egress traffic in `BU2`. We will monitor and visualize this in CoPilot as we adjust what FQDNs are allowed to be accessed on the Internet.
+In Lab 3, you will collaborate with other stakeholders in ACE, Inc (Application Developers and InfoSec teams) to form a CI/CD pipeline for securing Egress traffic in `bu2`. We will monitor and visualize this in CoPilot as we implement the Aviatrix `Distributed Cloud Firewall` and adjust what FQDNs are allowed to be accessed on the Internet.
 
 ## A Note about Terraform State
 
 Terraform maintains its view of the infrastructure in a file called Terraform state.
 
-**Note:** The Aviatrix Self-service tool is an Aviatrix-developed platform that maintains its own Terraform State for the Controller and Copilot you will deploy. However, one the goals of this training is to deploy cloud infrastructure via Terraform in a separate Terraform state file using tools that are more commonly used, such as Terraform Cloud.
+**Note:** The Aviatrix Self-service tool is an Aviatrix developed platform that maintains its own Terraform State for the Controller and Copilot you will deploy. One the goals of this training is to deploy cloud infrastructure via Terraform in a separate Terraform state file using tools that are more commonly used, such as Terraform Cloud.
 
 There will be a total of 3 Terraform State files used during this training residing in these locations:
 
@@ -108,6 +108,6 @@ There will be a total of 3 Terraform State files used during this training resid
 - API-driven workflow
 - Create, Automate, and Secure a GitHub Branch
 - Build a CI/CD pipeline
-- Apply use-case for Egress security with IaC guardrails by collaborating with different stakeholders (Network Operators (`NetOps`), Application Developers (`DevOps`), Security (`SecOps`))
+- Enable the `Distributed Cloud Firewall` to secure Egress traffic flows with IaC guardrails by collaborating with different stakeholders (Network Operators (`NetOps`), Application Developers (`DevOps`), Security (`SecOps`))
 
 When you are ready to begin, click `Lab 1 - Day 0` below.

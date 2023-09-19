@@ -314,6 +314,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-and-enable-branch-automation">Create and enable branch automation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automate-workflows-on-the-branch-by-configuring-github-actions">Automate workflows on the branch by configuring GitHub Actions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#codeowners-and-branch-protections">Codeowners and branch protections</a></li>
 </ul>
 </li>
@@ -334,7 +335,6 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation">Validation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-thoughts">Final Thoughts</a></li>
 </ul>
             </nav>
         </div>
@@ -351,7 +351,7 @@ document.write(`
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>In this lab you will adopt a CI/CD pipeline for making secure changes to your cloud infrastructure using the Aviatrix Multicloud Networking and Security platform.</p>
-<p>Specifically, you will implement Distributed Cloud Firewall (DCF) for Egress by collaborating with Applications development (DevOps) and InfoSec (SecOps) teams. The Developers will be making changes to a single file whenever they need to make changes to the FQDNs that their app needs to access on the Internet. We are using the term <code class="docutils literal notranslate"><span class="pre">Day</span> <span class="pre">2</span></code> for the work done in this lab.</p>
+<p>Specifically, you will implement Aviatrix’s <code class="docutils literal notranslate"><span class="pre">Distributed</span> <span class="pre">Cloud</span> <span class="pre">Firewall</span> <span class="pre">(DCF)</span> <span class="pre">for</span> <span class="pre">Egress</span></code> by collaborating with Applications development (DevOps) and InfoSec (SecOps) teams. The Developers will be making changes to a single file whenever they need to make changes to the FQDNs that their app needs to access on the Internet. We are using the term <code class="docutils literal notranslate"><span class="pre">Day</span> <span class="pre">2</span></code> for the work done in this lab.</p>
 <p><strong>Here is an overview of the tasks:</strong></p>
 <ul class="simple">
 <li><p>Refer to the infrastructure built in Lab 1 and Lab 2.</p></li>
@@ -359,14 +359,14 @@ document.write(`
 <li><p>Create a new GitHub Branch where code changes will be made, and then secure the main branch with Branch Protection Rules.</p></li>
 <li><p>Connect GitHub with Terraform Cloud via an API-driven workflow.</p></li>
 </ul>
-<p>You will implement DCF for Egress by collaborating with your DevOps and SecOps teams. The DevOps team will add FQDNs that their app needs to access to the <code class="docutils literal notranslate"><span class="pre">day-two/main.tf</span></code> file in a new GitHub branch. They will then create a <code class="docutils literal notranslate"><span class="pre">Pull</span> <span class="pre">Request</span></code> (PR) in GitHub. The <code class="docutils literal notranslate"><span class="pre">PR</span></code> will need to be approved by the SecOps team prior to being merged into the main branch. Branch protection rules enable checks and balances for the organization. Having such guard rails allows for layers of review and approval to help mitigate incorrect configuration entering your cloud networks.</p>
+<p>You will implement DCF for Egress by collaborating with your DevOps and SecOps teams. The DevOps team will add FQDNs that their app needs to access to the <code class="docutils literal notranslate"><span class="pre">day-two/allowed_domains.tf</span></code> file in a new GitHub branch. They will then create a <code class="docutils literal notranslate"><span class="pre">Pull</span> <span class="pre">Request</span></code> (PR) in GitHub. The <code class="docutils literal notranslate"><span class="pre">PR</span></code> will need to be approved by the SecOps team prior to being merged into the main branch. Branch protection rules enable checks and balances for the organization. Having such guardrails allows for layers of review and approval to help mitigate incorrect configuration entering your cloud networks.</p>
 <p>The workflow is represented here.</p>
 <p><img alt="Diagram" src="../_images/lab3-1-diag.png" /></p>
-<p>For the purpose of the lab these personas will be adopted by:</p>
+<p>For the purpose of the lab these personas all be adopted by you and your single github account:</p>
 <ul class="simple">
-<li><p><strong>DevOps</strong> (You): You will modify code and create a PR, requesting network modifications to the current.</p></li>
-<li><p><strong>SecOps</strong> (Aviatrix): This PR will automatically request Aviatrix review of the changes in the PR. SecOps can approve or suggest modification before approval to the proposed updates.</p></li>
-<li><p><strong>NetOps</strong> (You): With the approval of SecOps, you will now be able to merge the PR and automatically implement the change.</p></li>
+<li><p><strong>DevOps</strong> With this persona, you will modify code and create a <code class="docutils literal notranslate"><span class="pre">PR</span></code>, requesting network modifications to the current environment.</p></li>
+<li><p><strong>SecOps</strong> With this persona, you will review the <code class="docutils literal notranslate"><span class="pre">PR</span></code>. SecOps can approve or suggest modification before approval to the proposed updates.</p></li>
+<li><p><strong>NetOps</strong> With the approval of SecOps, this persona will now be able to merge the PR and automatically implement the change.</p></li>
 </ul>
 </section>
 <section id="github">
@@ -375,10 +375,10 @@ document.write(`
 <h3>Code Review<a class="headerlink" href="#code-review" title="Permalink to this heading">#</a></h3>
 <p>The terraform code for lab 3 is located in the sub-folder <code class="docutils literal notranslate"><span class="pre">day-two</span></code> of the <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> repository. Let’s take a look at each of the files:</p>
 <ul class="simple">
-<li><p><strong>allowed_domains.tf</strong> - The DevOps team maintains this file. This file defines FQDNs that the app needs to access on the Internet. The DevOps team will know best what domains their app to reach, so they are best positioned to request changes. They will need to make sure the formatting (white space, etc) of each line specifying an FQDN is consistent because GitHub Actions will check this, and fail if the code is not represented in a canonical format. Read <a class="reference external" href="https://www.terraform.io/docs/cli/commands/fmt.html">this doc</a> for more info on the <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">fmt</span></code> command.</p></li>
-<li><p><strong><a class="reference external" href="http://main.tf">main.tf</a></strong> - This file enables the <code class="docutils literal notranslate"><span class="pre">Aviatrix</span> <span class="pre">Distributed</span> <span class="pre">Cloud</span> <span class="pre">Firewall</span></code> (DCF) and sets webgroups (http and https) that contain domains that are allowed to egress to the Internet. Unless explicitly defined in the <code class="docutils literal notranslate"><span class="pre">allowed_domains.tf</span></code> file, the domain will be blocked. Additionally there is a ruled defined to allow all intra-rfc1918 traffic to traverse. Once DCF is enabled all traffic traversing Aviatrix gateways is blocked unless a rule is defined to allow it.</p></li>
-<li><p><strong><a class="reference external" href="http://providers.tf">providers.tf</a></strong> - This file contains the the Aviatrix terraform provider definition.</p></li>
-<li><p><strong><a class="reference external" href="http://versions.tf">versions.tf</a></strong> - This file defines the Terraform runtime (aka execution) and State should reside. We are using a Remote Backend in which both of these will reside in a Terraform Cloud workspace. You will need to edit this file appropriately for your tfc org/workspace.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">allowed_domains.tf</span></code></strong> - The DevOps team maintains this file. This file defines FQDNs that the app needs to access on the Internet. The DevOps team will know best what domains their app to reach, so they are best positioned to request changes. They will need to make sure the formatting (white space, etc) of each line specifying an FQDN is consistent because GitHub Actions will check this, and fail if the code is not represented in a canonical format. Read <a class="reference external" href="https://www.terraform.io/docs/cli/commands/fmt.html">this doc</a> for more info on the <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">fmt</span></code> command.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">main.tf</span></code></strong> - This file enables the <code class="docutils literal notranslate"><span class="pre">Aviatrix</span> <span class="pre">Distributed</span> <span class="pre">Cloud</span> <span class="pre">Firewall</span></code> (DCF) and sets webgroups (http and https) that contain domains that are allowed to egress to the Internet. Unless explicitly defined in the <code class="docutils literal notranslate"><span class="pre">allowed_domains.tf</span></code> file, the domain will be blocked. Additionally there is a ruled defined to allow all intra-rfc1918 traffic to traverse. Once DCF is enabled all traffic traversing Aviatrix gateways is blocked unless a rule is defined to allow it.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">providers.tf</span></code></strong> - This file contains the the Aviatrix terraform provider definition.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">versions.tf</span></code></strong> - This file defines the Terraform runtime (aka execution) and State should reside. We are using a Remote Backend in which both of these will reside in a Terraform Cloud workspace. You will need to edit this file appropriately for your tfc org/workspace.</p></li>
 </ul>
 <p>All resources in this repository leverage the Aviatrix terraform provider. In Lab 1 and Lab 2, we defined the controller ip and password in terraform variables. For this lab, we’ll be doing the same with environment variables. Both methods are valid.</p>
 </section>
@@ -406,14 +406,16 @@ document.write(`
 <li><p>day-zero</p></li>
 </ul>
 <p><img alt="Branch" src="../_images/lab3-7-branch.png" /></p>
-<p>Automate workflows on the branch by configuring GitHub Actions</p>
+</section>
+<section id="automate-workflows-on-the-branch-by-configuring-github-actions">
+<h3>Automate workflows on the branch by configuring GitHub Actions<a class="headerlink" href="#automate-workflows-on-the-branch-by-configuring-github-actions" title="Permalink to this heading">#</a></h3>
 <p><img alt="Actions" src="../_images/lab3-8-actions.png" /></p>
 <p>Click Actions</p>
 <p><img alt="Actions" src="../_images/lab3-9-actions.png" /></p>
 <p>Click “I understand my workflows, go ahead and enable them”.</p>
 <p>We already have the github actions workflow defined at <code class="docutils literal notranslate"><span class="pre">ace-automation</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">.github</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">workflows</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">terraform.yml</span></code>. This file causes github actions to execute when:</p>
 <ul class="simple">
-<li><p>Pull requests are created with changes in the <code class="docutils literal notranslate"><span class="pre">day-two</span></code> folder, actions will execute <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code> and report the result back to the PR.</p></li>
+<li><p>Pull requests are created with changes in the <code class="docutils literal notranslate"><span class="pre">day-two</span></code> folder, actions will execute <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">plan</span></code> and report the result back to the PR.</p></li>
 <li><p>Pull requests are merged to main with changes in the <code class="docutils literal notranslate"><span class="pre">day-two</span></code> folder, actions will execute <code class="docutils literal notranslate"><span class="pre">terraform</span> <span class="pre">apply</span></code></p></li>
 </ul>
 </section>
@@ -428,7 +430,7 @@ document.write(`
 <p>Next, let’s take a look at branch protections and how they work in tandem with the codeowners file to codify responsibility and collaboration.</p>
 <p>Go to your repository and click on <code class="docutils literal notranslate"><span class="pre">Settings</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Branches</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">branch</span> <span class="pre">protection</span> <span class="pre">rule</span></code></p>
 <p>Set the Branch Name Pattern: <code class="docutils literal notranslate"><span class="pre">main</span></code></p>
-<p>Check the following 7 fields (except for require approvals since you’re the only one doing the lab):</p>
+<p>Check the following 7 fields (except for <code class="docutils literal notranslate"><span class="pre">require</span> <span class="pre">approvals</span></code> since you’re the only one doing the lab):</p>
 <ul class="simple">
 <li><p>Require a pull request before merging</p></li>
 <li><p>Require approvals</p></li>
@@ -548,11 +550,7 @@ document.write(`
 <p>Next, click on the <code class="docutils literal notranslate"><span class="pre">WebGroups</span></code> tab and note that <code class="docutils literal notranslate"><span class="pre">api.openai.com</span></code> is configured.</p>
 <p><img alt="Web Groups" src="../_images/lab3-26-web-groups.png" /></p>
 <p>If you’d like, repeat the process and add an additional domain. You could also validate by ssh-ing to your app instance (via the proxy instance) that you built in lab1 and test Internet access via curl/wget.</p>
-</section>
-<section id="final-thoughts">
-<h2>Final Thoughts<a class="headerlink" href="#final-thoughts" title="Permalink to this heading">#</a></h2>
-<p>Congratulations! You have just built, operated, and secured a multicloud network using automation. By using <code class="docutils literal notranslate"><span class="pre">GitHub</span> <span class="pre">Actions</span></code> and <code class="docutils literal notranslate"><span class="pre">Terraform</span> <span class="pre">Cloud</span></code>, you have experienced true <code class="docutils literal notranslate"><span class="pre">&quot;GitOps&quot;</span></code> in action. You also learned how collaboration between teams can be enabled and enforced through code. No meetings necessary!</p>
-<p>Many of Aviatrix’s largest customers rely on IaC to ensure their cloud networks are dependable, flexible and auditable. While the choice of tools (e.g. Jenkins instead of Terraform Cloud, GitLab instead of GitHub) may vary across enterprises, the concepts of Infrastructure as Code remain the same.</p>
+<p>When you’ve successfully validated the process to your satisfaction, click <code class="docutils literal notranslate"><span class="pre">Summary</span></code> below to move to the next section.</p>
 </section>
 </section>
 
@@ -628,6 +626,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review">Code Review</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#personalize-the-code-for-your-accounts">Personalize the code for your accounts</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-and-enable-branch-automation">Create and enable branch automation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automate-workflows-on-the-branch-by-configuring-github-actions">Automate workflows on the branch by configuring GitHub Actions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#codeowners-and-branch-protections">Codeowners and branch protections</a></li>
 </ul>
 </li>
@@ -648,7 +647,6 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation">Validation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-thoughts">Final Thoughts</a></li>
 </ul>
   </nav></div>
 
